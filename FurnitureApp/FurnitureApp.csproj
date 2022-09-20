@@ -4,10 +4,13 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
+    <Platforms>AnyCPU;x86</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
     <Folder Include="Contents\" />
+    <Folder Include="Models\" />
+    <Folder Include="Resources\" />
   </ItemGroup>
 
 </Project>
