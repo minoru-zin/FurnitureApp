@@ -86,7 +86,7 @@ namespace FurnitureApp.Contents.Orders.Order00300
             this.TobiraShikiriitaMokujiTextBox.Text = $"{this.Product.TobiraShikiriitaMokuji}"; // 扉：仕切板目地
             this.ShikiriitaGawaitaHikaeTextBox.Text = $"{this.Product.ShikiriitaGawaitaHikae}"; // 仕切板：側板控え
             this.TanaitaGawaitaHikaeTextBox.Text = $"{this.Product.TanaitaGawaitaHikae}"; // 棚板：側板控え
-            this.KoguchiTapeUnitPriceTextBox.Text = $"{this.Product.KoguchiPasteUnitPrice}"; // 木口テープ単価
+            this.KoguchiPasteUnitPriceTextBox.Text = $"{this.Product.KoguchiPasteUnitPrice}"; // 木口テープ単価
             this.FinishCutUnitPriceTextBox.Text = $"{this.Product.FinishCutUnitPrice}"; // 仕上げカット単価
             this.FinishMarginTextBox.Text = $"{this.Product.FinishMargin}"; // 製作幅
 
@@ -284,6 +284,9 @@ namespace FurnitureApp.Contents.Orders.Order00300
             this.Product.TobiraShikiriitaMokuji = Utility.NumberFormatter.GetNullDouble(this.TobiraShikiriitaMokujiTextBox.Text) ?? 0;
             this.Product.ShikiriitaGawaitaHikae = Utility.NumberFormatter.GetNullDouble(this.ShikiriitaGawaitaHikaeTextBox.Text) ?? 0;
             this.Product.TanaitaGawaitaHikae = Utility.NumberFormatter.GetNullDouble(this.TanaitaGawaitaHikaeTextBox.Text) ?? 0;
+            this.Product.KoguchiPasteUnitPrice = Utility.NumberFormatter.GetNullDouble(this.KoguchiPasteUnitPriceTextBox.Text) ?? 0;
+            this.Product.FinishCutUnitPrice = Utility.NumberFormatter.GetNullDouble(this.FinishCutUnitPriceTextBox.Text) ?? 0;
+            this.Product.FinishMargin = Utility.NumberFormatter.GetNullDouble(this.FinishMarginTextBox.Text) ?? 0;
 
             this.Product.Boards.Clear();
 
@@ -303,6 +306,8 @@ namespace FurnitureApp.Contents.Orders.Order00300
             // 板コスト
             var boardSizes = new BoardSizeCalculator(this.Product);
             var cutSizes = new CutSizeCalculator().GetCutSizes(this.Product);
+
+            cutSizes.ForEach(x => x.Quantity = x.Quantity * this.Product.Quantity);
 
             var bcs = new RectPacker().GetBoardCosts(this.Product.Name, cutSizes, this.cd.MaterialSizeInfos);
             this.Product.BoardCosts.Clear();
