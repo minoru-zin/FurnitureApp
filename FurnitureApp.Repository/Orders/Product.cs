@@ -266,7 +266,7 @@ namespace FurnitureApp.Repository.Orders
 
         public int GetUnitPrice()
         {
-            var boardCost = (this.BoardCosts.Sum(x => x.TotalAmount)) ?? 0;
+            var boardCost = (this.BoardCosts.Sum(x => x.TotalAmount) ?? 0) / this.Quantity;
             var koguchiCost = this.KoguchiPasteCosts.Sum(x => x.TotalAmount) ?? 0;
             var finishCutCost = this.FinishCutCosts.Sum(x => x.TotalAmount) ?? 0;
             var makeCost = this.MakeupBoardPasteCosts.Sum(x => x.TotalAmount) ?? 0;
