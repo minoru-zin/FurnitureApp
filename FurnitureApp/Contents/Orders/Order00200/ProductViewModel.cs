@@ -28,10 +28,10 @@ namespace FurnitureApp.Contents.Orders.Order00200
             this.Depth = product.BodyDepth;
             this.Height = product.BodyHeight;
             this.UnitPrice = product.GetUnitPrice();
-            this.UnitPriceText = $"{this.UnitPrice:#,0}";
+            this.UnitPriceText = $"{this.UnitPrice:C}";
             this.Quantity = product.Quantity;
             this.TotalAmount = this.UnitPrice * this.Quantity;
-            this.TotalAmountText = $"{this.UnitPrice * this.Quantity:#,0}";
+            this.TotalAmountText = $"{this.UnitPrice * this.Quantity:C}";
         }
     }
 }
