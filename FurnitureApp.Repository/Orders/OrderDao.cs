@@ -14,14 +14,14 @@ namespace FurnitureApp.Repository.Orders
         {
         }
 
-        public IEnumerable<Order> SelectFromCreatedDate(DateTime deliveryDate)
+        public IEnumerable<Order> SelectFromCreatedDate(DateTime createdDate)
         {
             #region SQL
             var sql = $@"
 SELECT *
 FROM {this.tableName}
 WHERE
-{nameof(Order.DeliveryDate)} >= '{deliveryDate:yyyy-MM-dd}'
+{nameof(Order.CreatedDate)} >= '{createdDate:yyyy-MM-dd}'
 ";
             #endregion
 
