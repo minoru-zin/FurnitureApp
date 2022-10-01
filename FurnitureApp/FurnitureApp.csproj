@@ -8,9 +8,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Contents\" />
-    <Folder Include="Models\" />
     <Folder Include="Resources\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FurnitureApp.Repository\FurnitureApp.Repository.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

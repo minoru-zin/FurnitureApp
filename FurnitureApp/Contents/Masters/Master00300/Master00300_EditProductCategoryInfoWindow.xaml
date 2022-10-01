@@ -1,0 +1,45 @@
+﻿<Window x:Class="FurnitureApp.Contents.Masters.Master00300.Master00300_EditProductCategoryInfoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FurnitureApp.Contents.Masters.Master00300"
+        mc:Ignorable="d"
+        Title="製品カテゴリ Master00300_EditProductCategoryInfoWindow" Height="200" Width="400">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="35"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="順番"/>
+                <TextBox x:Name="SequenceTextBox"
+                         Width="200"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="名称"/>
+                <TextBox x:Name="NameTextBox"
+                         Width="200"/>
+            </StackPanel>
+        </StackPanel>
+        <DockPanel Grid.Row="1">
+            <Button Name="DeleteButton"
+                    Content="削除"
+                    DockPanel.Dock="Left"
+                    Width="100"
+                    Click="DeleteButton_Click"/>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <Button x:Name="UpdateButton"
+                        Content="登録"
+                        Width="100"
+                        Click="UpdateButton_Click"/>
+                <Button x:Name="CancelButton"
+                        Content="キャンセル"
+                        Width="100"
+                        Click="CancelButton_Click"/>
+            </StackPanel>
+        </DockPanel>
+    </Grid>
+</Window>

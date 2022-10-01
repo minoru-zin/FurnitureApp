@@ -1,0 +1,50 @@
+﻿<Window x:Class="FurnitureApp.Contents.Orders.Order00500.Order00500_EditProductFileWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FurnitureApp.Contents.Orders.Order00500"
+        mc:Ignorable="d"
+        Title="資料 Order00500_EditProductFileWindow" Height="150" Width="500">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="35"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="名称"/>
+                <TextBox x:Name="DisplayNameTextBox"
+                         Width="200"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        Name="SourceFilePathStackPanel">
+                <Label Content="コピー元"/>
+                <TextBox x:Name="SourceFilePathTextBox"
+                         Width="300"/>
+                <Button Content="参照"
+                        Name="SelctFileButton"
+                        Click="SelctFileButton_Click"
+                        Width="100"/>
+            </StackPanel>
+        </StackPanel>
+        <DockPanel Grid.Row="1">
+                <Button DockPanel.Dock="Left"
+                        Content="削除"
+                        Name="DeleteButton"
+                        Width="100"
+                        Click="DeleteButton_Click"/>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <Button Content="登録"
+                        Name="UpdateButton"
+                        Click="UpdateButton_Click"
+                        Width="100"/>
+                <Button Content="キャンセル"
+                        Name="CancelButton"
+                        Click="CancelButton_Click"
+                        Width="100"/>
+            </StackPanel>
+        </DockPanel>
+    </Grid>
+</Window>

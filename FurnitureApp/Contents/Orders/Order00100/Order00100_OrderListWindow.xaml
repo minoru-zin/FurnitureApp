@@ -1,0 +1,430 @@
+﻿<Window x:Class="FurnitureApp.Contents.Orders.Order00100.Order00100_OrderListWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FurnitureApp.Contents.Orders.Order00100"
+        mc:Ignorable="d"
+        Title="受注一覧 Order00100_OrderListWindow" Height="800" Width="1200"
+        WindowState="Maximized">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <DockPanel Grid.Row="0">
+                <StackPanel Orientation="Horizontal"
+                            DockPanel.Dock="Left">
+                    <Label Content="作成日"
+                           VerticalAlignment="Center"/>
+                    <TextBox Name="CreatedDateTextBox"
+                             Width="100"
+                             Height="25"/>
+                    <Label Content="以降"
+                           VerticalAlignment="Center"/>
+                    <Button Content="表示"
+                            Name="RefreshOrdersButton"
+                            Click="RefreshOrdersButton_Click"
+                            Width="100"/>
+                </StackPanel>
+            </DockPanel>
+            <StackPanel Grid.Row="0"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <Button Content="＋"
+                        ToolTip="受注データを新規作成します"
+                        Width="35"
+                        Name="AddOrderButton"
+                        Click="AddOrderButton_Click"/>
+            </StackPanel>
+            <DataGrid Grid.Row="1"
+                      ItemsSource="{Binding OrderViewModels}"
+                      Name="OrderDataGrid"
+                      MouseDoubleClick="OrderDataGrid_MouseDoubleClick"
+                      SelectedCellsChanged="OrderDataGrid_SelectedCellsChanged">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="作成日"
+                                        Binding="{Binding CreatedDate, StringFormat=yyyy/MM/dd}"/>
+                    <DataGridTextColumn Header="物件名"
+                                        Binding="{Binding Name}"
+                                        Width="*"/>
+                    <DataGridTextColumn Header="提出先"
+                                        Binding="{Binding ClientName}"/>
+                    <DataGridTextColumn Header="納品日"
+                                        Binding="{Binding DeliveryDate, StringFormat=yyyy/MM/dd}"/>
+                    <DataGridTextColumn Header="備考"
+                                        Binding="{Binding Remarks}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <Button Content="素材マスタ"
+                        Width="120"
+                        Name="ShowMaterialInfosButton"
+                        Click="ShowMaterialInfosButton_Click"/>
+                <Button Content="素材規格マスタ"
+                        Width="120"
+                        Name="ShowMaterialSizeInfosButton"
+                        Click="ShowMaterialSizeInfosButton_Click"/>
+                <Button Content="製品カテゴリマスタ"
+                        Width="120"
+                        Name="ShowProductCategoryInfosButton"
+                        Click="ShowProductCategoryInfosButton_Click"/>
+                <Button Content="費用項目マスタ"
+                        Width="120"
+                        Name="ShowCostItemInfosButton"
+                        Click="ShowCostItemInfosButton_Click"/>
+            </StackPanel>
+            <TabControl Grid.Row="1">
+                <TabItem Header="原価見積">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="35"/>
+                        </Grid.RowDefinitions>
+                        <DataGrid ItemsSource="{Binding ProductViewModels}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="カテゴリ"
+                                        Binding="{Binding ProductCategoryName}"/>
+                                <DataGridTextColumn Header="名称"
+                                        Width="*"
+                                        Binding="{Binding Name}"/>
+                                <DataGridTextColumn Header="W"
+                                        Binding="{Binding Width}"/>
+                                <DataGridTextColumn Header="D"
+                                        Binding="{Binding Depth}"/>
+                                <DataGridTextColumn Header="H"
+                                        Binding="{Binding Height}"/>
+                                <DataGridTextColumn Header="単価"
+                                        Binding="{Binding UnitPrice}"/>
+                                <DataGridTextColumn Header="数量"
+                                        Binding="{Binding Quantity}"
+                                        Width="35"/>
+                                <DataGridTextColumn Header="合計"
+                                        Binding="{Binding TotalAmount}"
+                                        Width="100"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="詳細">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <DataGrid Grid.Column="0" 
+                                  ItemsSource="{Binding ProductViewModels}"
+                                  Name="ProductDataGrid"
+                                  SelectedCellsChanged="ProductDataGrid_SelectedCellsChanged">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="カテゴリ"
+                                        Binding="{Binding ProductCategoryName}"/>
+                                <DataGridTextColumn Header="名称"
+                                        Width="*"
+                                        Binding="{Binding Name}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <TabControl Grid.Column="1">
+                            <TabItem Header="製品情報">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Row="0">
+                                        <StackPanel.Resources>
+                                            <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+                                                <Setter Property="Width" Value="125"/>
+                                            </Style>
+                                            <Style TargetType="TextBlock" BasedOn="{StaticResource ValueTextBlock}">
+                                                <Setter Property="MinWidth" Value="80"/>
+                                            </Style>
+                                        </StackPanel.Resources>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="カテゴリ"/>
+                                            <TextBlock x:Name="ProductCategoryNameTextBlock"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="製品名"/>
+                                            <TextBlock x:Name="NameTextBlock"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="数量"/>
+                                            <TextBlock Name="QuantityTextBlock"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="本体寸法(W)"/>
+                                            <TextBlock Name="BodyWidthTextBlock"/>
+                                            <Label Content="mm"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="本体寸法(D)"/>
+                                            <TextBlock Name="BodyDepthTextBlock"/>
+                                            <Label Content="mm"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="本体寸法(H)"/>
+                                            <TextBlock Name="BodyHeightTextBlock"/>
+                                            <Label Content="mm"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="フィラーL(W)"/>
+                                            <TextBlock Name="FillerLTextBlock"/>
+                                            <Label Content="mm"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="フィラーR(W)"/>
+                                            <TextBlock Name="FillerRTextBlock"/>
+                                            <Label Content="mm"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="LVL(W)"/>
+                                            <TextBlock Name="LvlWidthTextBlock"/>
+                                            <Label Content="mm"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="アンコピッチ"/>
+                                            <TextBlock Name="AnkoPitchTextBlock"/>
+                                            <Label Content="mm"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="台輪（H）"/>
+                                            <TextBlock Name="DaiwaHeightTextBlock"/>
+                                            <Label Content="mm"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="扉：天板隙間"/>
+                                            <TextBlock Name="TobiraTenitaSukimaTextBlcok"/>
+                                            <Label Content="mm"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="扉：天板控え"/>
+                                            <TextBlock Name="TobiraTenitaHikaeTextBlock"/>
+                                            <Label Content="mm"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="扉：側板目地"/>
+                                            <TextBlock Name="TobiraGawaitaMokujiTextBlock"/>
+                                            <Label Content="mm"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="扉間目地"/>
+                                            <TextBlock Name="TobiraKanMokujiTextBlock"/>
+                                            <Label Content="mm"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="扉：仕切板目地"/>
+                                            <TextBlock Name="TobiraShikiriitaMokujiTextBlcok"/>
+                                            <Label Content="mm"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="仕切板：側板控え"/>
+                                            <TextBlock Name="ShikiriitaGawaitaHikaeTextBlock"/>
+                                            <Label Content="mm"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="棚板：側板控え"/>
+                                            <TextBlock Name="TanaitaGawaitaHikaeTextBlcok"/>
+                                            <Label Content="mm"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="木口貼り単価"/>
+                                            <TextBlock Name="KoguchiPasteUnitPriceTextBlcok"/>
+                                            <Label Content="円/mm"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="仕上げ単価"/>
+                                            <TextBlock Name="FinishCutUnitPriceTextBlock"/>
+                                            <Label Content="円/mm"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="製作幅"/>
+                                            <TextBlock Name="FinishMarginTextBlock"/>
+                                            <Label Content="mm"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <Grid Grid.Column="1">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <DataGrid Grid.Row="0"
+                                                  ItemsSource="{Binding BoardViewModels}"
+                                                  Name="BoardDataGrid"
+                                                  SelectedCellsChanged="BoardDataGrid_SelectedCellsChanged">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Header="部位"
+                                                                    Binding="{Binding BoardName}"/>
+                                                <DataGridTextColumn Header="仕上横"
+                                                                    Binding="{Binding Width}"/>
+                                                <DataGridTextColumn Header="仕上縦"
+                                                                    Binding="{Binding Length}"/>
+                                                <DataGridTextColumn Header="厚さ"
+                                                                    Binding="{Binding Thickness}"/>
+                                                <DataGridTextColumn Header="数量"
+                                                                    Binding="{Binding Quantity}"/>
+                                                <DataGridTextColumn Header="木口貼り箇所"
+                                                                    Binding="{Binding KoguchiPasteArea}"/>
+                                                
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                        <DataGrid Grid.Row="1"
+                                                  ItemsSource="{Binding BoardLayerViewModels}">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Header="素材"
+                                                                    Binding="{Binding MaterialName}"/>
+                                                <DataGridTextColumn Header="厚さ"
+                                                                    Binding="{Binding Thickness}"/>
+                                                <DataGridTextColumn Header="貼り単価"
+                                                                    Binding="{Binding PasteUnitPrice}"/>
+                                                <DataGridTextColumn Header="木目"
+                                                                    Binding="{Binding MokumeDirection}"/>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </Grid>
+                                </Grid>
+                            </TabItem>
+                            <TabItem Header="費用">
+                                <DataGrid ItemsSource="{Binding CostViewModels}">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="項目"
+                                                            Binding="{Binding Name}"/>
+                                        <DataGridTextColumn Header="単価"
+                                                            Binding="{Binding UnitPrice}"/>
+                                        <DataGridTextColumn Header="数量"
+                                                            Binding="{Binding Quantity}"/>
+                                        <DataGridTextColumn Header="合計"
+                                                            Binding="{Binding TotalAmount}"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </TabItem>
+                            <TabItem Header="画像">
+                                <DataGrid ItemsSource="{Binding ProductFileViewModels}"
+                                          Name="ProductFileDataGrid"
+                                          MouseDoubleClick="ProductFileDataGrid_MouseDoubleClick">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="ファイル名"
+                                                            Binding="{Binding DisplayName}"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </TabItem>
+                            <TabItem Header="製作寸法">
+                                <DataGrid Grid.Row="0"
+                                          ItemsSource="{Binding BoardViewModels2}">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="部位"
+                                                                    Binding="{Binding BoardName}"/>
+                                        <DataGridTextColumn Header="横"
+                                                                    Binding="{Binding Width}"/>
+                                        <DataGridTextColumn Header="縦"
+                                                                    Binding="{Binding Length}"/>
+                                        <DataGridTextColumn Header="厚さ"
+                                                                    Binding="{Binding Thickness}"/>
+                                        <DataGridTextColumn Header="数量"
+                                                                    Binding="{Binding Quantity}"/>
+                                        <DataGridTextColumn Header="木口貼り箇所"
+                                                                    Binding="{Binding KoguchiPasteArea}"/>
+
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </TabItem>
+                            <TabItem Header="板">
+                                <DataGrid ItemsSource="{Binding BoardCostViewModels}">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="名称"
+                                                            Binding="{Binding Name}"/>
+                                        <DataGridTextColumn Header="縦"
+                                                            Binding="{Binding Length}"/>
+                                        <DataGridTextColumn Header="横"
+                                                            Binding="{Binding Width}"/>
+                                        <DataGridTextColumn Header="単価"
+                                                            Binding="{Binding UnitPrice}"/>
+                                        <DataGridTextColumn Header="数量"
+                                                            Binding="{Binding Quantity}"/>
+                                        <DataGridTextColumn Header="合計"
+                                                            Binding="{Binding TotalAmount}"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </TabItem>
+                            <TabItem Header="木口貼り">
+                                <DataGrid ItemsSource="{Binding KoguchiPasteCostViewModels}">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="部位"
+                                                            Binding="{Binding BoardName}"/>
+                                        <DataGridTextColumn Header="縦"
+                                                            Binding="{Binding Length}"/>
+                                        <DataGridTextColumn Header="横"
+                                                            Binding="{Binding Width}"/>
+                                        <DataGridTextColumn Header="箇所"
+                                                            Binding="{Binding KoguchiMakeupArea}"/>
+                                        <DataGridTextColumn Header="長さ"
+                                                            Binding="{Binding UnitLength}"/>
+                                        <DataGridTextColumn Header="単価"
+                                                            Binding="{Binding UnitPrice}"/>
+                                        <DataGridTextColumn Header="数量"
+                                                            Binding="{Binding Quantity}"/>
+                                        <DataGridTextColumn Header="合計"
+                                                            Binding="{Binding TotalAmount}"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </TabItem>
+                            <TabItem Header="仕上カット">
+                                <DataGrid ItemsSource="{Binding FinishCutCostViewModels}">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="部位"
+                                                            Binding="{Binding BoardName}"/>
+                                        <DataGridTextColumn Header="縦"
+                                                            Binding="{Binding Length}"/>
+                                        <DataGridTextColumn Header="横"
+                                                            Binding="{Binding Width}"/>
+                                        <DataGridTextColumn Header="外周"
+                                                            Binding="{Binding UnitLength}"/>
+                                        <DataGridTextColumn Header="単価"
+                                                            Binding="{Binding UnitPrice}"/>
+                                        <DataGridTextColumn Header="数量"
+                                                            Binding="{Binding Quantity}"/>
+                                        <DataGridTextColumn Header="合計"
+                                                            Binding="{Binding TotalAmount}"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </TabItem>
+                            <TabItem Header="化粧板貼り">
+                                <DataGrid ItemsSource="{Binding MakeupBoardPasteCostViewModels}">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="部位"
+                                                            Binding="{Binding BoardName}"/>
+                                        <DataGridTextColumn Header="縦"
+                                                            Binding="{Binding Length}"/>
+                                        <DataGridTextColumn Header="横"
+                                                            Binding="{Binding Width}"/>
+                                        <DataGridTextColumn Header="面積"
+                                                            Binding="{Binding UnitLength}"/>
+                                        <DataGridTextColumn Header="単価"
+                                                            Binding="{Binding UnitPrice}"/>
+                                        <DataGridTextColumn Header="数量"
+                                                            Binding="{Binding Quantity}"/>
+                                        <DataGridTextColumn Header="合計"
+                                                            Binding="{Binding TotalAmount}"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </TabItem>
+                        </TabControl>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </Grid>
+</Window>

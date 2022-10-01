@@ -1,0 +1,63 @@
+﻿<Window x:Class="FurnitureApp.Contents.Masters.Master00200.Master00200_EditMaterialSizeInfoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FurnitureApp.Contents.Masters.Master00200"
+        mc:Ignorable="d"
+        Title="素材規格 Master00200_EditMaterialSizeInfoWindow" Height="450" Width="800">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="35"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="素材"/>
+                <ComboBox ItemsSource="{Binding Materials}"
+                          DisplayMemberPath="DisplayName"
+                          SelectedValuePath="Code"
+                          x:Name="MaterialComboBox"
+                          Width="200"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="名称"/>
+                <TextBox x:Name="NameTextBox"
+                         Width="200"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="縦"/>
+                <TextBox x:Name="LengthTextBox"
+                         Width="200"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="横"/>
+                <TextBox x:Name="WidthTextBox"
+                         Width="200"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="単価"/>
+                <TextBox x:Name="UnitPriceTextBox"
+                         Width="200"/>
+            </StackPanel>
+        </StackPanel>
+        <DockPanel Grid.Row="1">
+            <Button Name="DeleteButton"
+                    Content="削除"
+                    DockPanel.Dock="Left"
+                    Width="100"
+                    Click="DeleteButton_Click"/>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <Button x:Name="UpdateButton"
+                        Content="登録"
+                        Width="100"
+                        Click="UpdateButton_Click"/>
+                <Button x:Name="CancelButton"
+                        Content="キャンセル"
+                        Width="100"
+                        Click="CancelButton_Click"/>
+            </StackPanel>
+        </DockPanel>
+    </Grid>
+</Window>

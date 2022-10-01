@@ -1,0 +1,44 @@
+﻿<Window x:Class="FurnitureApp.Contents.Orders.Order00600.Order00600_SelectProductWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FurnitureApp.Contents.Orders.Order00600"
+        mc:Ignorable="d"
+        Title="製品選択 Order00600_SelectProductWindow" Height="450" Width="500">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <Label Content="カテゴリ"
+                   VerticalAlignment="Center"/>
+            <ComboBox ItemsSource="{Binding ProductCategoryInfos}"
+                      DisplayMemberPath="DisplayName"
+                      SelectedValuePath="Code"
+                      Width="200"
+                      x:Name="ProductCategoryInfoComboBox"
+                      SelectionChanged="ProductCategoryInfoComboBox_SelectionChanged"
+                      Margin="3 3 3 3"/>
+        </StackPanel>
+        <DataGrid Grid.Row="1"
+                  ItemsSource="{Binding ProductViewModels}"
+                  Name="ProductDataGrid"
+                  MouseDoubleClick="ProductDataGrid_MouseDoubleClick">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="カテゴリ"
+                                        Binding="{Binding ProductCategoryName}"/>
+                <DataGridTextColumn Header="名称"
+                                        Width="*"
+                                        Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="W"
+                                        Binding="{Binding Width}"/>
+                <DataGridTextColumn Header="D"
+                                        Binding="{Binding Depth}"/>
+                <DataGridTextColumn Header="H"
+                                        Binding="{Binding Height}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

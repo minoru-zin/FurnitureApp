@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FurnitureApp", "FurnitureAp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FurnitureApp.Repository", "FurnitureApp.Repository\FurnitureApp.Repository.csproj", "{A45CA488-B0FA-4E02-AFFD-52EF58F62A5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FurnitureApp.Utility", "FurnitureApp.Utility\FurnitureApp.Utility.csproj", "{67A64A26-1CEE-4EB5-AF7B-151E7E5E37D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FurnitureApp.Utility", "FurnitureApp.Utility\FurnitureApp.Utility.csproj", "{67A64A26-1CEE-4EB5-AF7B-151E7E5E37D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FurnitureApp.Test", "FurnitureApp.Test\FurnitureApp.Test.csproj", "{8FA6054D-557A-46FF-B755-F214B8274473}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,14 @@ Global
 		{67A64A26-1CEE-4EB5-AF7B-151E7E5E37D3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{67A64A26-1CEE-4EB5-AF7B-151E7E5E37D3}.Release|x86.ActiveCfg = Release|x86
 		{67A64A26-1CEE-4EB5-AF7B-151E7E5E37D3}.Release|x86.Build.0 = Release|x86
+		{8FA6054D-557A-46FF-B755-F214B8274473}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FA6054D-557A-46FF-B755-F214B8274473}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FA6054D-557A-46FF-B755-F214B8274473}.Debug|x86.ActiveCfg = Debug|x86
+		{8FA6054D-557A-46FF-B755-F214B8274473}.Debug|x86.Build.0 = Debug|x86
+		{8FA6054D-557A-46FF-B755-F214B8274473}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FA6054D-557A-46FF-B755-F214B8274473}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FA6054D-557A-46FF-B755-F214B8274473}.Release|x86.ActiveCfg = Release|Any CPU
+		{8FA6054D-557A-46FF-B755-F214B8274473}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

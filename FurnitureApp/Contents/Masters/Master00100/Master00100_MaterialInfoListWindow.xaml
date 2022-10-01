@@ -1,0 +1,39 @@
+﻿<Window x:Class="FurnitureApp.Contents.Masters.Master00100.Master00100_MaterialInfoListWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FurnitureApp.Contents.Masters.Master00100"
+        mc:Ignorable="d"
+        Title="素材一覧 Master00100_MaterialInfoListWindow" Height="450" Width="800">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0"
+                    HorizontalAlignment="Right">
+            <Button Content="＋"
+                    Width="35"
+                    Name="AddButton"
+                    Click="AddButton_Click"/>
+        </StackPanel>
+        <DataGrid Grid.Row="1" ItemsSource="{Binding ViewModels}"
+                  Name="DataGrid"
+                  MouseDoubleClick="DataGrid_MouseDoubleClick">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="順番"
+                                    Binding="{Binding Sequence}"/>
+                <DataGridTextColumn Header="名称"
+                                    Binding="{Binding Name}"
+                                    Width="*"/>
+                <DataGridTextColumn Header="厚さ"
+                                    Binding="{Binding Thickness}"/>
+                <DataGridTextColumn Header="貼り単価"
+                                    Binding="{Binding PasteUnitPrice}"/>
+                <DataGridTextColumn Header="カットタイプ"
+                                    Binding="{Binding CutType}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

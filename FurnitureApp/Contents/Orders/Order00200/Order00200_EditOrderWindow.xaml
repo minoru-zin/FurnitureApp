@@ -1,0 +1,113 @@
+﻿<Window x:Class="FurnitureApp.Contents.Orders.Order00200.Order00200_EditOrderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FurnitureApp.Contents.Orders.Order00200"
+        mc:Ignorable="d"
+        Title="受注作成 Order00200_EditOrderWindow" Height="700" Width="1000">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="35"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <DockPanel Grid.Row="0"
+                    Grid.Column="0">
+            <StackPanel DockPanel.Dock="Top">
+                <DockPanel>
+                    <Label DockPanel.Dock="Left" Content="作成日"/>
+                    <TextBox x:Name="CreatedDateTextBox"/>
+                </DockPanel>
+                <DockPanel>
+                    <Label DockPanel.Dock="Left" Content="物件名"/>
+                    <TextBox x:Name="NameTextBox"/>
+                </DockPanel>
+                <DockPanel>
+                    <Label DockPanel.Dock="Left" Content="提出先"/>
+                    <TextBox x:Name="ClientNameTextBox"/>
+                </DockPanel>
+                <DockPanel>
+                    <Label DockPanel.Dock="Left" Content="納品日"/>
+                    <TextBox x:Name="DeliveryDateTextBox"/>
+                </DockPanel>
+            </StackPanel>
+            <DockPanel>
+                <Label DockPanel.Dock="Top" Content="備考"/>
+                <TextBox x:Name="RemarksTextBox"
+                         AcceptsReturn="True"/>
+            </DockPanel>
+        </DockPanel>
+        <Grid Grid.Row="0"
+              Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="35"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <Button Content="＋"
+                        Name="AddProductButton"
+                        Width="35"
+                        Click="AddProductButton_Click"/>
+            </StackPanel>
+            <DataGrid Grid.Row="1"
+                      ItemsSource="{Binding ProductViewModels}"
+                      Name="ProductDataGrid"
+                      MouseDoubleClick="ProductDataGrid_MouseDoubleClick">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="カテゴリ"
+                                        Binding="{Binding ProductCategoryName}"/>
+                    <DataGridTextColumn Header="名称"
+                                        Width="*"
+                                        Binding="{Binding Name}"/>
+                    <DataGridTextColumn Header="W"
+                                        Binding="{Binding Width}"/>
+                    <DataGridTextColumn Header="D"
+                                        Binding="{Binding Depth}"/>
+                    <DataGridTextColumn Header="H"
+                                        Binding="{Binding Height}"/>
+                    <DataGridTextColumn Header="単価"
+                                        Binding="{Binding UnitPrice}"/>
+                    <DataGridTextColumn Header="数量"
+                                        Binding="{Binding Quantity}"
+                                        Width="35"/>
+                    <DataGridTextColumn Header="合計"
+                                        Binding="{Binding TotalAmount}"
+                                        Width="100"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <TextBlock Grid.Row="2"
+                       FontSize="25"
+                       Name="TotalAmountTextBlock"
+                       TextAlignment="Right"/>
+        </Grid>
+        
+        <StackPanel Grid.Row="1"
+                    Grid.Column="0"
+                    Orientation="Horizontal">
+            <Button Content="削除"
+                    Name="DeleteButton"
+                    Width="100"
+                    Click="DeleteButton_Click"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1"
+                    Grid.Column="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+            <Button Content="登録"
+                    Width="100"
+                    Name="UpdateButton"
+                    Click="UpdateButton_Click"/>
+            <Button Content="キャンセル"
+                    Width="100"
+                    Name="CancelButton"
+                    Click="CancelButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
