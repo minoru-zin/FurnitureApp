@@ -20,7 +20,7 @@ namespace FurnitureApp.Repository.Utilities
             if (!File.Exists(this.settingFilePath))
             {
                 settings = new ConnectionSetting();
-
+                Utility.DirectoryCreator.CreateSafely(Path.GetDirectoryName(this.settingFilePath));
                 Utility.XmlWriter.WriteXml(settings, this.settingFilePath);
             }
 

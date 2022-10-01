@@ -1,4 +1,8 @@
 ﻿using Dapper;
+using FurnitureApp.Repository.MaterialInfos;
+using FurnitureApp.Repository.MaterialSizeInfos;
+using FurnitureApp.Repository.Orders;
+using FurnitureApp.Repository.ProductCategoryInfos;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
@@ -23,6 +27,558 @@ namespace FurnitureApp.Repository.Utilities
             Utility.DirectoryCreator.CreateSafely(Path.GetDirectoryName(this.connectionFactory.DbPath));
             SQLiteConnection.CreateFile(this.connectionFactory.DbPath);
             this.CreateTables();
+
+
+            var materialInfos = new List<MaterialInfo>
+            {
+                new MaterialInfo
+                {
+                    Sequence = 10,
+                    Name = "ポストホーム",
+                    Thickness = 1,
+                    CutType = CutType.Normal
+                },
+new MaterialInfo
+                {
+                    Sequence = 20,
+                    Name = "人口大理石",
+                    Thickness = 1,
+                    CutType = CutType.Normal
+                },
+new MaterialInfo
+                {
+                    Sequence = 30,
+                    Name = "メラミン1t",
+                    Thickness = 1,
+                    CutType = CutType.Normal
+                },
+new MaterialInfo
+                {
+                    Sequence = 40,
+                    Name = "ポリ合板2.5t",
+                    Thickness = 2.5,
+                    CutType = CutType.Normal
+                },
+new MaterialInfo
+                {
+                    Sequence = 50,
+                    Name = "ラワンベニヤ2.5t",
+                    Thickness = 2.5,
+                    CutType = CutType.Normal
+                },
+new MaterialInfo
+                {
+                    Sequence = 60,
+                    Name = "ポリ合板3.8t",
+                    Thickness = 3.8,
+                    CutType = CutType.Normal
+                },
+new MaterialInfo
+                {
+                    Sequence = 70,
+                    Name = "Rベニヤ2.5t",
+                    Thickness = 2.5,
+                    CutType = CutType.Normal
+                },
+new MaterialInfo
+                {
+                    Sequence = 80,
+                    Name = "Rベニヤ4t",
+                    Thickness = 4,
+                    CutType = CutType.Normal
+                },
+new MaterialInfo
+                {
+                    Sequence = 90,
+                    Name = "Rベニヤ5.5t",
+                    Thickness = 5.5,
+                    CutType = CutType.Normal
+                },
+new MaterialInfo
+                {
+                    Sequence = 100,
+                    Name = "Rベニヤ9t",
+                    Thickness = 9,
+                    CutType = CutType.Normal
+                },
+new MaterialInfo
+                {
+                    Sequence = 110,
+                    Name = "LVL12t",
+                    Thickness = 12,
+                    CutType = CutType.Lvl
+                },
+new MaterialInfo
+                {
+                    Sequence = 120,
+                    Name = "LVL15t",
+                    Thickness = 15,
+                    CutType = CutType.Lvl
+                },
+new MaterialInfo
+                {
+                    Sequence = 130,
+                    Name = "LC12t",
+                    Thickness = 12,
+                    CutType = CutType.Normal
+                },
+new MaterialInfo
+                {
+                    Sequence = 140,
+                    Name = "LC15t",
+                    Thickness = 15,
+                    CutType = CutType.Normal
+                },
+new MaterialInfo
+                {
+                    Sequence = 150,
+                    Name = "LC18t",
+                    Thickness = 18,
+                    CutType = CutType.Normal
+                },
+new MaterialInfo
+                {
+                    Sequence = 160,
+                    Name = "LC21t",
+                    Thickness = 21,
+                    CutType = CutType.Normal
+                },
+new MaterialInfo
+                {
+                    Sequence = 170,
+                    Name = "LC24t",
+                    Thickness = 24,
+                    CutType = CutType.Normal
+                },
+            };
+            var materialSizeInfos = new List<MaterialSizeInfo>
+            {
+                new MaterialSizeInfo
+                {
+                    MaterialInfoId = 5,
+                    Name = "ラワンベニヤ2.5t",
+                    Length = 1820,
+                    Width = 910,
+                    UnitPrice = 570,
+                },
+                new MaterialSizeInfo
+                {
+                    MaterialInfoId = 5,
+                    Name = "ラワンベニヤ2.5t",
+                    Length = 2430,
+                    Width = 1230,
+                    UnitPrice = 1200,
+                },
+                new MaterialSizeInfo
+                {
+                    MaterialInfoId = 4,
+                    Name = "ポリ合板2.5t LP",
+                    Length = 1820,
+                    Width = 910,
+                    UnitPrice = 3810,
+                },
+                new MaterialSizeInfo
+                {
+                    MaterialInfoId = 4,
+                    Name = "ポリ合板2.5t LP",
+                    Length = 2430,
+                    Width = 1230,
+                    UnitPrice = 7640,
+                },
+                new MaterialSizeInfo
+                {
+                    MaterialInfoId = 12,
+                    Name = "LVL15t",
+                    Length = 3900,
+                    Width = 45,
+                    UnitPrice = 240,
+                },
+                new MaterialSizeInfo
+                {
+                    MaterialInfoId = 11,
+                    Name = "LVL12t",
+                    Length = 3900,
+                    Width = 45,
+                    UnitPrice = 240,
+                },
+                new MaterialSizeInfo
+                {
+                    MaterialInfoId = 3,
+                    Name = "メラミン1t TJ",
+                    Length = 1820,
+                    Width = 910,
+                    UnitPrice = 5400,
+                },
+                new MaterialSizeInfo
+                {
+                    MaterialInfoId = 3,
+                    Name = "メラミン1t TJ",
+                    Length = 2430,
+                    Width = 1230,
+                    UnitPrice = 9600,
+                },
+                new MaterialSizeInfo
+                {
+                    MaterialInfoId = 13,
+                    Name = "LC12t",
+                    Length = 1820,
+                    Width = 910,
+                    UnitPrice = 1700,
+                },
+                new MaterialSizeInfo
+                {
+                    MaterialInfoId = 13,
+                    Name = "LC12t",
+                    Length = 2430,
+                    Width = 1230,
+                    UnitPrice = 2900,
+                },
+                new MaterialSizeInfo
+                {
+                    MaterialInfoId = 14,
+                    Name = "LC15t",
+                    Length = 1820,
+                    Width = 910,
+                    UnitPrice = 1900,
+                },
+                new MaterialSizeInfo
+                {
+                    MaterialInfoId = 14,
+                    Name = "LC15t",
+                    Length = 2430,
+                    Width = 1230,
+                    UnitPrice = 3200,
+                },
+                new MaterialSizeInfo
+                {
+                    MaterialInfoId = 15,
+                    Name = "LC18t",
+                    Length = 1820,
+                    Width = 910,
+                    UnitPrice = 2100,
+                },
+                new MaterialSizeInfo
+                {
+                    MaterialInfoId = 15,
+                    Name = "LC18t",
+                    Length = 2430,
+                    Width = 1230,
+                    UnitPrice = 3700,
+                },
+            };
+
+            var productCategoryInfos = new List<ProductCategoryInfo>
+            {
+                new ProductCategoryInfo
+                {
+                    Sequence = 1,
+                    Name = "洗面台",
+                },
+                new ProductCategoryInfo
+                {
+                    Sequence = 2,
+                    Name = "収納棚",
+                }
+            };
+
+            var order = new Order();
+            order.CreatedDate = new DateTime(2022, 09, 26);
+            order.Name = "KOLN 三宮 新築工事";
+            order.ClientName = "大垣林業";
+            order.DeliveryDate = new DateTime(2023, 12, 31);
+            order.Remarks = "なし";
+
+            var product1 = new Product();
+            product1.ProductCategoryInfoId = 1;
+            product1.Name = "洗面台";
+            product1.Quantity = 1;
+            product1.BodyWidth = 3600;
+            product1.BodyDepth = 600;
+            product1.BodyHeight = 900;
+            product1.FillerL = 0;
+            product1.FillerR = 0;
+            product1.LvlWidth = 35;
+            product1.AnkoPitch = 300;
+            product1.DaiwaHeight = 60;
+            product1.TobiraTenitaSukima = 3;
+            product1.TobiraTenitaHikae = 10;
+            product1.TobiraGawaitaMokuji = 4;
+            product1.TobiraKanMokuji = 2;
+            product1.TobiraShikiriitaMokuji = 4;
+            product1.ShikiriitaGawaitaHikae = 0;
+            product1.TanaitaGawaitaHikae = 10;
+
+            product1.Boards.Add(new Board
+            {
+                BoardCode = BoardType.Tenshita,
+                Quantity = 1,
+                BoardLayers = new List<BoardLayer>
+                {
+                    new BoardLayer{ MaterialInfoId = 5,},
+                    new BoardLayer{ MaterialInfoId = 12,},
+                    new BoardLayer{ MaterialInfoId = 4,},
+                }
+            });
+            product1.Boards.Add(new Board
+            {
+                BoardCode = BoardType.Gawaita,
+                Quantity = 2,
+                BoardLayers = new List<BoardLayer>
+                {
+                    new BoardLayer{ MaterialInfoId = 4,},
+                    new BoardLayer{ MaterialInfoId = 11,},
+                    new BoardLayer{ MaterialInfoId = 4,},
+                }
+            });
+            product1.Boards.Add(new Board
+            {
+                BoardCode = BoardType.Shikiriita,
+                Quantity = 3,
+                BoardLayers = new List<BoardLayer>
+                {
+                    new BoardLayer{ MaterialInfoId = 4,},
+                    new BoardLayer{ MaterialInfoId = 12,},
+                    new BoardLayer{ MaterialInfoId = 4,},
+                }
+            });
+            product1.Boards.Add(new Board
+            {
+                BoardCode = BoardType.Tobira,
+                Quantity = 8,
+                BoardLayers = new List<BoardLayer>
+                {
+                    new BoardLayer{ MaterialInfoId = 3,},
+                    new BoardLayer{ MaterialInfoId = 12,},
+                    new BoardLayer{ MaterialInfoId = 4,},
+                }
+            });
+            product1.Boards.Add(new Board
+            {
+                BoardCode = BoardType.Seita,
+                Quantity = 1,
+                BoardLayers = new List<BoardLayer>
+                {
+                    new BoardLayer{ MaterialInfoId = 4,},
+                    new BoardLayer{ MaterialInfoId = 12,},
+                }
+            });
+            product1.Boards.Add(new Board
+            {
+                BoardCode = BoardType.Jiita,
+                Quantity = 1,
+                BoardLayers = new List<BoardLayer>
+                {
+                    new BoardLayer{ MaterialInfoId = 4,},
+                    new BoardLayer{ MaterialInfoId = 12,},
+                    new BoardLayer{ MaterialInfoId = 5,},
+                }
+            });
+            product1.Boards.Add(new Board
+            {
+                BoardCode = BoardType.DaiwaFront,
+                Quantity = 1,
+                BoardLayers = new List<BoardLayer>
+                {
+                    new BoardLayer{ MaterialInfoId = 4,},
+                    new BoardLayer{ MaterialInfoId = 12,},
+                }
+            });
+            product1.Boards.Add(new Board
+            {
+                BoardCode = BoardType.DaiwaBack,
+                Quantity = 1,
+                BoardLayers = new List<BoardLayer>
+                {
+                    new BoardLayer{ MaterialInfoId = 12,},
+                }
+            });
+            product1.Boards.Add(new Board
+            {
+                BoardCode = BoardType.DaiwaLeft,
+                Quantity = 1,
+                BoardLayers = new List<BoardLayer>
+                {
+                    new BoardLayer{ MaterialInfoId = 4,},
+                    new BoardLayer{ MaterialInfoId = 12,},
+                }
+            });
+            product1.Boards.Add(new Board
+            {
+                BoardCode = BoardType.DaiwaRight,
+                Quantity = 1,
+                BoardLayers = new List<BoardLayer>
+                {
+                    new BoardLayer{ MaterialInfoId = 4,},
+                    new BoardLayer{ MaterialInfoId = 12,},
+                }
+            });
+
+            order.Products.Add(product1);
+
+            var orders = new List<Order>();
+            orders.Add(order);
+
+            order = order.Clone();
+            order.CreatedDate = new DateTime(2022, 09, 26);
+            order.Name = "テスト";
+            order.ClientName = "テスト";
+            order.DeliveryDate = new DateTime(2023, 12, 31);
+            order.Remarks = "なし";
+
+            var product2 = new Product();
+            product2.ProductCategoryInfoId = 2;
+            product2.Name = "収納棚　外：メラミン　内：ポリ";
+            product2.Quantity = 1;
+            product2.BodyWidth = 800;
+            product2.BodyDepth = 400;
+            product2.BodyHeight = 1000;
+            product2.FillerL = 0;
+            product2.FillerR = 0;
+            product2.LvlWidth = 40;
+            product2.AnkoPitch = 300;
+            product2.DaiwaHeight = 60;
+            product2.TobiraTenitaSukima = 3;
+            product2.TobiraTenitaHikae = 10;
+            product2.TobiraGawaitaMokuji = 4;
+            product2.TobiraKanMokuji = 3;
+            product2.TobiraShikiriitaMokuji = 0;
+            product2.ShikiriitaGawaitaHikae = 0;
+            product2.TanaitaGawaitaHikae = 10;
+
+            product2.Boards.Add(new Board
+            {
+                BoardCode = BoardType.Tenita,
+                Quantity = 1,
+                BoardLayers = new List<BoardLayer>
+                {
+                    new BoardLayer{ MaterialInfoId = 3,},
+                    new BoardLayer{ MaterialInfoId = 5,},
+                    new BoardLayer{ MaterialInfoId = 13,},
+                    new BoardLayer{ MaterialInfoId = 5,},
+                    new BoardLayer{ MaterialInfoId = 3,},
+                }
+            });
+            product2.Boards.Add(new Board
+            {
+                BoardCode = BoardType.Tenshita,
+                Quantity = 1,
+                BoardLayers = new List<BoardLayer>
+                {
+                    new BoardLayer{ MaterialInfoId = 5,},
+                    new BoardLayer{ MaterialInfoId = 12,},
+                    new BoardLayer{ MaterialInfoId = 4,},
+                }
+            });
+            product2.Boards.Add(new Board
+            {
+                BoardCode = BoardType.Gawaita,
+                Quantity = 2,
+                BoardLayers = new List<BoardLayer>
+                {
+                    new BoardLayer{ MaterialInfoId = 3,},
+                    new BoardLayer{ MaterialInfoId = 5,},
+                    new BoardLayer{ MaterialInfoId = 12,},
+                    new BoardLayer{ MaterialInfoId = 4,},
+                }
+            });
+            product2.Boards.Add(new Board
+            {
+                BoardCode = BoardType.Tanaita,
+                Quantity = 2,
+                BoardLayers = new List<BoardLayer>
+                {
+                    new BoardLayer{ MaterialInfoId = 4,},
+                    new BoardLayer{ MaterialInfoId = 12,},
+                    new BoardLayer{ MaterialInfoId = 4,},
+                }
+            });
+            product2.Boards.Add(new Board
+            {
+                BoardCode = BoardType.Tobira,
+                Quantity = 2,
+                BoardLayers = new List<BoardLayer>
+                {
+                    new BoardLayer{ MaterialInfoId = 3,},
+                    new BoardLayer{ MaterialInfoId = 5,},
+                    new BoardLayer{ MaterialInfoId = 13,},
+                    new BoardLayer{ MaterialInfoId = 5,},
+                    new BoardLayer{ MaterialInfoId = 3,},
+                }
+            });
+            product2.Boards.Add(new Board
+            {
+                BoardCode = BoardType.Seita,
+                Quantity = 1,
+                BoardLayers = new List<BoardLayer>
+                {
+                    new BoardLayer{ MaterialInfoId = 4,},
+                    new BoardLayer{ MaterialInfoId = 12,},
+                }
+            });
+            product2.Boards.Add(new Board
+            {
+                BoardCode = BoardType.Jiita,
+                Quantity = 1,
+                BoardLayers = new List<BoardLayer>
+                {
+                    new BoardLayer{ MaterialInfoId = 4,},
+                    new BoardLayer{ MaterialInfoId = 12,},
+                    new BoardLayer{ MaterialInfoId = 5,},
+                }
+            });
+            product2.Boards.Add(new Board
+            {
+                BoardCode = BoardType.DaiwaFront,
+                Quantity = 1,
+                BoardLayers = new List<BoardLayer>
+                {
+                    new BoardLayer{ MaterialInfoId = 3,},
+                    new BoardLayer{ MaterialInfoId = 15,},
+                }
+            });
+            product2.Boards.Add(new Board
+            {
+                BoardCode = BoardType.DaiwaBack,
+                Quantity = 1,
+                BoardLayers = new List<BoardLayer>
+                {
+                    new BoardLayer{ MaterialInfoId = 15,},
+                }
+            });
+            product2.Boards.Add(new Board
+            {
+                BoardCode = BoardType.DaiwaLeft,
+                Quantity = 1,
+                BoardLayers = new List<BoardLayer>
+                {
+                    new BoardLayer{ MaterialInfoId = 3,},
+                    new BoardLayer{ MaterialInfoId = 15,},
+                }
+            });
+            product2.Boards.Add(new Board
+            {
+                BoardCode = BoardType.DaiwaRight,
+                Quantity = 1,
+                BoardLayers = new List<BoardLayer>
+                {
+                    new BoardLayer{ MaterialInfoId = 3,},
+                    new BoardLayer{ MaterialInfoId = 5,},
+                }
+            });
+
+            order.Products = new List<Product> { product2 };
+
+            orders.Add(order);
+
+            order = order.Clone();
+            order.Products = new List<Product> { product1, product2 };
+            
+            orders.Add(order);
+
+            new MaterialInfoRepository().Insert(materialInfos);
+            new MaterialSizeInfoRepository().Insert(materialSizeInfos);
+            new ProductCategoryInfoRepository().Insert(productCategoryInfos);
+            new OrderRepository().Insert(orders);
         }
 
         private void CreateTables()
@@ -33,13 +589,19 @@ namespace FurnitureApp.Repository.Utilities
                 var sql = $@"
 CREATE TABLE Orders (
     Id integer,
+    CreatedDate date,
     Name text,
+    ClientName text,
+    DeliveryDate date,
     Remarks text,
     PRIMARY KEY(Id AUTOINCREMENT)
 )
 ";
                 c.Execute(sql);
-                
+                sql = $@"
+CREATE INDEX IX_Orders ON Orders(CreatedDate)
+";
+                c.Execute(sql);
                 #endregion
 
 
@@ -48,7 +610,7 @@ CREATE TABLE Orders (
 CREATE TABLE Products (
 Id integer,    
 OrderId integer,
-ProductCategoryCode integer,
+ProductCategoryInfoId integer,
 Name text,
 Quantity integer,
 BodyWidth real,
@@ -56,7 +618,19 @@ BodyDepth real,
 BodyHeight real,
 FillerL real,
 FillerR real,
-TopBoardHikae real,
+LvlWidth real,
+AnkoPitch real,
+DaiwaHeight real,
+TobiraTenitaSukima real,
+TobiraTenitaHikae real,
+TobiraGawaitaMokuji real,
+TobiraKanMokuji real,
+TobiraShikiriitaMokuji real,
+ShikiriitaGawaitaHikae real,
+TanaitaGawaitaHikae real,
+KoguchiPasteUnitPrice real,
+FinishCutUnitPrice real,
+FinishMargin real,
 PRIMARY KEY(Id AUTOINCREMENT)
 )
 ";
@@ -66,7 +640,7 @@ CREATE INDEX IX_Products ON Products(OrderId)
 ";
                 c.Execute(sql);
                 sql = $@"
-CREATE INDEX IX_Products2 ON Products(ProductCategoryCode,Name)
+CREATE INDEX IX_Products2 ON Products(ProductCategoryInfoId,Name)
 ";
                 c.Execute(sql);
 
@@ -79,6 +653,7 @@ CREATE TABLE Boards (
     ProductId integer,
     BoardCode integer,
     Quantity integer,
+    KoguchiKeshouAreaCode integer,
     PRIMARY KEY(Id AUTOINCREMENT)
 )
 ";
@@ -96,6 +671,8 @@ CREATE TABLE BoardLayers (
     BoardId  integer,
     Sequence  integer,
     MaterialInfoId text,
+    PasteUnitPrice int,
+    MokumeDirectionCode int,
     PRIMARY KEY(Id AUTOINCREMENT)
 )
 ";
@@ -106,64 +683,136 @@ CREATE INDEX IX_BoardLayers ON BoardLayers(BoardId)
                 c.Execute(sql);
                 #endregion
 
-                #region StandardBoardCosts
+                #region Costs
                 sql = $@"
-CREATE TABLE StandardBoardCosts (
+CREATE TABLE Costs (
+    Id integer,
+    ProductId integer,
+    Name  text,
+    UnitPrice integer,
+    Quantity integer,
+    TotalAmount integer,
+    PRIMARY KEY(Id AUTOINCREMENT)
+)
+";
+                c.Execute(sql);
+                sql = $@"
+CREATE INDEX IX_Costs ON Costs(ProductId)
+";
+                c.Execute(sql);
+
+                #endregion
+                #region BoardCosts
+                sql = $@"
+CREATE TABLE BoardCosts (
     Id  integer,
-    OrderId integer,
+    ProductId integer,
     Name  text,
     Length real,
     Width real,
     UnitPrice integer,
     Quantity integer,
+    TotalAmount integer,
     PRIMARY KEY(Id AUTOINCREMENT)
 )
 ";
                 c.Execute(sql);
                 sql = $@"
-CREATE INDEX IX_StandardBoardCosts ON StandardBoardCosts(OrderId)
+CREATE INDEX IX_BoardCosts ON BoardCosts(ProductId)
 ";
                 c.Execute(sql);
 
                 #endregion
 
-                #region CuttingCosts
+                #region KoguchiPasteCosts
                 sql = $@"
-CREATE TABLE CuttingCosts (
+CREATE TABLE KoguchiPasteCosts (
     Id  integer,
-    OrderId integer,
-    Name  text,
-    UnitPrice integer,
+    ProductId integer,
+    BoardTypeCode integer,
     Length real,
-    PRIMARY KEY(Id AUTOINCREMENT)
-)
-";
-                c.Execute(sql);
-
-                sql = $@"
-CREATE INDEX IX_CuttingCosts ON CuttingCosts(OrderId)
-";
-                c.Execute(sql);
-                #endregion
-
-                #region Costs
-                sql = $@"
-CREATE TABLE Costs (
-Id  integer,
-    OrderId integer,
-    Name  text,
-    UnitPrice integer,
+    Width real,
+    KoguchiMakeupAreaCode integer,
+    UnitLength real,
     Quantity integer,
+    UnitPrice real,
+    TotalAmount integer,
     PRIMARY KEY(Id AUTOINCREMENT)
 )
 ";
                 c.Execute(sql);
+
                 sql = $@"
-CREATE INDEX IX_Costs ON Costs(OrderId)
+CREATE INDEX IX_KoguchiPasteCosts ON KoguchiPasteCosts(ProductId)
+";
+                c.Execute(sql);
+                #endregion
+
+                #region FinishCutCosts
+                sql = $@"
+CREATE TABLE FinishCutCosts (
+    Id  integer,
+    ProductId integer,
+    BoardTypeCode integer,
+    Length real,
+    Width real,
+    UnitLength real,
+    Quantity integer,
+    UnitPrice real,
+    TotalAmount integer,
+    PRIMARY KEY(Id AUTOINCREMENT)
+)
 ";
                 c.Execute(sql);
 
+                sql = $@"
+CREATE INDEX IX_FinishCutCosts ON FinishCutCosts(ProductId)
+";
+                c.Execute(sql);
                 #endregion
+
+                #region MakeupBoardPasteCosts
+                sql = $@"
+CREATE TABLE MakeupBoardPasteCosts (
+    Id  integer,
+    ProductId integer,
+    BoardTypeCode integer,
+    MaterialName text,
+    Length real,
+    Width real,
+    UnitArea real,
+    Quantity integer,
+    UnitPrice integer,
+    TotalAmount integer,
+    PRIMARY KEY(Id AUTOINCREMENT)
+)
+";
+                c.Execute(sql);
+
+                sql = $@"
+CREATE INDEX IX_MakeupBoardPasteCosts ON MakeupBoardPasteCosts(ProductId)
+";
+                c.Execute(sql);
+                #endregion
+
+                #region ProductFiles
+                sql = $@"
+CREATE TABLE ProductFiles (
+    Id  integer,
+    ProductId integer,
+    DisplayName text,
+    FileName text,
+    PRIMARY KEY(Id AUTOINCREMENT)
+)
+";
+                c.Execute(sql);
+
+                sql = $@"
+CREATE INDEX IX_ProductFiles ON ProductFiles(ProductId)
+";
+                c.Execute(sql);
+                #endregion
+
 
                 #region MaterialInfos
                 sql = $@"
@@ -173,11 +822,12 @@ Name text,
 Sequence integer,
 Thickness real,
 PasteUnitPrice integer,
+CutType integer,
 PRIMARY KEY(Id AUTOINCREMENT)
 )
 ";
                 c.Execute(sql);
-                
+
                 #endregion
 
                 #region MaterialSizeInfos
@@ -205,6 +855,19 @@ CREATE TABLE ProductCategoryInfos (
     Id  integer,
     Name text,
     Sequence  integer,
+    PRIMARY KEY(Id AUTOINCREMENT)
+)
+";
+                c.Execute(sql);
+                #endregion
+
+                #region CostItemInfos
+                sql = $@"
+CREATE TABLE CostItemInfos (
+    Id  integer,
+    Name text,
+    Sequence  integer,
+    UnitPrice integer,
     PRIMARY KEY(Id AUTOINCREMENT)
 )
 ";
