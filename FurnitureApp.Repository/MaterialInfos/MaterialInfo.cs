@@ -51,6 +51,32 @@ namespace FurnitureApp.Repository.MaterialInfos
             get { return pasteUnitPrice; }
             set { pasteUnitPrice = value; }
         }
+        private CutType cutType;
+        /// <summary>
+        /// カットタイプ
+        /// </summary>
+        public CutType CutType
+        {
+            get { return cutType; }
+            set { cutType = value; }
+        }
 
+        public MaterialInfo Clone()
+        {
+            return (MaterialInfo)MemberwiseClone();
+        }
     }
+
+    public enum CutType
+    {
+        /// <summary>
+        /// 通常
+        /// </summary>
+        Normal,
+        /// <summary>
+        /// LVL
+        /// </summary>
+        Lvl,
+    }
+
 }
