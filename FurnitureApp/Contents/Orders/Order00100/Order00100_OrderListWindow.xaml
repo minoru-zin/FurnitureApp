@@ -89,7 +89,7 @@
                         Click="ShowCostItemInfosButton_Click"/>
             </StackPanel>
             <TabControl Grid.Row="1">
-                <TabItem Header="原価見積">
+                <TabItem Header="原価計算">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
@@ -122,11 +122,11 @@
                 </TabItem>
                 <TabItem Header="詳細">
                     <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="200"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <DataGrid Grid.Column="0" 
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="250"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <DataGrid Grid.Row="0" 
                                   ItemsSource="{Binding ProductViewModels}"
                                   Name="ProductDataGrid"
                                   SelectedCellsChanged="ProductDataGrid_SelectedCellsChanged">
@@ -136,9 +136,23 @@
                                 <DataGridTextColumn Header="名称"
                                         Width="*"
                                         Binding="{Binding Name}"/>
+                                <DataGridTextColumn Header="W"
+                                        Binding="{Binding Width}"/>
+                                <DataGridTextColumn Header="D"
+                                        Binding="{Binding Depth}"/>
+                                <DataGridTextColumn Header="H"
+                                        Binding="{Binding Height}"/>
+                                <DataGridTextColumn Header="単価"
+                                        Binding="{Binding UnitPrice}"/>
+                                <DataGridTextColumn Header="数量"
+                                        Binding="{Binding Quantity}"
+                                        Width="35"/>
+                                <DataGridTextColumn Header="合計"
+                                        Binding="{Binding TotalAmount}"
+                                        Width="100"/>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <TabControl Grid.Column="1">
+                        <TabControl Grid.Row="1">
                             <TabItem Header="製品情報">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -259,7 +273,7 @@
                                     </StackPanel>
                                     <Grid Grid.Column="1">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="255"/>
                                             <RowDefinition Height="*"/>
                                         </Grid.RowDefinitions>
                                         <DataGrid Grid.Row="0"
