@@ -19,6 +19,8 @@ namespace FurnitureApp.Models
         {
             cutSizes = this.GetResizedCutSizes(cutSizes.Where(x => x.Length > 0 && x.Width > 0).ToList(), materialSizeInfos);
 
+            //cutSizes.ForEach(x => x.Quantity = x.Quantity * 100); 1台と100台での差を検証
+
             var xmls = this.GetInputXmls(cutSizes, materialSizeInfos);
 
             xmls = this.GetResultXmls(name, xmls);
@@ -215,7 +217,7 @@ namespace FurnitureApp.Models
                     if (sb.UsedNumber == "0") { continue; }
 
                     var unitPrice = Utility.NumberFormatter.GetNullInt(sb.Cost);
-                    var quantity = Utility.NumberFormatter.GetNullInt(sb.UsedNumber);
+                    var quantity = Utility.NumberFormatter.GetNullInt(sb.UsedNumber);　 // /100 1台と100台での差を検証
 
                     var s = new BoardCost
                     {
