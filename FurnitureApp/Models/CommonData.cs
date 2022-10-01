@@ -6,6 +6,7 @@ using FurnitureApp.Repository.ProductCategoryInfos;
 using FurnitureApp.Repository.Utilities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -15,6 +16,9 @@ namespace FurnitureApp.Models
     {
         private static CommonData commonData = new CommonData();
 
+        public static string TempFileDirName { get; } = "TempFiles";
+        public static string ProductFileDirName { get; } = "ProductFiles";
+
         #region メッセージダイアログ
         /// <summary>
         /// メッセージ表示はこれ経由
@@ -23,7 +27,7 @@ namespace FurnitureApp.Models
         #endregion
 
         #region リポジトリ
-        public OrderRepository OrderRepository = new OrderRepository();
+        public OrderRepository OrderRepository = new OrderRepository(ProductFileDirName);
         public MaterialInfoRepository MaterialInfoRepository = new MaterialInfoRepository();
         public MaterialSizeInfoRepository MaterialSizeInfoRepository = new MaterialSizeInfoRepository();
         public ProductCategoryInfoRepository ProductCategoryInfoRepository = new ProductCategoryInfoRepository();
@@ -97,6 +101,15 @@ namespace FurnitureApp.Models
             new SqliteDbCreator().Create();
 
             this.RefreshMasters();
+
+            try
+            {
+                Utility.DirectoryCreator.CreateSafely(TempFileDirName);
+                foreach (var filePath in Directory.GetFiles(TempFileDirName)) { File.Delete(filePath); }
+            }
+            catch (Exception)
+            {
+            }
         }
         public static CommonData GetInstance()
         {

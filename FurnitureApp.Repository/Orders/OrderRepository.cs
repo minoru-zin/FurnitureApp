@@ -10,11 +10,12 @@ namespace FurnitureApp.Repository.Orders
 {
     public class OrderRepository
     {
-        private readonly string productFileDirectoryName = "ProductFiles";
+        private string productFileDirName = "ProductFiles";
 
-        public OrderRepository()
+        public OrderRepository(string productFileDirName)
         {
-            Utility.DirectoryCreator.CreateSafely(this.productFileDirectoryName);
+            this.productFileDirName = productFileDirName;
+            Utility.DirectoryCreator.CreateSafely(this.productFileDirName);
         }
 
         public List<Order> SelectFromCreatedDate(DateTime createdDate)
@@ -129,7 +130,7 @@ namespace FurnitureApp.Repository.Orders
                     {
                         foreach (var file in product.ProductFiles)
                         {
-                            var filePath = Path.Combine(this.productFileDirectoryName, $"{order.Id}", file.FileName);
+                            var filePath = Path.Combine(this.productFileDirName, $"{order.Id}", file.FileName);
                             Utility.DirectoryCreator.CreateSafely(Path.GetDirectoryName(filePath));
                             File.Copy(file.SourceFilePath, filePath);
                         }
@@ -234,7 +235,7 @@ namespace FurnitureApp.Repository.Orders
                     {
                         foreach (var file in product.ProductFiles)
                         {
-                            var filePath = Path.Combine(this.productFileDirectoryName, $"{order.Id}", file.FileName);
+                            var filePath = Path.Combine(this.productFileDirName, $"{order.Id}", file.FileName);
 
                             Utility.DirectoryCreator.CreateSafely(Path.GetDirectoryName(filePath));
 
@@ -281,7 +282,7 @@ namespace FurnitureApp.Repository.Orders
 
                 foreach (var order in orders)
                 {
-                    var dirPath = Path.Combine(this.productFileDirectoryName, $"{order.Id}");
+                    var dirPath = Path.Combine(this.productFileDirName, $"{order.Id}");
 
                     if (!Directory.Exists(dirPath)) { continue; }
 
