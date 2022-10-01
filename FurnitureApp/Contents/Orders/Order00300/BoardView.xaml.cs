@@ -43,6 +43,8 @@ namespace FurnitureApp.Contents.Orders.Order00300
             this.BoardTypeTextBlock.Text = this.cd.BoardTypes.First(x => x.Code == boardType).DisplayName;
             this.KoguchiKeshouAreas = this.cd.KoguchiKeshouAreas;
             this.MokumeDirectionTypes = this.cd.MokumeDirectionTypes;
+
+            this.KoguchiKeshouAreaComboBox.SelectedValue = KoguchiMakeupArea.Nashi;
         }
         public BoardView()
         {
