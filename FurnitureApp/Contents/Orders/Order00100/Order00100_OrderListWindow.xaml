@@ -53,13 +53,31 @@
                                         Binding="{Binding CreatedDate, StringFormat=yyyy/MM/dd}"/>
                     <DataGridTextColumn Header="物件名"
                                         Binding="{Binding Name}"
-                                        Width="*"/>
+                                        Width="*">
+                            <DataGridTextColumn.CellStyle>
+                                <Style TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+                                    <Setter Property="ToolTip" Value="{Binding Name}"/>
+                                </Style>
+                            </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn>
                     <DataGridTextColumn Header="提出先"
-                                        Binding="{Binding ClientName}"/>
+                                        Binding="{Binding ClientName}">
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+                                <Setter Property="ToolTip" Value="{Binding ClientName}"/>
+                            </Style>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
                     <DataGridTextColumn Header="納品日"
                                         Binding="{Binding DeliveryDate, StringFormat=yyyy/MM/dd}"/>
                     <DataGridTextColumn Header="備考"
-                                        Binding="{Binding Remarks}"/>
+                                        Binding="{Binding Remarks}">
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+                                <Setter Property="ToolTip" Value="{Binding Remarks}"/>
+                            </Style>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
