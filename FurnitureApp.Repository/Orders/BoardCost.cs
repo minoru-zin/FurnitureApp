@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FurnitureApp.Repository.Orders
 {
-    public class StandardBoardCost
+    public class BoardCost
     {
         private int? id;
         /// <summary>
@@ -13,8 +13,18 @@ namespace FurnitureApp.Repository.Orders
         public int? Id
         {
             get { return id; }
-            set { Id = value; }
+            set { id = value; }
         }
+        private int? productId;
+        /// <summary>
+        /// ProductId
+        /// </summary>
+        public int? ProductId
+        {
+            get { return productId; }
+            set { productId = value; }
+        }
+
         private string name;
         /// <summary>
         /// 名称
@@ -22,7 +32,7 @@ namespace FurnitureApp.Repository.Orders
         public string Name
         {
             get { return name; }
-            set { Name = value; }
+            set { name = value; }
         }
         private double? length;
         /// <summary>
@@ -31,7 +41,7 @@ namespace FurnitureApp.Repository.Orders
         public double? Length
         {
             get { return length; }
-            set { Length = value; }
+            set { length = value; }
         }
         private double? width;
         /// <summary>
@@ -40,7 +50,7 @@ namespace FurnitureApp.Repository.Orders
         public double? Width
         {
             get { return width; }
-            set { Width = value; }
+            set { width = value; }
         }
         private int? unitPrice;
         /// <summary>
@@ -49,7 +59,7 @@ namespace FurnitureApp.Repository.Orders
         public int? UnitPrice
         {
             get { return unitPrice; }
-            set { UnitPrice = value; }
+            set { unitPrice = value; }
         }
         private int? quantity;
         /// <summary>
@@ -58,8 +68,21 @@ namespace FurnitureApp.Repository.Orders
         public int? Quantity
         {
             get { return quantity; }
-            set { Quantity = value; }
+            set { quantity = value; }
+        }
+        private int? totalAmount;
+        /// <summary>
+        /// 総額
+        /// </summary>
+        public int? TotalAmount
+        {
+            get { return totalAmount; }
+            set { totalAmount = value; }
         }
 
+        public BoardCost Clone()
+        {
+            return (BoardCost)MemberwiseClone();
+        }
     }
 }

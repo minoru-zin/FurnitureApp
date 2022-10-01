@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FurnitureApp.Repository.Orders
 {
-    public class Cost
+    public class MakeupBoardPasteCost
     {
         private int? id;
         /// <summary>
@@ -25,15 +25,44 @@ namespace FurnitureApp.Repository.Orders
             set { productId = value; }
         }
 
-        private string name;
+        private BoardType? boardTypeCode;
         /// <summary>
-        /// 名称
+        /// 板タイプ
         /// </summary>
-        public string Name
+        public BoardType? BoardTypeCode
         {
-            get { return name; }
-            set { name = value; }
+            get { return boardTypeCode; }
+            set { boardTypeCode = value; }
         }
+
+        private double? length;
+        /// <summary>
+        /// 縦
+        /// </summary>
+        public double? Length
+        {
+            get { return length; }
+            set { length = value; }
+        }
+        private double? width;
+        /// <summary>
+        /// 横
+        /// </summary>
+        public double? Width
+        {
+            get { return width; }
+            set { width = value; }
+        }
+        private double? unitLength;
+        /// <summary>
+        /// 一個あたりの長さ
+        /// </summary>
+        public double? UnitLength
+        {
+            get { return unitLength; }
+            set { unitLength = value; }
+        }
+
         private int? unitPrice;
         /// <summary>
         /// 単価
@@ -62,9 +91,9 @@ namespace FurnitureApp.Repository.Orders
             set { totalAmount = value; }
         }
 
-        public Cost Clone()
+        public MakeupBoardPasteCost Clone()
         {
-            return (Cost)MemberwiseClone();
+            return (MakeupBoardPasteCost)MemberwiseClone();
         }
     }
 }

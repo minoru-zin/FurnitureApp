@@ -15,14 +15,14 @@ namespace FurnitureApp.Repository.Orders
             get { return id; }
             set { id = value; }
         }
-        private int? partId;
+        private int? boardId;
         /// <summary>
         /// 部材Id
         /// </summary>
-        public int? PartId
+        public int? BoardId
         {
-            get { return partId; }
-            set { partId = value; }
+            get { return boardId; }
+            set { boardId = value; }
         }
         private int? sequence;
         /// <summary>
@@ -42,6 +42,38 @@ namespace FurnitureApp.Repository.Orders
             get { return materialInfoId; }
             set { materialInfoId = value; }
         }
+        private int? pasteUnitPrice;
+        /// <summary>
+        /// 貼り単価
+        /// </summary>
+        public int? PasteUnitPrice
+        {
+            get { return pasteUnitPrice; }
+            set { pasteUnitPrice = value; }
+        }
+        private MokumeDirectionType mokumeDirectionCode;
+        /// <summary>
+        /// 木目方向
+        /// </summary>
+        public MokumeDirectionType MokumeDirectionCode
+        {
+            get { return mokumeDirectionCode; }
+            set { mokumeDirectionCode = value; }
+        }
 
+
+        public BoardLayer Clone()
+        {
+            return (BoardLayer)MemberwiseClone();
+        }
+    }
+    /// <summary>
+    /// 木目方向
+    /// </summary>
+    public enum MokumeDirectionType
+    {
+        Nashi,
+        Length,
+        Width,
     }
 }

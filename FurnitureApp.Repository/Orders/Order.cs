@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace FurnitureApp.Repository.Orders
@@ -15,15 +16,45 @@ namespace FurnitureApp.Repository.Orders
             get { return id; }
             set { id = value; }
         }
+        private DateTime? createdDate;
+        /// <summary>
+        /// 作成日
+        /// </summary>
+        public DateTime? CreatedDate
+        {
+            get { return createdDate; }
+            set { createdDate = value; }
+        }
         private string name;
         /// <summary>
-        /// 名称
+        /// 物件名
         /// </summary>
         public string Name
         {
             get { return name; }
             set { name = value; }
         }
+        private string clientName;
+        /// <summary>
+        /// 提出先
+        /// </summary>
+        public string ClientName
+        {
+            get { return clientName; }
+            set { clientName = value; }
+        }
+
+        private DateTime? deliveryDate;
+        /// <summary>
+        /// 納品日
+        /// </summary>
+        public DateTime? DeliveryDate
+        {
+            get { return deliveryDate; }
+            set { deliveryDate = value; }
+        }
+
+        
         private string remarks;
         /// <summary>
         /// 備考
@@ -37,17 +68,13 @@ namespace FurnitureApp.Repository.Orders
         /// 製品リスト
         /// </summary>
         public List<Product> Products { get; set; } = new List<Product>();
-        /// <summary>
-        /// 規格板費用リスト
-        /// </summary>
-        public List<StandardBoardCost> StandardPlateCosts { get; set; } = new List<StandardBoardCost>();
-        /// <summary>
-        /// カット費用リスト
-        /// </summary>
-        public List<CuttingCost> CuttingCosts { get; set; } = new List<CuttingCost>();
-        /// <summary>
-        /// 費用リスト
-        /// </summary>
-        public List<Cost> Costs { get; set; } = new List<Cost>();
+        
+        public Order Clone()
+        {
+            var clone = (Order)MemberwiseClone();
+            clone.Products = this.Products.Select(x => x.Clone()).ToList();
+            
+            return clone;
+        }
     }
 }
