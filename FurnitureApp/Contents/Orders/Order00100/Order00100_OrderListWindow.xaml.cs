@@ -46,7 +46,7 @@ namespace FurnitureApp.Contents.Orders.Order00100
         public ObservableCollection<DisplayFinishCutCostViewModel> FinishCutCostViewModels { get; } = new ObservableCollection<DisplayFinishCutCostViewModel>();
         public ObservableCollection<DisplayMakeupBoardPasteCostViewModel> MakeupBoardPasteCostViewModels { get; } = new ObservableCollection<DisplayMakeupBoardPasteCostViewModel>();
 
-        
+
         private Dictionary<int?, ProductCategoryInfo> productCateogryInfoDict;
         public Order00100_OrderListWindow()
         {
@@ -76,6 +76,18 @@ namespace FurnitureApp.Contents.Orders.Order00100
             {
                 this.OrderViewModels.Add(new OrderViewModel(order));
             }
+
+            this.ProductViewModels.Clear();
+            this.BoardViewModels.Clear();
+            this.BoardLayerViewModels.Clear();
+            this.CostViewModels.Clear();
+            this.ProductFileViewModels.Clear();
+            this.BoardViewModels2.Clear();
+            this.BoardCostViewModels.Clear();
+            this.KoguchiPasteCostViewModels.Clear();
+            this.FinishCutCostViewModels.Clear();
+            this.MakeupBoardPasteCostViewModels.Clear();
+
         }
         private void RefreshOrdersButton_Click(object sender, RoutedEventArgs e)
         {
@@ -243,10 +255,10 @@ namespace FurnitureApp.Contents.Orders.Order00100
 
                 if (vm == null) { return; }
 
-                var orderId =  (this.ProductDataGrid.SelectedItem as ProductViewModel).Model.OrderId;
+                var orderId = (this.ProductDataGrid.SelectedItem as ProductViewModel).Model.OrderId;
                 var sourceFilePath = this.cd.OrderRepository.GetProductFilePath(orderId, vm.Model.FileName);
                 var destFilePath = Path.Combine(this.tempFileDirName, vm.Model.FileName);
-                
+
                 Utility.DirectoryCreator.CreateSafely(Path.GetDirectoryName(destFilePath));
 
                 File.Copy(sourceFilePath, destFilePath, true);
