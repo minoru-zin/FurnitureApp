@@ -60,5 +60,9 @@ namespace FurnitureApp.Repository.MaterialSizeInfos
             get { return unitPrice; }
             set { unitPrice = value; }
         }
+        public MaterialSizeInfo Clone()
+        {
+            return (MaterialSizeInfo)MemberwiseClone();
+        }
     }
 }
