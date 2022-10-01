@@ -63,6 +63,16 @@ namespace FurnitureApp.Test
             };
 
             Utility.XmlWriter.WriteXml(xml, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "test.xml"), "UTF-8");
+
+        }
+        [Test]
+        public void ‰æ‘œ‚ðŠJ‚­()
+        {
+            var app = new ProcessStartInfo();
+            app.FileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "est.csv");
+            app.UseShellExecute = true;
+
+            Process.Start(app);
         }
     }
 }

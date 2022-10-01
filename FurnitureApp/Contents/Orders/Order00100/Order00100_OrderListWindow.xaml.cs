@@ -11,6 +11,8 @@ using FurnitureApp.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -20,7 +22,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace FurnitureApp.Contents.Orders.Order00100
 {
@@ -31,7 +32,7 @@ namespace FurnitureApp.Contents.Orders.Order00100
     {
         private NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private CommonData cd = CommonData.GetInstance();
-
+        private readonly string tempFileDirName = "TempFiles";
         public ObservableCollection<OrderViewModel> OrderViewModels { get; } = new ObservableCollection<OrderViewModel>();
         public ObservableCollection<ProductViewModel> ProductViewModels { get; } = new ObservableCollection<ProductViewModel>();
         public ObservableCollection<DisplayBoardViewModel> BoardViewModels { get; } = new ObservableCollection<DisplayBoardViewModel>();
@@ -242,7 +243,19 @@ namespace FurnitureApp.Contents.Orders.Order00100
 
                 if (vm == null) { return; }
 
-                // TODO 画像開く
+                var orderId =  (this.ProductDataGrid.SelectedItem as ProductViewModel).Model.OrderId;
+                var sourceFilePath = this.cd.OrderRepository.GetProductFilePath(orderId, vm.Model.FileName);
+                var destFilePath = Path.Combine(this.tempFileDirName, vm.Model.FileName);
+                
+                Utility.DirectoryCreator.CreateSafely(Path.GetDirectoryName(destFilePath));
+
+                File.Copy(sourceFilePath, destFilePath, true);
+
+                var app = new ProcessStartInfo();
+                app.FileName = destFilePath;
+                app.UseShellExecute = true;
+
+                Process.Start(app);
             }
             catch (Exception ex)
             {
@@ -311,8 +324,18 @@ namespace FurnitureApp.Contents.Orders.Order00100
             }
         }
 
+
         #endregion
 
-        
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            try
+            {
+                foreach (var filePath in Directory.GetFiles(this.tempFileDirName)) { File.Delete(filePath); }
+            }
+            catch (Exception)
+            {
+            }
+        }
     }
 }

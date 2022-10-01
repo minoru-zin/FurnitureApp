@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:FurnitureApp.Contents.Orders.Order00100"
         mc:Ignorable="d"
         Title="受注一覧 Order00100_OrderListWindow" Height="800" Width="1200"
-        WindowState="Maximized">
+        WindowState="Maximized"
+        Closed="Window_Closed">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>

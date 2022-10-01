@@ -10,12 +10,11 @@ namespace FurnitureApp.Repository.Orders
 {
     public class OrderRepository
     {
-        private string productFileDirName = "ProductFiles";
+        public string ProductFileDirName { get; } = "ProductFiles";
 
-        public OrderRepository(string productFileDirName)
+        public OrderRepository()
         {
-            this.productFileDirName = productFileDirName;
-            Utility.DirectoryCreator.CreateSafely(this.productFileDirName);
+            Utility.DirectoryCreator.CreateSafely(this.ProductFileDirName);
         }
 
         public List<Order> SelectFromCreatedDate(DateTime createdDate)
@@ -130,7 +129,7 @@ namespace FurnitureApp.Repository.Orders
                     {
                         foreach (var file in product.ProductFiles)
                         {
-                            var filePath = Path.Combine(this.productFileDirName, $"{order.Id}", file.FileName);
+                            var filePath = this.GetProductFilePath(order.Id, file.FileName);
                             Utility.DirectoryCreator.CreateSafely(Path.GetDirectoryName(filePath));
                             File.Copy(file.SourceFilePath, filePath);
                         }
@@ -235,7 +234,7 @@ namespace FurnitureApp.Repository.Orders
                     {
                         foreach (var file in product.ProductFiles)
                         {
-                            var filePath = Path.Combine(this.productFileDirName, $"{order.Id}", file.FileName);
+                            var filePath = this.GetProductFilePath(order.Id, file.FileName);
 
                             Utility.DirectoryCreator.CreateSafely(Path.GetDirectoryName(filePath));
 
@@ -282,7 +281,7 @@ namespace FurnitureApp.Repository.Orders
 
                 foreach (var order in orders)
                 {
-                    var dirPath = Path.Combine(this.productFileDirName, $"{order.Id}");
+                    var dirPath = this.GetProductFileDirPath(order.Id);
 
                     if (!Directory.Exists(dirPath)) { continue; }
 
@@ -323,6 +322,15 @@ namespace FurnitureApp.Repository.Orders
             });
 
             return products;
+        }
+
+        public string GetProductFilePath(int? orderId, string fileName)
+        {
+            return Path.Combine(this.GetProductFileDirPath(orderId), fileName);
+        }
+        private string GetProductFileDirPath (int? orderId)
+        {
+            return Path.Combine(this.ProductFileDirName, $"{orderId}");
         }
     }
 }
