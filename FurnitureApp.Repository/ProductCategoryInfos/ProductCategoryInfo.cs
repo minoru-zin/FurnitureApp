@@ -33,5 +33,9 @@ namespace FurnitureApp.Repository.ProductCategoryInfos
             get { return sequence; }
             set { sequence = value; }
         }
+        public ProductCategoryInfo Clone()
+        {
+            return (ProductCategoryInfo)MemberwiseClone();
+        }
     }
 }
