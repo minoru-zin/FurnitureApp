@@ -108,13 +108,13 @@
                                         Binding="{Binding Depth}"/>
                                 <DataGridTextColumn Header="H"
                                         Binding="{Binding Height}"/>
-                                <DataGridTextColumn Header="単価"
-                                        Binding="{Binding UnitPrice}"/>
                                 <DataGridTextColumn Header="数量"
                                         Binding="{Binding Quantity}"
                                         Width="35"/>
+                                <DataGridTextColumn Header="単価"
+                                        Binding="{Binding UnitPriceText}"/>
                                 <DataGridTextColumn Header="合計"
-                                        Binding="{Binding TotalAmount}"
+                                        Binding="{Binding TotalAmountText}"
                                         Width="100"/>
                             </DataGrid.Columns>
                         </DataGrid>
@@ -142,13 +142,13 @@
                                         Binding="{Binding Depth}"/>
                                 <DataGridTextColumn Header="H"
                                         Binding="{Binding Height}"/>
-                                <DataGridTextColumn Header="単価"
-                                        Binding="{Binding UnitPrice}"/>
                                 <DataGridTextColumn Header="数量"
                                         Binding="{Binding Quantity}"
                                         Width="35"/>
+                                <DataGridTextColumn Header="単価"
+                                        Binding="{Binding UnitPriceText}"/>
                                 <DataGridTextColumn Header="合計"
-                                        Binding="{Binding TotalAmount}"
+                                        Binding="{Binding TotalAmountText}"
                                         Width="100"/>
                             </DataGrid.Columns>
                         </DataGrid>
@@ -293,7 +293,7 @@
                                                                     Binding="{Binding Quantity}"/>
                                                 <DataGridTextColumn Header="木口貼り箇所"
                                                                     Binding="{Binding KoguchiPasteArea}"/>
-                                                
+
                                             </DataGrid.Columns>
                                         </DataGrid>
                                         <DataGrid Grid.Row="1"

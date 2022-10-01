@@ -13,8 +13,10 @@ namespace FurnitureApp.Contents.Orders.Order00200
         public double? Depth { get; }
         public double? Height { get; }
         public int? UnitPrice { get; }
+        public string UnitPriceText { get; }
         public int? Quantity { get; }
         public int? TotalAmount { get; }
+        public string TotalAmountText { get; }
         public Product Model { get; }
 
         public ProductViewModel(Product product, string productCategoryName)
@@ -26,8 +28,10 @@ namespace FurnitureApp.Contents.Orders.Order00200
             this.Depth = product.BodyDepth;
             this.Height = product.BodyHeight;
             this.UnitPrice = product.GetUnitPrice();
+            this.UnitPriceText = $"{this.UnitPrice:#,0}";
             this.Quantity = product.Quantity;
             this.TotalAmount = this.UnitPrice * this.Quantity;
+            this.TotalAmountText = $"{this.UnitPrice * this.Quantity:#,0}";
         }
     }
 }
