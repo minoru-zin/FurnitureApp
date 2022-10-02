@@ -29,10 +29,12 @@
                                     Width="*"/>
                 <DataGridTextColumn Header="縦"
                                     Binding="{Binding Length}"
-                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
+                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"
+                                    MinWidth="60"/>
                 <DataGridTextColumn Header="横"
                                     Binding="{Binding Width}"
-                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
+                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"
+                                    MinWidth="60"/>
                 <DataGridTextColumn Header="単価"
                                     Binding="{Binding UnitPrice}"
                                     Width="70"

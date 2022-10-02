@@ -12,7 +12,7 @@ namespace FurnitureApp.Contents.Masters.Master00200
         public string Name { get; }
         public double? Length { get; }
         public double? Width { get; }
-        public int? UnitPrice { get; }
+        public string UnitPrice { get; }
         public MaterialSizeInfo Model { get; }
         public MaterialSizeInfoViewModel(MaterialSizeInfo m, Dictionary<int?, MaterialInfo> materialDict)
         {
@@ -21,7 +21,7 @@ namespace FurnitureApp.Contents.Masters.Master00200
             this.Name = m.Name;
             this.Length = m.Length;
             this.Width = m.Width;
-            this.UnitPrice = m.UnitPrice;
+            this.UnitPrice = $"{m.UnitPrice:C}";
         }
     }
 }
