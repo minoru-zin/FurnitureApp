@@ -39,7 +39,7 @@
                               DisplayMemberPath="DisplayName"
                               SelectedValuePath="Code"
                               x:Name="ProductCategoryInfoComboBox"
-                              Width="150"
+                              Width="200"
                               Height="25"/>
                     <Button Content="参照"
                             Name="SelectProductButton"

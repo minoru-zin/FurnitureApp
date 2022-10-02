@@ -185,5 +185,25 @@ namespace FurnitureApp.Contents.Orders.Order00300
 
             return board;
         }
+
+        private void CountUpButton_Click(object sender, RoutedEventArgs e)
+        {
+            var textBox = this.QuantityTextBox;
+            var number = Utility.NumberFormatter.GetNullInt(textBox.Text) ?? 0;
+            if (number < 0) { number = 0; }
+            textBox.Text = $"{number + 1}";
+        }
+
+        private void CountDownButton_Click(object sender, RoutedEventArgs e)
+        {
+            var textBox = this.QuantityTextBox;
+            var number = Utility.NumberFormatter.GetNullInt(textBox.Text) ?? 0;
+            if (number <= 0)
+            {
+                textBox.Text = "0";
+                return;
+            }
+            textBox.Text = $"{number - 1}";
+        }
     }
 }

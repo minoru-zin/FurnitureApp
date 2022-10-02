@@ -11,55 +11,99 @@
     <Grid Width="250"
           Height="205">
         <Grid.RowDefinitions>
-            <RowDefinition Height="22"/>
-            <RowDefinition Height="25"/>
+            <RowDefinition Height="47"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="25"/>
         </Grid.ColumnDefinitions>
-        <DockPanel Grid.Row="0"
-                    Grid.ColumnSpan="2">
-            <StackPanel DockPanel.Dock="Left"
-                        Orientation="Horizontal">
-                <TextBlock x:Name="BoardTypeTextBlock"
+        <Grid Grid.Row="0"
+              Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="160"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="BoardTypeTextBlock"
                            FontSize="15"
                            Width="73"
                            FontWeight="Bold"/>
-                <StackPanel Orientation="Horizontal"
+                    <StackPanel Orientation="Horizontal"
                             VerticalAlignment="Center">
-                    <TextBlock Text="厚さ"/>
-                    <TextBlock Name="SumThicknessTextBlock"
+                        <TextBlock Text="厚さ"/>
+                        <TextBlock Name="SumThicknessTextBlock"
                            Width="25"
                            TextAlignment="Right"/>
-                    <TextBlock Text="mm"/>
+                        <TextBlock Text="mm"/>
+                    </StackPanel>
                 </StackPanel>
-                
-            </StackPanel>
-            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                <TextBox Name="QuantityTextBox"
-                         Width="30"
-                         VerticalAlignment="Center"
-                         TextChanged="QuantityTextBox_TextChanged"/>
-                <TextBlock Text="枚"
-                           Margin="0 0 25 0"
-                           VerticalAlignment="Center"/>
-            </StackPanel>
-            
-        </DockPanel>
-        <DockPanel Grid.Row="1"
+                <DockPanel Grid.Row="1"
                    Grid.Column="0">
-            <TextBlock Text="木口化粧箇所"
+                    <TextBlock Text="木口化粧"
                        VerticalAlignment="Center"
                    DockPanel.Dock="Left"/>
-            <ComboBox ItemsSource="{Binding KoguchiKeshouAreas}"
+                    <ComboBox ItemsSource="{Binding KoguchiKeshouAreas}"
                       FontSize="13"
                       DisplayMemberPath="DisplayName"
                       SelectedValuePath="Code"
-                      x:Name="KoguchiKeshouAreaComboBox"/>
-        </DockPanel>
-        <DataGrid Grid.Row="2"
+                      x:Name="KoguchiKeshouAreaComboBox"
+                      Width="112"
+                      HorizontalAlignment="Left"/>
+                </DockPanel>
+            </StackPanel>
+            <StackPanel Grid.Column="1"
+                        Orientation="Horizontal">
+                <TextBox Name="QuantityTextBox"
+                         FontSize="30"
+                         Width="40"
+                         TextAlignment="Center"
+                         Height="45"
+                         Margin="0 0 1 0"
+                         VerticalAlignment="Center"
+                         TextChanged="QuantityTextBox_TextChanged"
+                         Style="{StaticResource NumberTextBox}"/>
+                <StackPanel>
+                    <Button FontSize="20"
+                            Margin="0"
+                            Padding="0"
+                            Height="23"
+                            Width="20"
+                            Name="CountUpButton"
+                            Click="CountUpButton_Click">
+                        <Button.Content>
+                            <StackPanel VerticalAlignment="Bottom"
+                                        >
+                                <TextBlock Text="+"
+                                       Margin="0"/>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                    <Button FontSize="20"
+                            Margin="0"
+                            Padding="0"
+                            Height="23"
+                            Width="20"
+                            Name="CountDownButton"
+                            Click="CountDownButton_Click">
+                        <Button.Content>
+                            <StackPanel VerticalAlignment="Bottom"
+                                        >
+                                <TextBlock Text="-"
+                                       Margin="0"/>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                </StackPanel>
+                <TextBlock Text="枚"
+                           Margin="0 0 25 0"
+                           FontSize="25"
+                           VerticalAlignment="Center"/>
+
+            </StackPanel>
+        </Grid>
+        <DataGrid Grid.Row="1"
                   ItemsSource="{Binding ViewModels}"
                   Name="BoardLayerDataGrid">
             <DataGrid.Columns>
@@ -84,7 +128,8 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBox Text="{Binding PasteUnitPrice, UpdateSourceTrigger=PropertyChanged}"
-                                     Height="23"/>
+                                     Height="23"
+                                     Style="{StaticResource NumberTextBox}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -119,6 +164,6 @@
                     Content="↓"
                     Click="DownButton_Click"/>
         </StackPanel>
-        
+
     </Grid>
 </UserControl>
