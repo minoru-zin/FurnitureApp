@@ -32,6 +32,28 @@ namespace FurnitureApp.Contents.Orders.Order00500
             this.ProductFile = productFile.Clone();
             this.SetModelToControls();
         }
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Enter:
+                    (FocusManager.GetFocusedElement(System.Windows.Window.GetWindow(this)) as System.Windows.FrameworkElement).MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+                    break;
+            }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.DisplayNameTextBox.Focus();
+        }
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            var textBox = e.OriginalSource as System.Windows.Controls.TextBox;
+
+            if (textBox == null) { return; }
+
+            textBox.SelectAll();
+        }
         private void SetModelToControls()
         {
             this.DisplayNameTextBox.Text = this.ProductFile.DisplayName;
@@ -54,6 +76,10 @@ namespace FurnitureApp.Contents.Orders.Order00500
             if(this.cd.DialogService.TrySelectFilePath(this, out string filePath, Environment.GetFolderPath(Environment.SpecialFolder.Desktop)))
             {
                 this.SourceFilePathTextBox.Text = filePath;
+                if (string.IsNullOrEmpty(this.DisplayNameTextBox.Text))
+                {
+                    this.DisplayNameTextBox.Text = Path.GetFileNameWithoutExtension(filePath);
+                }
             }
         }
 
