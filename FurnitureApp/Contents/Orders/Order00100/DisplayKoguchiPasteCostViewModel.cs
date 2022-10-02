@@ -16,7 +16,7 @@ namespace FurnitureApp.Contents.Orders.Order00100
         public double? UnitLength { get; }
         public double? UnitPrice { get; }
         public int? Quantity { get; }
-        public int? TotalAmount { get; }
+        public string TotalAmount { get; }
         private CommonData cd = CommonData.GetInstance();
         public DisplayKoguchiPasteCostViewModel(KoguchiPasteCost k)
         {
@@ -27,7 +27,7 @@ namespace FurnitureApp.Contents.Orders.Order00100
             this.UnitLength = k.UnitLength;
             this.UnitPrice = k.UnitPrice;
             this.Quantity = k.Quantity;
-            this.TotalAmount = k.TotalAmount;
+            this.TotalAmount = $"{k.TotalAmount:C}";
         }
     }
 }

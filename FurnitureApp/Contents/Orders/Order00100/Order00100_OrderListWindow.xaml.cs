@@ -32,6 +32,8 @@ namespace FurnitureApp.Contents.Orders.Order00100
     {
         private NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private CommonData cd = CommonData.GetInstance();
+        private ControlFormatter cf = new ControlFormatter();
+
         private readonly string tempFileDirName = "TempFiles";
         public ObservableCollection<OrderViewModel> OrderViewModels { get; } = new ObservableCollection<OrderViewModel>();
         public ObservableCollection<ProductViewModel> ProductViewModels { get; } = new ObservableCollection<ProductViewModel>();
@@ -52,23 +54,52 @@ namespace FurnitureApp.Contents.Orders.Order00100
         {
             InitializeComponent();
             this.DataContext = this;
-            this.CreatedDateTextBox.Text = $"{DateTime.Now.Date.AddMonths(-6):d}";
+            this.CreatedDateFTextBox.Text = $"{DateTime.Now.Date.AddMonths(-6):d}";
+            this.CreatedDateTTextBox.Text = $"{DateTime.Now:d}";
             this.productCateogryInfoDict = this.cd.ProductCategoryInfos.ToDictionary(x => x.Id);
 
             this.DisplayOrders();
         }
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Enter:
+                    (FocusManager.GetFocusedElement(System.Windows.Window.GetWindow(this)) as System.Windows.FrameworkElement).MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+                    break;
+            }
+        }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+        }
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            var textBox = e.OriginalSource as System.Windows.Controls.TextBox;
+
+            if (textBox == null) { return; }
+
+            textBox.SelectAll();
+        }
+
+        #region 作成日
+        private void CreatedDateFTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            this.cf.SetDates(this.CreatedDateFTextBox, this.CreatedDateTTextBox);
+        }
+        #endregion
         private void DisplayOrders()
         {
-            var createdDate = Utility.DateTimeFormatter.GetDateTime(this.CreatedDateTextBox.Text);
+            var createdDateF = Utility.DateTimeFormatter.GetDateTime(this.CreatedDateFTextBox.Text);
+            var createdDateT = Utility.DateTimeFormatter.GetDateTime(this.CreatedDateTTextBox.Text);
 
-            if (createdDate == null)
+            if (createdDateF == null || createdDateT == null)
             {
                 this.cd.DialogService.ShowMessage("作成日を入力してください");
                 return;
             }
 
-            var orders = this.cd.OrderRepository.SelectFromCreatedDate((DateTime)createdDate);
+            var orders = this.cd.OrderRepository.SelectFromCreatedDate((DateTime)createdDateF , (DateTime)createdDateT).OrderByDescending(x => x.CreatedDate).ToList();
 
             this.OrderViewModels.Clear();
 
@@ -349,5 +380,7 @@ namespace FurnitureApp.Contents.Orders.Order00100
             {
             }
         }
+
+        
     }
 }

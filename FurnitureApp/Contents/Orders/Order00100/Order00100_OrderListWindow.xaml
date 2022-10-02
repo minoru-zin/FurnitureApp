@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="受注一覧 Order00100_OrderListWindow" Height="800" Width="1200"
         WindowState="Maximized"
+        KeyDown="Window_KeyDown"
+        Loaded="Window_Loaded"
         Closed="Window_Closed">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
@@ -21,13 +23,24 @@
             <DockPanel Grid.Row="0">
                 <StackPanel Orientation="Horizontal"
                             DockPanel.Dock="Left">
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type TextBox}"
+                           BasedOn="{StaticResource NumberTextBox}">
+                            <EventSetter Event="GotFocus" Handler="TextBox_GotFocus"/>
+                        </Style>
+                    </StackPanel.Resources>
                     <Label Content="作成日"
                            VerticalAlignment="Center"/>
-                    <TextBox Name="CreatedDateTextBox"
+                    <TextBox Name="CreatedDateFTextBox"
                              Width="100"
-                             Height="25"/>
-                    <Label Content="以降"
-                           VerticalAlignment="Center"/>
+                             Height="25"
+                             LostFocus="CreatedDateFTextBox_LostFocus"/>
+                    <TextBlock Text="～"
+                               VerticalAlignment="Center"/>
+                    <TextBox Name="CreatedDateTTextBox"
+                             Width="100"
+                             Height="25"
+                             LostFocus="CreatedDateFTextBox_LostFocus"/>
                     <Button Content="表示"
                             Name="RefreshOrdersButton"
                             Click="RefreshOrdersButton_Click"
@@ -50,18 +63,20 @@
                       SelectedCellsChanged="OrderDataGrid_SelectedCellsChanged">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="作成日"
-                                        Binding="{Binding CreatedDate, StringFormat=yyyy/MM/dd}"/>
+                                        Binding="{Binding CreatedDate, StringFormat=yyyy/MM/dd}"
+                                        Width="70"/>
                     <DataGridTextColumn Header="物件名"
                                         Binding="{Binding Name}"
                                         Width="*">
-                            <DataGridTextColumn.CellStyle>
-                                <Style TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
-                                    <Setter Property="ToolTip" Value="{Binding Name}"/>
-                                </Style>
-                            </DataGridTextColumn.CellStyle>
-                        </DataGridTextColumn>
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+                                <Setter Property="ToolTip" Value="{Binding Name}"/>
+                            </Style>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
                     <DataGridTextColumn Header="提出先"
-                                        Binding="{Binding ClientName}">
+                                        Binding="{Binding ClientName}"
+                                        Width="150">
                         <DataGridTextColumn.CellStyle>
                             <Style TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
                                 <Setter Property="ToolTip" Value="{Binding ClientName}"/>
@@ -69,8 +84,10 @@
                         </DataGridTextColumn.CellStyle>
                     </DataGridTextColumn>
                     <DataGridTextColumn Header="納品日"
+                                        Width="70"
                                         Binding="{Binding DeliveryDate, StringFormat=yyyy/MM/dd}"/>
                     <DataGridTextColumn Header="備考"
+                                        Width="80"
                                         Binding="{Binding Remarks}">
                         <DataGridTextColumn.CellStyle>
                             <Style TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
@@ -121,18 +138,24 @@
                                         Width="*"
                                         Binding="{Binding Name}"/>
                                 <DataGridTextColumn Header="W"
-                                        Binding="{Binding Width}"/>
+                                                    Binding="{Binding Width}"
+                                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                 <DataGridTextColumn Header="D"
-                                        Binding="{Binding Depth}"/>
+                                                    Binding="{Binding Depth}"
+                                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                 <DataGridTextColumn Header="H"
-                                        Binding="{Binding Height}"/>
+                                                    Binding="{Binding Height}"
+                                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                 <DataGridTextColumn Header="数量"
                                         Binding="{Binding Quantity}"
-                                        Width="35"/>
+                                        Width="35"
+                                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                 <DataGridTextColumn Header="単価"
-                                        Binding="{Binding UnitPriceText}"/>
+                                        Binding="{Binding UnitPriceText}"
+                                                    ElementStyle="{StaticResource RightGridCellTextBlock}"/>
                                 <DataGridTextColumn Header="合計"
                                         Binding="{Binding TotalAmountText}"
+                                                    ElementStyle="{StaticResource RightGridCellTextBlock}"
                                         Width="100"/>
                             </DataGrid.Columns>
                         </DataGrid>
@@ -155,19 +178,25 @@
                                         Width="*"
                                         Binding="{Binding Name}"/>
                                 <DataGridTextColumn Header="W"
-                                        Binding="{Binding Width}"/>
+                                        Binding="{Binding Width}"
+                                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                 <DataGridTextColumn Header="D"
-                                        Binding="{Binding Depth}"/>
+                                        Binding="{Binding Depth}"
+                                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                 <DataGridTextColumn Header="H"
-                                        Binding="{Binding Height}"/>
+                                        Binding="{Binding Height}"
+                                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                 <DataGridTextColumn Header="数量"
                                         Binding="{Binding Quantity}"
-                                        Width="35"/>
+                                        Width="35"
+                                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                 <DataGridTextColumn Header="単価"
-                                        Binding="{Binding UnitPriceText}"/>
+                                        Binding="{Binding UnitPriceText}"
+                                                    ElementStyle="{StaticResource RightGridCellTextBlock}"/>
                                 <DataGridTextColumn Header="合計"
                                         Binding="{Binding TotalAmountText}"
-                                        Width="100"/>
+                                        Width="100"
+                                                    ElementStyle="{StaticResource RightGridCellTextBlock}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                         <TabControl Grid.Row="1">
@@ -184,15 +213,19 @@
                                             </Style>
                                             <Style TargetType="TextBlock" BasedOn="{StaticResource ValueTextBlock}">
                                                 <Setter Property="MinWidth" Value="80"/>
+                                                <Setter Property="TextAlignment" Value="Right"/>
+                                                <Setter Property="Margin" Value="0 0 5 0"/>
                                             </Style>
                                         </StackPanel.Resources>
                                         <StackPanel Orientation="Horizontal">
                                             <Label Content="カテゴリ"/>
-                                            <TextBlock x:Name="ProductCategoryNameTextBlock"/>
+                                            <TextBlock x:Name="ProductCategoryNameTextBlock"
+                                                       TextAlignment="Left"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal">
                                             <Label Content="製品名"/>
-                                            <TextBlock x:Name="NameTextBlock"/>
+                                            <TextBlock x:Name="NameTextBlock"
+                                                       TextAlignment="Left"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal">
                                             <Label Content="数量"/>
@@ -302,13 +335,17 @@
                                                 <DataGridTextColumn Header="部位"
                                                                     Binding="{Binding BoardName}"/>
                                                 <DataGridTextColumn Header="仕上横"
-                                                                    Binding="{Binding Width}"/>
+                                                                    Binding="{Binding Width}"
+                                                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                                 <DataGridTextColumn Header="仕上縦"
-                                                                    Binding="{Binding Length}"/>
+                                                                    Binding="{Binding Length}"
+                                                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                                 <DataGridTextColumn Header="厚さ"
-                                                                    Binding="{Binding Thickness}"/>
+                                                                    Binding="{Binding Thickness}"
+                                                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                                 <DataGridTextColumn Header="数量"
-                                                                    Binding="{Binding Quantity}"/>
+                                                                    Binding="{Binding Quantity}"
+                                                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                                 <DataGridTextColumn Header="木口貼り箇所"
                                                                     Binding="{Binding KoguchiPasteArea}"/>
 
@@ -320,11 +357,14 @@
                                                 <DataGridTextColumn Header="素材"
                                                                     Binding="{Binding MaterialName}"/>
                                                 <DataGridTextColumn Header="厚さ"
-                                                                    Binding="{Binding Thickness}"/>
+                                                                    Binding="{Binding Thickness}"
+                                                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                                 <DataGridTextColumn Header="貼り単価"
-                                                                    Binding="{Binding PasteUnitPrice}"/>
+                                                                    Binding="{Binding PasteUnitPrice}"
+                                                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                                 <DataGridTextColumn Header="木目"
-                                                                    Binding="{Binding MokumeDirection}"/>
+                                                                    Binding="{Binding MokumeDirection}"
+                                                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                             </DataGrid.Columns>
                                         </DataGrid>
                                     </Grid>
@@ -335,12 +375,17 @@
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="項目"
                                                             Binding="{Binding Name}"/>
-                                        <DataGridTextColumn Header="単価"
-                                                            Binding="{Binding UnitPrice}"/>
                                         <DataGridTextColumn Header="数量"
-                                                            Binding="{Binding Quantity}"/>
+                                                            Binding="{Binding Quantity}"
+                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
+                                        <DataGridTextColumn Header="単価"
+                                                            MinWidth="60"
+                                                            Binding="{Binding UnitPrice}"
+                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                         <DataGridTextColumn Header="合計"
-                                                            Binding="{Binding TotalAmount}"/>
+                                                            MinWidth="60"
+                                                            Binding="{Binding TotalAmount}"
+                                                            ElementStyle="{StaticResource RightGridCellTextBlock}"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </TabItem>
@@ -361,13 +406,17 @@
                                         <DataGridTextColumn Header="部位"
                                                                     Binding="{Binding BoardName}"/>
                                         <DataGridTextColumn Header="横"
-                                                                    Binding="{Binding Width}"/>
+                                                                    Binding="{Binding Width}"
+                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                         <DataGridTextColumn Header="縦"
-                                                                    Binding="{Binding Length}"/>
+                                                                    Binding="{Binding Length}"
+                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                         <DataGridTextColumn Header="厚さ"
-                                                                    Binding="{Binding Thickness}"/>
+                                                                    Binding="{Binding Thickness}"
+                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                         <DataGridTextColumn Header="数量"
-                                                                    Binding="{Binding Quantity}"/>
+                                                                    Binding="{Binding Quantity}"
+                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                         <DataGridTextColumn Header="木口貼り箇所"
                                                                     Binding="{Binding KoguchiPasteArea}"/>
 
@@ -380,15 +429,22 @@
                                         <DataGridTextColumn Header="名称"
                                                             Binding="{Binding Name}"/>
                                         <DataGridTextColumn Header="縦"
-                                                            Binding="{Binding Length}"/>
+                                                            Binding="{Binding Length}"
+                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                         <DataGridTextColumn Header="横"
-                                                            Binding="{Binding Width}"/>
-                                        <DataGridTextColumn Header="単価"
-                                                            Binding="{Binding UnitPrice}"/>
+                                                            Binding="{Binding Width}"
+                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                         <DataGridTextColumn Header="数量"
-                                                            Binding="{Binding Quantity}"/>
+                                                            Binding="{Binding Quantity}"
+                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
+                                        <DataGridTextColumn Header="単価"
+                                                            MinWidth="60"
+                                                            Binding="{Binding UnitPrice}"
+                                                            ElementStyle="{StaticResource RightGridCellTextBlock}"/>
                                         <DataGridTextColumn Header="合計"
-                                                            Binding="{Binding TotalAmount}"/>
+                                                            MinWidth="60"
+                                                            Binding="{Binding TotalAmount}"
+                                                            ElementStyle="{StaticResource RightGridCellTextBlock}"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </TabItem>
@@ -398,19 +454,27 @@
                                         <DataGridTextColumn Header="部位"
                                                             Binding="{Binding BoardName}"/>
                                         <DataGridTextColumn Header="縦"
-                                                            Binding="{Binding Length}"/>
+                                                            Binding="{Binding Length}"
+                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                         <DataGridTextColumn Header="横"
-                                                            Binding="{Binding Width}"/>
+                                                            Binding="{Binding Width}"
+                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                         <DataGridTextColumn Header="箇所"
                                                             Binding="{Binding KoguchiMakeupArea}"/>
                                         <DataGridTextColumn Header="長さ"
-                                                            Binding="{Binding UnitLength}"/>
-                                        <DataGridTextColumn Header="単価"
-                                                            Binding="{Binding UnitPrice}"/>
+                                                            Binding="{Binding UnitLength}"
+                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                         <DataGridTextColumn Header="数量"
-                                                            Binding="{Binding Quantity}"/>
+                                                            Binding="{Binding Quantity}"
+                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
+                                        <DataGridTextColumn Header="単価"
+                                                            MinWidth="60"
+                                                            Binding="{Binding UnitPrice}"
+                                                            ElementStyle="{StaticResource RightGridCellTextBlock}"/>
                                         <DataGridTextColumn Header="合計"
-                                                            Binding="{Binding TotalAmount}"/>
+                                                            MinWidth="60"
+                                                            Binding="{Binding TotalAmount}"
+                                                            ElementStyle="{StaticResource RightGridCellTextBlock}"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </TabItem>
@@ -420,17 +484,25 @@
                                         <DataGridTextColumn Header="部位"
                                                             Binding="{Binding BoardName}"/>
                                         <DataGridTextColumn Header="縦"
-                                                            Binding="{Binding Length}"/>
+                                                            Binding="{Binding Length}"
+                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}" />
                                         <DataGridTextColumn Header="横"
-                                                            Binding="{Binding Width}"/>
+                                                            Binding="{Binding Width}"
+                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                         <DataGridTextColumn Header="外周"
-                                                            Binding="{Binding UnitLength}"/>
-                                        <DataGridTextColumn Header="単価"
-                                                            Binding="{Binding UnitPrice}"/>
+                                                            Binding="{Binding UnitLength}"
+                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                         <DataGridTextColumn Header="数量"
-                                                            Binding="{Binding Quantity}"/>
+                                                            Binding="{Binding Quantity}"
+                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
+                                        <DataGridTextColumn Header="単価"
+                                                            MinWidth="60"
+                                                            Binding="{Binding UnitPrice}"
+                                                            ElementStyle="{StaticResource RightGridCellTextBlock}"/>
                                         <DataGridTextColumn Header="合計"
-                                                            Binding="{Binding TotalAmount}"/>
+                                                            MinWidth="60"
+                                                            Binding="{Binding TotalAmount}"
+                                                            ElementStyle="{StaticResource RightGridCellTextBlock}"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </TabItem>
@@ -440,17 +512,25 @@
                                         <DataGridTextColumn Header="部位"
                                                             Binding="{Binding BoardName}"/>
                                         <DataGridTextColumn Header="縦"
-                                                            Binding="{Binding Length}"/>
+                                                            Binding="{Binding Length}"
+                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                         <DataGridTextColumn Header="横"
-                                                            Binding="{Binding Width}"/>
+                                                            Binding="{Binding Width}"
+                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                         <DataGridTextColumn Header="面積"
-                                                            Binding="{Binding UnitLength}"/>
-                                        <DataGridTextColumn Header="単価"
-                                                            Binding="{Binding UnitPrice}"/>
+                                                            Binding="{Binding UnitLength}"
+                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                         <DataGridTextColumn Header="数量"
-                                                            Binding="{Binding Quantity}"/>
+                                                            Binding="{Binding Quantity}"
+                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
+                                        <DataGridTextColumn Header="単価"
+                                                            MinWidth="60"
+                                                            Binding="{Binding UnitPrice}"
+                                                            ElementStyle="{StaticResource RightGridCellTextBlock}"/>
                                         <DataGridTextColumn Header="合計"
-                                                            Binding="{Binding TotalAmount}"/>
+                                                            MinWidth="60"
+                                                            Binding="{Binding TotalAmount}"
+                                                            ElementStyle="{StaticResource RightGridCellTextBlock}"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </TabItem>

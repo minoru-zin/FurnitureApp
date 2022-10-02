@@ -10,17 +10,17 @@ namespace FurnitureApp.Contents.Orders.Order00100
         public string Name { get; }
         public double? Length { get; }
         public double? Width { get; }
-        public double? UnitPrice { get; }
+        public string UnitPrice { get; }
         public int? Quantity { get; }
-        public int? TotalAmount { get; }
+        public string TotalAmount { get; }
         public DisplayBoardCostViewModel(BoardCost boardCost)
         {
             this.Name = boardCost.Name;
             this.Length = boardCost.Length;
             this.Width = boardCost.Width;
-            this.UnitPrice = boardCost.UnitPrice;
+            this.UnitPrice = $"{boardCost.UnitPrice:C}";
             this.Quantity = boardCost.Quantity;
-            this.TotalAmount = boardCost.TotalAmount;
+            this.TotalAmount = $"{boardCost.TotalAmount:C}";
         }
     }
 }

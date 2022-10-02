@@ -15,7 +15,7 @@ namespace FurnitureApp.Contents.Orders.Order00100
         public double? UnitLength { get; }
         public double? UnitPrice { get; }
         public int? Quantity { get; }
-        public int? TotalAmount { get; }
+        public string TotalAmount { get; }
         private CommonData cd = CommonData.GetInstance();
         public DisplayMakeupBoardPasteCostViewModel(MakeupBoardPasteCost m)
         {
@@ -25,7 +25,7 @@ namespace FurnitureApp.Contents.Orders.Order00100
             this.UnitLength = m.UnitLength;
             this.UnitPrice = m.UnitPrice;
             this.Quantity = m.Quantity;
-            this.TotalAmount = m.TotalAmount;
+            this.TotalAmount = $"{m.TotalAmount:C}";
         }
     }
 }
