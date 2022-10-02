@@ -80,6 +80,10 @@ namespace FurnitureApp.Contents.Orders.Order00300
         {
             this.cf.SetDoubleNumberTextBox(sender as TextBox);
         }
+        private void DoubleTextBox2_LostFocus(object sender, RoutedEventArgs e)
+        {
+            this.cf.SetDoubleNumberTextBox(sender as TextBox, 2);
+        }
         private void InitializeControls()
         {
             #region 部材初期化

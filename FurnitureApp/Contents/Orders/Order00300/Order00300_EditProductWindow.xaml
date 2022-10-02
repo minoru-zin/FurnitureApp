@@ -164,13 +164,13 @@
                     <StackPanel Orientation="Horizontal">
                         <Label Content="木口貼り"/>
                         <TextBox Name="KoguchiPasteUnitPriceTextBox"
-                                 LostFocus="DoubleTextBox_LostFocus"/>
+                                 LostFocus="DoubleTextBox2_LostFocus"/>
                         <Label Content="円/mm"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="仕上げ単価"/>
                         <TextBox Name="FinishCutUnitPriceTextBox"
-                                 LostFocus="DoubleTextBox_LostFocus"/>
+                                 LostFocus="DoubleTextBox2_LostFocus"/>
                         <Label Content="円/mm"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">

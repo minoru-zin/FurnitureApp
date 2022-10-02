@@ -59,12 +59,21 @@ namespace FurnitureApp.Models
             }
             textBox.Text = "";
         }
-        public void SetDoubleNumberTextBox(TextBox textBox)
+        public void SetDoubleNumberTextBox(TextBox textBox, int shousuuketa = 1)
         {
             if (double.TryParse(textBox.Text, out var number))
             {
-                textBox.Text = $"{number:0.0}".Replace(".0", "");
-                return;
+                switch (shousuuketa)
+                {
+                    case 1:
+                        textBox.Text = $"{number:0.0}".Replace(".0", "");
+                        return;
+                    case 2:
+                        textBox.Text = $"{number:0.00}".Replace(".00", "");
+                        return;
+                    default:
+                        throw new NotImplementedException($"想定外 : {nameof(ControlFormatter.SetDoubleNumberTextBox)} : {shousuuketa} ");
+                }
             }
             textBox.Text = "";
         }
