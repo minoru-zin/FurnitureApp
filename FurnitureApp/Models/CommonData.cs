@@ -62,7 +62,7 @@ namespace FurnitureApp.Models
         public List<DisplayInfo<CutType>> CutTypes { get; } = new List<DisplayInfo<CutType>>
         {
             new DisplayInfo<CutType>(CutType.Normal, "通常"),
-            new DisplayInfo<CutType>(CutType.Lvl, "LVL")
+            new DisplayInfo<CutType>(CutType.Lvl, "LVL(フラッシュ)")
         };
         #endregion
 

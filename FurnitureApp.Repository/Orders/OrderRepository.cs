@@ -17,13 +17,13 @@ namespace FurnitureApp.Repository.Orders
             Utility.DirectoryCreator.CreateSafely(this.ProductFileDirName);
         }
 
-        public List<Order> SelectFromCreatedDate(DateTime createdDate)
+        public List<Order> SelectFromCreatedDate(DateTime createdDateF, DateTime createdDateT)
         {
             var orders = new List<Order>();
 
             RepositoryAction.Query(c =>
             {
-                orders = new OrderDao(c, null).SelectFromCreatedDate(createdDate).ToList();
+                orders = new OrderDao(c, null).SelectFromCreatedDate(createdDateF, createdDateT).ToList();
                 var productDao = new ProductDao(c, null);
                 var boardDao = new BoardDao(c, null);
                 var boardLayerDao = new BoardLayerDao(c, null);

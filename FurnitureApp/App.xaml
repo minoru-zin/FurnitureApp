@@ -14,6 +14,14 @@
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="TextWrapping" Value="Wrap"/>
         </Style>
+        <Style x:Key="RightGridCellTextBlock"
+               TargetType="{x:Type TextBlock}">
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+        </Style>
+        <Style x:Key="CenterGridCellTextBlock"
+               TargetType="{x:Type TextBlock}">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
         <Style TargetType="{x:Type TextBox}">
             <Setter Property="FontSize" Value="15"/>
         </Style>
@@ -82,6 +90,7 @@
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="Background" Value="AliceBlue"/>
         </Style>
+        
 
         <Style TargetType="{x:Type DataGridCell}">
             <Style.Triggers>
@@ -101,6 +110,7 @@
             <Setter Property="IsReadOnly" Value="True"/>
             <Setter Property="HorizontalGridLinesBrush" Value="AliceBlue"/>
             <Setter Property="VerticalGridLinesBrush" Value="AliceBlue"/>
+            <Setter Property="IsTabStop" Value="False"/>
         </Style>
         <!--<Style TargetType="{x:Type DataGridCell}" x:Key="RightDataGridCell">
             <Setter Property="TextBlock.TextAlignment" Value="Center"/>
