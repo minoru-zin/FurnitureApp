@@ -63,7 +63,7 @@ namespace FurnitureApp.Models
         {
             if (double.TryParse(textBox.Text, out var number))
             {
-                textBox.Text = $"{number:0.0}";
+                textBox.Text = $"{number:0.0}".Replace(".0", "");
                 return;
             }
             textBox.Text = "";
