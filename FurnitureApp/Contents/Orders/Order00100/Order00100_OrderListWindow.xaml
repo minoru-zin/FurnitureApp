@@ -163,6 +163,10 @@
                                         MinWidth="100"/>
                             </DataGrid.Columns>
                         </DataGrid>
+                        <Button Grid.Row="1"
+                                x:Name="OutputButton"
+                                Click="OutputButton_Click"
+                                Content="原価計算ファイル出力"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="詳細">

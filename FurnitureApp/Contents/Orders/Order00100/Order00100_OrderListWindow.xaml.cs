@@ -379,6 +379,74 @@ namespace FurnitureApp.Contents.Orders.Order00100
             }
         }
 
-        
+        private void OutputButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                this.OutputFile();
+            }
+            catch (Exception ex)
+            {
+                this.logger.Error(ex);
+                this.cd.DialogService.ShowMessage(ex.Message);
+            }
+        }
+
+        private void OutputFile()
+        {
+            if (this.ProductViewModels.Count == 0)
+            {
+                this.cd.DialogService.ShowMessage("製品が存在しません");
+                return;
+            }
+
+            var lines = new List<string>();
+            var fields = new List<string>();
+
+            fields.Clear();
+            fields.Add($@"""カテゴリ""");
+            fields.Add($@"""製品名""");
+            fields.Add($@"""W""");
+            fields.Add($@"""D""");
+            fields.Add($@"""H""");
+            fields.Add($@"""数量""");
+            fields.Add($@"""単価""");
+            fields.Add($@"""合計""");
+            lines.Add(string.Join(",", fields));
+
+            foreach (var pv in this.ProductViewModels)
+            {
+                fields.Clear();
+                fields.Add($@"""{pv.ProductCategoryName}""");
+                fields.Add($@"""{pv.Name}""");
+                fields.Add($@"""{pv.Width}""");
+                fields.Add($@"""{pv.Depth}""");
+                fields.Add($@"""{pv.Height}""");
+                fields.Add($@"""{pv.Quantity}""");
+                fields.Add($@"""{pv.UnitPrice}""");
+                fields.Add($@"""{pv.TotalAmount}""");
+                lines.Add(string.Join(",", fields));
+            }
+            fields.Clear();
+            fields.Add($@"""""");
+            fields.Add($@"""""");
+            fields.Add($@"""""");
+            fields.Add($@"""""");
+            fields.Add($@"""""");
+            fields.Add($@"""""");
+            fields.Add($@"""""");
+            fields.Add($@"""{this.ProductViewModels.Sum(x => x.TotalAmount)}""");
+            lines.Add(string.Join(",", fields));
+
+            var name = (this.OrderDataGrid.SelectedItem as OrderViewModel)?.Name;
+
+            var fileName = $"{name}_原価計算.csv";
+
+            Utility.FileWriter.WriteLine(string.Join("\r\n", lines),
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), fileName), true);
+
+            this.cd.DialogService.ShowMessage($"デスクトップに「{fileName}」を出力しました");
+
+        }
     }
 }
