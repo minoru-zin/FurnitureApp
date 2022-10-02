@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FurnitureApp.Contents.Masters.Master00100"
         mc:Ignorable="d"
-        Title="素材一覧 Master00100_MaterialInfoListWindow" Height="450" Width="800">
+        Title="素材一覧 Master00100_MaterialInfoListWindow" Height="500" Width="500">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
@@ -23,14 +23,17 @@
                   MouseDoubleClick="DataGrid_MouseDoubleClick">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="順番"
-                                    Binding="{Binding Sequence}"/>
+                                    Binding="{Binding Sequence}"
+                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                 <DataGridTextColumn Header="名称"
                                     Binding="{Binding Name}"
                                     Width="*"/>
                 <DataGridTextColumn Header="厚さ"
-                                    Binding="{Binding Thickness}"/>
+                                    Binding="{Binding Thickness}"
+                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                 <DataGridTextColumn Header="貼り単価"
-                                    Binding="{Binding PasteUnitPrice}"/>
+                                    Binding="{Binding PasteUnitPrice}"
+                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                 <DataGridTextColumn Header="カットタイプ"
                                     Binding="{Binding CutType}"/>
             </DataGrid.Columns>

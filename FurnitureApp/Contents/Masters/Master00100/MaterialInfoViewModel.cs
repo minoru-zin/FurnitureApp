@@ -23,7 +23,7 @@ namespace FurnitureApp.Contents.Masters.Master00100
             this.Name = m.Name;
             this.Thickness = m.Thickness;
             this.PasteUnitPrice = m.PasteUnitPrice;
-            this.CutType = cd.CutTypes.FirstOrDefault(x => x.Code == m.CutType)?.DisplayName;
+            this.CutType = this.cd.CutTypes.FirstOrDefault(x => x.Code == m.CutType)?.DisplayName;
         }
     }
 }
