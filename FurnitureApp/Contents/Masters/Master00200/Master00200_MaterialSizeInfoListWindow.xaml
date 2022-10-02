@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FurnitureApp.Contents.Masters.Master00200"
         mc:Ignorable="d"
-        Title="素材規格一覧 Master00200_MaterialSizeInfoListWindow" Height="450" Width="800">
+        Title="素材規格一覧 Master00200_MaterialSizeInfoListWindow" Height="500" Width="500">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
@@ -25,13 +25,18 @@
                 <DataGridTextColumn Header="素材"
                                     Binding="{Binding MaterialName}"/>
                 <DataGridTextColumn Header="名称"
-                                    Binding="{Binding Name}"/>
+                                    Binding="{Binding Name}"
+                                    Width="*"/>
                 <DataGridTextColumn Header="縦"
-                                    Binding="{Binding Length}"/>
+                                    Binding="{Binding Length}"
+                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                 <DataGridTextColumn Header="横"
-                                    Binding="{Binding Width}"/>
+                                    Binding="{Binding Width}"
+                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                 <DataGridTextColumn Header="単価"
-                                    Binding="{Binding UnitPrice}"/>
+                                    Binding="{Binding UnitPrice}"
+                                    Width="70"
+                                    ElementStyle="{StaticResource RightGridCellTextBlock}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

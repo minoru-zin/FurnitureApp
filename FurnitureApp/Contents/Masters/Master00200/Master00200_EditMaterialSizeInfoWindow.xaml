@@ -5,40 +5,52 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FurnitureApp.Contents.Masters.Master00200"
         mc:Ignorable="d"
-        Title="素材規格 Master00200_EditMaterialSizeInfoWindow" Height="450" Width="800">
+        Title="素材規格 Master00200_EditMaterialSizeInfoWindow" Height="230" Width="500"
+        KeyDown="Window_KeyDown"
+        Loaded="Window_Loaded">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="35"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
+            <StackPanel.Resources>
+                <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+                    <Setter Property="Width" Value="50"/>
+                </Style>
+                <Style TargetType="TextBox" BasedOn="{StaticResource NumberTextBox}">
+                    <Setter Property="Width" Value="250"/>
+                    <EventSetter Event="GotFocus" Handler="TextBox_GotFocus"/>
+                </Style>
+            </StackPanel.Resources>
             <StackPanel Orientation="Horizontal">
                 <Label Content="素材"/>
                 <ComboBox ItemsSource="{Binding Materials}"
                           DisplayMemberPath="DisplayName"
                           SelectedValuePath="Code"
                           x:Name="MaterialComboBox"
-                          Width="200"/>
+                          Width="250"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="名称"/>
                 <TextBox x:Name="NameTextBox"
-                         Width="200"/>
+                         Style="{StaticResource HiraganaTextBox}"
+                         Width="250"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="縦"/>
                 <TextBox x:Name="LengthTextBox"
-                         Width="200"/>
+                         LostFocus="LengthTextBox_LostFocus"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="横"/>
                 <TextBox x:Name="WidthTextBox"
-                         Width="200"/>
+                         LostFocus="LengthTextBox_LostFocus"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="単価"/>
                 <TextBox x:Name="UnitPriceTextBox"
-                         Width="200"/>
+                         LostFocus="UnitPriceTextBox_LostFocus"/>
             </StackPanel>
         </StackPanel>
         <DockPanel Grid.Row="1">
