@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="製品情報 Order00300_EditProductWindow" Height="800" Width="1200"
         WindowState="Maximized"
+        KeyDown="Window_KeyDown"
+        Loaded="Window_Loaded"
         Name="Root">
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -24,6 +26,11 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0">
+                <StackPanel.Resources>
+                    <Style TargetType="TextBox" BasedOn="{StaticResource NumberTextBox}">
+                        <EventSetter Event="GotFocus" Handler="TextBox_GotFocus"/>
+                    </Style>
+                </StackPanel.Resources>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="カテゴリ"
                            Width="45"
@@ -32,42 +39,50 @@
                               DisplayMemberPath="DisplayName"
                               SelectedValuePath="Code"
                               x:Name="ProductCategoryInfoComboBox"
-                              Width="150"/>
+                              Width="150"
+                              Height="25"/>
                     <Button Content="参照"
                             Name="SelectProductButton"
                             Click="SelectProductButton_Click"
-                            Width="50"/>
+                            Width="50"
+                            IsTabStop="False"/>
                 </StackPanel>
                 <DockPanel>
                     <Label DockPanel.Dock="Left" Content="製品名"/>
-                    <TextBox Name="NameTextBox"/>
+                    <TextBox Name="NameTextBox"
+                             Style="{StaticResource HiraganaTextBox}"
+                             GotFocus="TextBox_GotFocus"/>
                 </DockPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="数量"
                            Width="45"/>
                     <TextBox Width="60"
-                         Name="QuantityTextBox"/>
+                             Name="QuantityTextBox"
+                             LostFocus="QuantityTextBox_LostFocus"/>
                 </StackPanel>
                 <Label Content="本体寸法"/>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="W"
                            Width="45"/>
                     <TextBox Width="60"
-                         Name="BodyWidthTextBox"/>
+                         Name="BodyWidthTextBox"
+                             LostFocus="DoubleTextBox_LostFocus"/>
                     <Label Content="mm"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="D"
                            Width="45"/>
                     <TextBox Width="60"
-                         Name="BodyDepthTextBox"/>
+                         Name="BodyDepthTextBox"
+                             LostFocus="DoubleTextBox_LostFocus"/>
                     <Label Content="mm"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="H"
                            Width="45"/>
                     <TextBox Width="60"
-                             Name="BodyHeightTextBox"/>
+                             Name="BodyHeightTextBox"
+                             LostFocus="DoubleTextBox_LostFocus"/>
                     <Label Content="mm"/>
                 </StackPanel>
                 <StackPanel>
@@ -76,86 +91,96 @@
                             <Setter Property="Width" Value="130"/>
                         </Style>
                         <Style TargetType="TextBox" BasedOn="{StaticResource NumberTextBox}">
+                            <EventSetter Event="GotFocus" Handler="TextBox_GotFocus"/>
                             <Setter Property="Width" Value="80"/>
                         </Style>
                     </StackPanel.Resources>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="フィラーL(W)"/>
-                        <TextBox Name="FillerLTextBox"/>
+                        <TextBox Name="FillerLTextBox"
+                                 LostFocus="DoubleTextBox_LostFocus"/>
                         <Label Content="mm"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="フィラーR(W)"/>
-                        <TextBox Name="FillerRTextBox"/>
+                        <TextBox Name="FillerRTextBox"
+                                 LostFocus="DoubleTextBox_LostFocus"/>
                         <Label Content="mm"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="LVL(W)"/>
-                        <TextBox Name="LvlWidthTextBox"/>
+                        <TextBox Name="LvlWidthTextBox"
+                                 LostFocus="DoubleTextBox_LostFocus"/>
                         <Label Content="mm"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="アンコピッチ"/>
-                        <TextBox Name="AnkoPitchTextBox"/>
+                        <TextBox Name="AnkoPitchTextBox"
+                                 LostFocus="DoubleTextBox_LostFocus"/>
                         <Label Content="mm"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="台輪（H）"/>
-                        <TextBox Name="DaiwaHeightTextBox"/>
+                        <TextBox Name="DaiwaHeightTextBox"
+                                 LostFocus="DoubleTextBox_LostFocus"/>
                         <Label Content="mm"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="扉：天板隙間"/>
-                        <TextBox Name="TobiraTenitaSukimaTextBox"/>
+                        <TextBox Name="TobiraTenitaSukimaTextBox"
+                                 LostFocus="DoubleTextBox_LostFocus"/>
                         <Label Content="mm"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="扉：天板控え"/>
-                        <TextBox Name="TobiraTenitaHikaeTextBox"/>
+                        <TextBox Name="TobiraTenitaHikaeTextBox"
+                                 LostFocus="DoubleTextBox_LostFocus"/>
                         <Label Content="mm"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="扉：側板目地"/>
-                        <TextBox Name="TobiraGawaitaMokujiTextBox"/>
+                        <TextBox Name="TobiraGawaitaMokujiTextBox"
+                                 LostFocus="DoubleTextBox_LostFocus"/>
                         <Label Content="mm"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="扉間目地"/>
-                        <TextBox Name="TobiraKanMokujiTextBox"/>
-                        <Label Content="mm"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="扉：仕切板目地"/>
-                        <TextBox Name="TobiraShikiriitaMokujiTextBox"/>
+                        <TextBox Name="TobiraKanMokujiTextBox"
+                                 LostFocus="DoubleTextBox_LostFocus"/>
                         <Label Content="mm"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="仕切板：側板控え"/>
-                        <TextBox Name="ShikiriitaGawaitaHikaeTextBox"/>
+                        <TextBox Name="ShikiriitaGawaitaHikaeTextBox"
+                                 LostFocus="DoubleTextBox_LostFocus"/>
                         <Label Content="mm"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="棚板：側板控え"/>
-                        <TextBox Name="TanaitaGawaitaHikaeTextBox"/>
+                        <TextBox Name="TanaitaGawaitaHikaeTextBox"
+                                 LostFocus="DoubleTextBox_LostFocus"/>
                         <Label Content="mm"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="木口貼り"/>
-                        <TextBox Name="KoguchiPasteUnitPriceTextBox"/>
+                        <TextBox Name="KoguchiPasteUnitPriceTextBox"
+                                 LostFocus="DoubleTextBox_LostFocus"/>
                         <Label Content="円/mm"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="仕上げ単価"/>
-                        <TextBox Name="FinishCutUnitPriceTextBox"/>
+                        <TextBox Name="FinishCutUnitPriceTextBox"
+                                 LostFocus="DoubleTextBox_LostFocus"/>
                         <Label Content="円/mm"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="製作幅"/>
-                        <TextBox Name="FinishMarginTextBox"/>
+                        <TextBox Name="FinishMarginTextBox"
+                                 LostFocus="DoubleTextBox_LostFocus"/>
                         <Label Content="mm"/>
                     </StackPanel>
                 </StackPanel>
-                
+
             </StackPanel>
             <DockPanel Grid.Row="1">
                 <StackPanel DockPanel.Dock="Top">
@@ -164,40 +189,55 @@
                             Click="RefreshCalButton_Click"/>
                 </StackPanel>
                 <TabControl>
-                    <TabItem Header="寸法">
-                        <DataGrid ItemsSource="{Binding BoardSizeViewModels}"
-                              Name="BoardSizeDataGrid">
+                    <TabItem Header="仕上寸法">
+                        <DataGrid ItemsSource="{Binding BoardSizeViewModels}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="名称"
+                                                    Width="*"
                                                 Binding="{Binding BoardType}"/>
-                                <DataGridTextColumn Header="製作横"
-                                                Binding="{Binding Width}"/>
-                                <DataGridTextColumn Header="製作縦"
+                                <DataGridTextColumn Header="横"
+                                                Binding="{Binding Width}"
+                                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"
+                                                    MinWidth="45"/>
+                                <DataGridTextColumn Header="縦"
+                                                    MinWidth="45"
+                                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"
                                                 Binding="{Binding Length}"/>
-                                <!--<DataGridTextColumn Header="仕上横"
-                                                Binding="{Binding FinishWidth}"/>
-                                <DataGridTextColumn Header="仕上縦"
-                                                Binding="{Binding FinishLength}"/>-->
                                 <DataGridTextColumn Header="厚さ"
+                                                    MinWidth="40"
+                                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"
                                                 Binding="{Binding FinishThickness}"/>
                                 <DataGridTextColumn Header="数量"
+                                                    MinWidth="35"
+                                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"
                                                 Binding="{Binding Quantity}"/>
 
                             </DataGrid.Columns>
                         </DataGrid>
                     </TabItem>
-                    <TabItem Header="カット情報">
-                        <DataGrid ItemsSource="{Binding CutSizeViewModels}"
-                              Name="CutSizeDataGrid">
+                    <TabItem Header="製作寸法">
+                        <DataGrid ItemsSource="{Binding BoardSizeViewModels2}">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="素材"
-                                                Binding="{Binding MaterialName}"/>
+                                <DataGridTextColumn Header="名称"
+                                                    Width="*"
+                                                Binding="{Binding BoardType}"/>
                                 <DataGridTextColumn Header="横"
-                                                Binding="{Binding Width}"/>
+                                                Binding="{Binding Width}"
+                                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"
+                                                    MinWidth="45"/>
                                 <DataGridTextColumn Header="縦"
+                                                    MinWidth="45"
+                                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"
                                                 Binding="{Binding Length}"/>
+                                <DataGridTextColumn Header="厚さ"
+                                                    MinWidth="40"
+                                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"
+                                                Binding="{Binding FinishThickness}"/>
                                 <DataGridTextColumn Header="数量"
+                                                    MinWidth="35"
+                                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"
                                                 Binding="{Binding Quantity}"/>
+
                             </DataGrid.Columns>
                         </DataGrid>
                     </TabItem>
@@ -249,20 +289,24 @@
                     </DataGrid>
                 </Grid>
             </TabItem>
-            <TabItem Header="画像">
+            <TabItem Header="ファイル">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="35"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="0"
-                                Orientation="Horizontal"
-                                HorizontalAlignment="Right">
+                    <DockPanel Grid.Row="0">
+                        <Button Content="ファイル確認"
+                                Width="100"
+                                ToolTip="選択してクリックするとファイルが開きます"
+                                Name="DisplayFileButton"
+                                Click="DisplayFileButton_Click"/>
                         <Button Content="＋"
                                 Width="35"
                                 Name="AddProductFileButton"
-                                Click="AddProductFileButton_Click"/>
-                    </StackPanel>
+                                Click="AddProductFileButton_Click"
+                                HorizontalAlignment="Right"/>
+                    </DockPanel>
                     <DataGrid Grid.Row="1"
                               ItemsSource="{Binding ProductFileViewModels}"
                               Name="ProductFileDataGrid"

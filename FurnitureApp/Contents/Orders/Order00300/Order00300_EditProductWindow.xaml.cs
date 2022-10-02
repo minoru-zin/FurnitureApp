@@ -7,6 +7,8 @@ using FurnitureApp.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -16,7 +18,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace FurnitureApp.Contents.Orders.Order00300
 {
@@ -27,10 +28,10 @@ namespace FurnitureApp.Contents.Orders.Order00300
     {
         private NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private CommonData cd = CommonData.GetInstance();
-
+        private ControlFormatter cf = new ControlFormatter();
         public ObservableCollection<BoardView> BoardViews { get; } = new ObservableCollection<BoardView>();
         public ObservableCollection<BoardSizeViewModel> BoardSizeViewModels { get; } = new ObservableCollection<BoardSizeViewModel>();
-        public ObservableCollection<CutSizeViewModel> CutSizeViewModels { get; } = new ObservableCollection<CutSizeViewModel>();
+        public ObservableCollection<BoardSizeViewModel> BoardSizeViewModels2 { get; } = new ObservableCollection<BoardSizeViewModel>();
         public ObservableCollection<CostViewModel> CostViewModels { get; } = new ObservableCollection<CostViewModel>();
         public ObservableCollection<ProductFileViewModel> ProductFileViewModels { get; } = new ObservableCollection<ProductFileViewModel>();
 
@@ -47,6 +48,37 @@ namespace FurnitureApp.Contents.Orders.Order00300
             this.ProductCategoryInfos.AddRange(this.cd.ProductCategoryInfos.Select(x => new DisplayInfo<int?>(x.Id, x.Name)));
             this.InitializeControls();
             this.SetProductToControls();
+        }
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Enter:
+                    (FocusManager.GetFocusedElement(System.Windows.Window.GetWindow(this)) as System.Windows.FrameworkElement).MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+                    break;
+            }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.ProductCategoryInfoComboBox.Focus();
+        }
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            var textBox = e.OriginalSource as System.Windows.Controls.TextBox;
+
+            if (textBox == null) { return; }
+
+            textBox.SelectAll();
+        }
+        private void QuantityTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            this.cf.SetIntNumberTextBox(sender as TextBox);
+        }
+
+        private void DoubleTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            this.cf.SetDoubleNumberTextBox(sender as TextBox);
         }
         private void InitializeControls()
         {
@@ -83,7 +115,6 @@ namespace FurnitureApp.Contents.Orders.Order00300
             this.TobiraTenitaHikaeTextBox.Text = $"{this.Product.TobiraTenitaHikae}"; // 扉：天板控え
             this.TobiraGawaitaMokujiTextBox.Text = $"{this.Product.TobiraGawaitaMokuji}"; // 扉：側板目地
             this.TobiraKanMokujiTextBox.Text = $"{this.Product.TobiraKanMokuji}"; // 扉間目地
-            this.TobiraShikiriitaMokujiTextBox.Text = $"{this.Product.TobiraShikiriitaMokuji}"; // 扉：仕切板目地
             this.ShikiriitaGawaitaHikaeTextBox.Text = $"{this.Product.ShikiriitaGawaitaHikae}"; // 仕切板：側板控え
             this.TanaitaGawaitaHikaeTextBox.Text = $"{this.Product.TanaitaGawaitaHikae}"; // 棚板：側板控え
             this.KoguchiPasteUnitPriceTextBox.Text = $"{this.Product.KoguchiPasteUnitPrice}"; // 木口テープ単価
@@ -105,6 +136,8 @@ namespace FurnitureApp.Contents.Orders.Order00300
             #region ファイルセット
             this.ProductFileViewModels.AddRange(this.Product.ProductFiles.Select(x => new ProductFileViewModel(x)));
             #endregion
+
+            this.RefreshBordViewModels();
         }
         private void SelectProductButton_Click(object sender, RoutedEventArgs e)
         {
@@ -216,32 +249,85 @@ namespace FurnitureApp.Contents.Orders.Order00300
                 this.cd.DialogService.ShowMessage(ex.Message);
             }
         }
+        private void DisplayFileButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var vm = this.ProductFileDataGrid.SelectedItem as ProductFileViewModel;
+
+                if (vm == null) { return; }
+
+                var orderId =this.Product.OrderId;
+                var sourceFilePath = ""; 
+
+                if (string.IsNullOrEmpty(vm.Model.SourceFilePath))
+                {
+                    sourceFilePath = this.cd.OrderRepository.GetProductFilePath(orderId, vm.Model.FileName);
+                }
+                else
+                {
+                    sourceFilePath = vm.Model.SourceFilePath;
+                }
+
+                var destFilePath = Path.Combine(this.cd.TempFileDirName, vm.Model.FileName);
+
+                Utility.DirectoryCreator.CreateSafely(Path.GetDirectoryName(destFilePath));
+
+                File.Copy(sourceFilePath, destFilePath, true);
+
+                var app = new ProcessStartInfo();
+                app.FileName = destFilePath;
+                app.UseShellExecute = true;
+
+                Process.Start(app);
+            }
+            catch (Exception ex)
+            {
+                this.logger.Error(ex);
+                this.cd.DialogService.ShowMessage(ex.Message);
+            }
+        }
         #endregion
         private void RefreshCalButton_Click(object sender, RoutedEventArgs e)
         {
+            this.RefreshBordViewModels();
+        }
+        private void RefreshBordViewModels()
+        {
             this.SetProductWithoutCosts();
 
-            var boardSizes = new BoardSizeCalculator(this.Product).GetBoardSizes();
+            var tempBoardSizes = new BoardSizeCalculator(this.Product).GetBoardSizes();
 
-            this.BoardSizeViewModels.Clear();
+            var finishMargin = Utility.NumberFormatter.GetNullDouble(this.FinishMarginTextBox.Text) ?? 0;
+
+
+            var boardSizes = new List<BoardSize>();
 
             foreach (var boardType in this.cd.BoardTypes.Select(x => x.Code))
             {
-                var bs = boardSizes.FirstOrDefault(x => x.BoardType == boardType);
+                var bs = tempBoardSizes.FirstOrDefault(x => x.BoardType == boardType);
 
                 if (bs == null)
                 {
                     bs = new BoardSize { BoardType = boardType };
                 }
 
-                this.BoardSizeViewModels.Add(new BoardSizeViewModel(bs, this.cd.FinishMargin));
+                boardSizes.Add(bs);
             }
 
-            var cutSizes = new CutSizeCalculator().GetCutSizes(this.Product);
+            this.BoardSizeViewModels.Clear();
+            this.BoardSizeViewModels.AddRange(boardSizes.Select(x => new BoardSizeViewModel(x)));
 
-            this.CutSizeViewModels.Clear();
-            this.CutSizeViewModels.AddRange(cutSizes.Select(x => new CutSizeViewModel(x)));
+            boardSizes = boardSizes.Select(x => x.Clone()).ToList();
 
+            foreach (var bs in boardSizes)
+            {
+                bs.Width += finishMargin * 2;
+                bs.Length += finishMargin * 2;
+            }
+
+            this.BoardSizeViewModels2.Clear();
+            this.BoardSizeViewModels2.AddRange(boardSizes.Select(x => new BoardSizeViewModel(x)));
         }
 
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
@@ -260,6 +346,8 @@ namespace FurnitureApp.Contents.Orders.Order00300
         private void Update()
         {
             this.SetProdut();
+
+            // TODO check
 
             this.IsChanged = true;
             this.Close();
@@ -281,7 +369,6 @@ namespace FurnitureApp.Contents.Orders.Order00300
             this.Product.TobiraTenitaHikae = Utility.NumberFormatter.GetNullDouble(this.TobiraTenitaHikaeTextBox.Text) ?? 0;
             this.Product.TobiraGawaitaMokuji = Utility.NumberFormatter.GetNullDouble(this.TobiraGawaitaMokujiTextBox.Text) ?? 0;
             this.Product.TobiraKanMokuji = Utility.NumberFormatter.GetNullDouble(this.TobiraKanMokujiTextBox.Text) ?? 0;
-            this.Product.TobiraShikiriitaMokuji = Utility.NumberFormatter.GetNullDouble(this.TobiraShikiriitaMokujiTextBox.Text) ?? 0;
             this.Product.ShikiriitaGawaitaHikae = Utility.NumberFormatter.GetNullDouble(this.ShikiriitaGawaitaHikaeTextBox.Text) ?? 0;
             this.Product.TanaitaGawaitaHikae = Utility.NumberFormatter.GetNullDouble(this.TanaitaGawaitaHikaeTextBox.Text) ?? 0;
             this.Product.KoguchiPasteUnitPrice = Utility.NumberFormatter.GetNullDouble(this.KoguchiPasteUnitPriceTextBox.Text) ?? 0;
@@ -339,5 +426,7 @@ namespace FurnitureApp.Contents.Orders.Order00300
         {
             this.Close();
         }
+
+
     }
 }
