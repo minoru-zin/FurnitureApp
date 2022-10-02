@@ -21,6 +21,7 @@ namespace FurnitureApp.Contents.Masters.Master00400
     {
         private NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private CommonData cd = CommonData.GetInstance();
+        private ControlFormatter cf = new ControlFormatter();
 
         private CostItemInfo model;
         public bool IsChanged = false;
@@ -30,7 +31,32 @@ namespace FurnitureApp.Contents.Masters.Master00400
             this.model = m.Clone();
             this.SetInfoToControls();
         }
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Enter:
+                    (FocusManager.GetFocusedElement(System.Windows.Window.GetWindow(this)) as System.Windows.FrameworkElement).MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+                    break;
+            }
+        }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.SequenceTextBox.Focus();
+        }
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            var textBox = e.OriginalSource as System.Windows.Controls.TextBox;
+
+            if (textBox == null) { return; }
+
+            textBox.SelectAll();
+        }
+        private void SequenceTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            this.cf.SetIntNumberTextBox(sender as TextBox);
+        }
         private void SetInfoToControls()
         {
             this.SequenceTextBox.Text = $"{this.model.Sequence}";
@@ -52,9 +78,13 @@ namespace FurnitureApp.Contents.Masters.Master00400
 
         private void Update()
         {
-            this.model.Sequence = Utility.NumberFormatter.GetNullInt(this.SequenceTextBox.Text);
+            this.model.Sequence = Utility.NumberFormatter.GetNullInt(this.SequenceTextBox.Text) ?? 0;
             this.model.Name = this.NameTextBox.Text;
-            this.model.UnitPrice = Utility.NumberFormatter.GetNullInt(this.UnitPriceTextBox.Text);
+            this.model.UnitPrice = Utility.NumberFormatter.GetNullInt(this.UnitPriceTextBox.Text) ?? 0;
+
+            if (this.model.Sequence <= 0) { throw new Exception("順番が不適"); }
+            if (string.IsNullOrEmpty(this.model.Name)) { throw new Exception("名称が不適"); }
+            if (this.model.UnitPrice < 0) { throw new Exception("単価が不適"); }
 
             if (this.model.Id == null)
             {

@@ -5,27 +5,40 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FurnitureApp.Contents.Masters.Master00400"
         mc:Ignorable="d"
-        Title="費用項目 Master00400_EditCostItemInfoWindow" Height="450" Width="800">
+        Title="費用項目 Master00400_EditCostItemInfoWindow" Height="200" Width="400"
+        KeyDown="Window_KeyDown"
+        Loaded="Window_Loaded">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="35"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
+            <StackPanel.Resources>
+                <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+                    <Setter Property="Width" Value="50"/>
+                </Style>
+                <Style TargetType="TextBox" BasedOn="{StaticResource NumberTextBox}">
+                    <Setter Property="Width" Value="250"/>
+                    <EventSetter Event="GotFocus" Handler="TextBox_GotFocus"/>
+                </Style>
+            </StackPanel.Resources>
             <StackPanel Orientation="Horizontal">
                 <Label Content="順番"/>
                 <TextBox x:Name="SequenceTextBox"
-                         Width="200"/>
+                         LostFocus="SequenceTextBox_LostFocus"/>
             </StackPanel>
-            <DockPanel>
+            <StackPanel Orientation="Horizontal">
                 <Label Content="名称"
                        DockPanel.Dock="Left"/>
-                <TextBox x:Name="NameTextBox"/>
-            </DockPanel>
+                <TextBox x:Name="NameTextBox"
+                         Style="{StaticResource HiraganaTextBox}"
+                         Width="250"/>
+            </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="単価"/>
                 <TextBox x:Name="UnitPriceTextBox"
-                         Width="200"/>
+                         LostFocus="SequenceTextBox_LostFocus"/>
             </StackPanel>
         </StackPanel>
         <DockPanel Grid.Row="1">
@@ -33,7 +46,8 @@
                     Content="削除"
                     DockPanel.Dock="Left"
                     Width="100"
-                    Click="DeleteButton_Click"/>
+                    Click="DeleteButton_Click"
+                    IsTabStop="False"/>
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right">
                 <Button x:Name="UpdateButton"

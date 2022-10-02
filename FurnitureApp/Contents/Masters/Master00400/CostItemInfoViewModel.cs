@@ -9,14 +9,14 @@ namespace FurnitureApp.Contents.Masters.Master00400
     {
         public string Name { get; }
         public int? Sequence { get; }
-        public int? UnitPrice { get; }
+        public string UnitPrice { get; }
         public CostItemInfo Model { get; }
         public CostItemInfoViewModel(CostItemInfo costItemInfo)
         {
             this.Model = costItemInfo;
             this.Name = costItemInfo.Name;
             this.Sequence = costItemInfo.Sequence;
-            this.UnitPrice = costItemInfo.UnitPrice;
+            this.UnitPrice = $"{costItemInfo.UnitPrice:C}";
         }
     }
 }
