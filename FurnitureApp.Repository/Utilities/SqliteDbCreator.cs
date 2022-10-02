@@ -304,7 +304,6 @@ new MaterialInfo
             product1.TobiraTenitaHikae = 10;
             product1.TobiraGawaitaMokuji = 4;
             product1.TobiraKanMokuji = 2;
-            product1.TobiraShikiriitaMokuji = 4;
             product1.ShikiriitaGawaitaHikae = 0;
             product1.TanaitaGawaitaHikae = 10;
 
@@ -441,7 +440,6 @@ new MaterialInfo
             product2.TobiraTenitaHikae = 10;
             product2.TobiraGawaitaMokuji = 4;
             product2.TobiraKanMokuji = 3;
-            product2.TobiraShikiriitaMokuji = 0;
             product2.ShikiriitaGawaitaHikae = 0;
             product2.TanaitaGawaitaHikae = 10;
 
@@ -625,7 +623,6 @@ TobiraTenitaSukima real,
 TobiraTenitaHikae real,
 TobiraGawaitaMokuji real,
 TobiraKanMokuji real,
-TobiraShikiriitaMokuji real,
 ShikiriitaGawaitaHikae real,
 TanaitaGawaitaHikae real,
 KoguchiPasteUnitPrice real,

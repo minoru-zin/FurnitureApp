@@ -43,7 +43,7 @@ namespace FurnitureApp.Repository.Orders
             get { return name; }
             set { name = value; }
         }
-        private int quantity;
+        private int quantity = 1;
         /// <summary>
         /// 数量
         /// </summary>
@@ -97,7 +97,7 @@ namespace FurnitureApp.Repository.Orders
             get { return fillerR; }
             set { fillerR = value; }
         }
-        private double lvlWidth;
+        private double lvlWidth = 40;
         /// <summary>
         /// LVL
         /// フラッシュ構造の枠の幅
@@ -107,7 +107,7 @@ namespace FurnitureApp.Repository.Orders
             get { return lvlWidth; }
             set { lvlWidth = value; }
         }
-        private double ankoPitch;
+        private double ankoPitch = 300;
         /// <summary>
         /// アンコピッチ
         /// </summary>
@@ -116,7 +116,7 @@ namespace FurnitureApp.Repository.Orders
             get { return ankoPitch; }
             set { ankoPitch = value; }
         }
-        private double daiwaHeight;
+        private double daiwaHeight = 60;
         /// <summary>
         /// 台輪（H）
         /// </summary>
@@ -146,7 +146,7 @@ namespace FurnitureApp.Repository.Orders
             set { tobiraTenitaHikae = value; }
         }
 
-        private double tobiraGawaitaMokuji;
+        private double tobiraGawaitaMokuji = 4;
         /// <summary>
         /// 扉：側板目地
         /// </summary>
@@ -156,7 +156,7 @@ namespace FurnitureApp.Repository.Orders
             set { tobiraGawaitaMokuji = value; }
         }
 
-        private double tobiraKanMokuji;
+        private double tobiraKanMokuji = 3;
         /// <summary>
         /// 扉間目地
         /// </summary>
@@ -166,15 +166,6 @@ namespace FurnitureApp.Repository.Orders
             set { tobiraKanMokuji = value; }
         }
 
-        private double tobiraShikiriitaMokuji;
-        /// <summary>
-        /// 扉：仕切板目地
-        /// </summary>
-        public double TobiraShikiriitaMokuji
-        {
-            get { return tobiraShikiriitaMokuji; }
-            set { tobiraShikiriitaMokuji = value; }
-        }
         private double shikiriitaGawaitaHikae;
         /// <summary>
         /// 仕切板：側板控え
