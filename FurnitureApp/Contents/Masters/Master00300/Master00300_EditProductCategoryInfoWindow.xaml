@@ -30,7 +30,9 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="名称"/>
-                <TextBox x:Name="NameTextBox"/>
+                <TextBox x:Name="NameTextBox"
+                         Style="{StaticResource HiraganaTextBox}"
+                         Width="250"/>
             </StackPanel>
         </StackPanel>
         <DockPanel Grid.Row="1">
