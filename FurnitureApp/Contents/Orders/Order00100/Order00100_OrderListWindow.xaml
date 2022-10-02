@@ -300,11 +300,6 @@
                                             <Label Content="mm"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal">
-                                            <Label Content="扉：仕切板目地"/>
-                                            <TextBlock Name="TobiraShikiriitaMokujiTextBlcok"/>
-                                            <Label Content="mm"/>
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal">
                                             <Label Content="仕切板：側板控え"/>
                                             <TextBlock Name="ShikiriitaGawaitaHikaeTextBlock"/>
                                             <Label Content="mm"/>

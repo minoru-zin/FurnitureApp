@@ -34,7 +34,6 @@ namespace FurnitureApp.Contents.Orders.Order00100
         private CommonData cd = CommonData.GetInstance();
         private ControlFormatter cf = new ControlFormatter();
 
-        private readonly string tempFileDirName = "TempFiles";
         public ObservableCollection<OrderViewModel> OrderViewModels { get; } = new ObservableCollection<OrderViewModel>();
         public ObservableCollection<ProductViewModel> ProductViewModels { get; } = new ObservableCollection<ProductViewModel>();
         public ObservableCollection<DisplayBoardViewModel> BoardViewModels { get; } = new ObservableCollection<DisplayBoardViewModel>();
@@ -215,7 +214,6 @@ namespace FurnitureApp.Contents.Orders.Order00100
             this.TobiraTenitaHikaeTextBlock.Text = $"{p.TobiraTenitaHikae}";
             this.TobiraGawaitaMokujiTextBlock.Text = $"{p.TobiraGawaitaMokuji}";
             this.TobiraKanMokujiTextBlock.Text = $"{p.TobiraKanMokuji}";
-            this.TobiraShikiriitaMokujiTextBlcok.Text = $"{p.TobiraShikiriitaMokuji}";
             this.ShikiriitaGawaitaHikaeTextBlock.Text = $"{p.ShikiriitaGawaitaHikae}";
             this.TanaitaGawaitaHikaeTextBlcok.Text = $"{p.TanaitaGawaitaHikae}";
             this.KoguchiPasteUnitPriceTextBlcok.Text = $"{p.KoguchiPasteUnitPrice}";
@@ -288,7 +286,7 @@ namespace FurnitureApp.Contents.Orders.Order00100
 
                 var orderId = (this.ProductDataGrid.SelectedItem as ProductViewModel).Model.OrderId;
                 var sourceFilePath = this.cd.OrderRepository.GetProductFilePath(orderId, vm.Model.FileName);
-                var destFilePath = Path.Combine(this.tempFileDirName, vm.Model.FileName);
+                var destFilePath = Path.Combine(this.cd.TempFileDirName, vm.Model.FileName);
 
                 Utility.DirectoryCreator.CreateSafely(Path.GetDirectoryName(destFilePath));
 
@@ -374,7 +372,7 @@ namespace FurnitureApp.Contents.Orders.Order00100
         {
             try
             {
-                foreach (var filePath in Directory.GetFiles(this.tempFileDirName)) { File.Delete(filePath); }
+                foreach (var filePath in Directory.GetFiles(this.cd.TempFileDirName)) { File.Delete(filePath); }
             }
             catch (Exception)
             {
