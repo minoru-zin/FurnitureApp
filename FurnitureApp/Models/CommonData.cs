@@ -15,6 +15,7 @@ namespace FurnitureApp.Models
     public class CommonData
     {
         private static CommonData commonData = new CommonData();
+        public readonly string TempFileDirName = "TempFiles";
 
         #region メッセージダイアログ
         /// <summary>
@@ -86,12 +87,6 @@ namespace FurnitureApp.Models
             new DisplayInfo<MokumeDirectionType>(MokumeDirectionType.Length, "→"),
         };
         #endregion
-
-        #region 製作マージン
-        public readonly int FinishMargin = 10;
-
-        #endregion
-
         private CommonData()
         {
             // DB作成
