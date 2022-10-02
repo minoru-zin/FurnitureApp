@@ -30,10 +30,12 @@
                                     Width="*"/>
                 <DataGridTextColumn Header="厚さ"
                                     Binding="{Binding Thickness}"
-                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
+                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"
+                                    MinWidth="60"/>
                 <DataGridTextColumn Header="貼り単価"
                                     Binding="{Binding PasteUnitPrice}"
-                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
+                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"
+                                    MinWidth="60"/>
                 <DataGridTextColumn Header="カットタイプ"
                                     Binding="{Binding CutType}"/>
             </DataGrid.Columns>
