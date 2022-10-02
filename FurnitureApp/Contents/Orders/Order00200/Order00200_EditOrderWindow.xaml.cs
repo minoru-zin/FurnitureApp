@@ -26,34 +26,60 @@ namespace FurnitureApp.Contents.Orders.Order00200
     {
         private NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private CommonData cd = CommonData.GetInstance();
-        public ObservableCollection<ProductViewModel> ProductViewModels { get; } = new ObservableCollection<ProductViewModel>();
-        public ObservableCollection<BoardSizeViewModel> BoardSizeViewModels { get; } = new ObservableCollection<BoardSizeViewModel>();
-        public ObservableCollection<CutSizeViewModel> CutSizeViewModels { get; } = new ObservableCollection<CutSizeViewModel>();
-        public ObservableCollection<StandardBoardCostViewModel> StandardBoardCostViewModels { get; } = new ObservableCollection<StandardBoardCostViewModel>();
+        private ControlFormatter cf = new ControlFormatter();
 
+        public ObservableCollection<ProductViewModel> ProductViewModels { get; } = new ObservableCollection<ProductViewModel>();
+        
         private Dictionary<int?, ProductCategoryInfo> productCateogryInfoDict;
-        private Order order;
+        private Order oldOrder;
         public bool IsChanged = false;
         public Order00200_EditOrderWindow(Order order)
         {
             InitializeComponent();
             this.DataContext = this;
-            this.order = order.Clone();
+            this.oldOrder = order.Clone();
             this.productCateogryInfoDict = this.cd.ProductCategoryInfos.ToDictionary(x => x.Id);
             this.SetOrderToControls();
             this.SetTotalAmount();
+            if (order.Id == null) { this.CreatedDateTextBox.Text = $"{DateTime.Now:d}"; }
+        }
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Enter:
+                    (FocusManager.GetFocusedElement(System.Windows.Window.GetWindow(this)) as System.Windows.FrameworkElement).MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+                    break;
+            }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.CreatedDateTextBox.Focus();
+        }
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            var textBox = e.OriginalSource as System.Windows.Controls.TextBox;
+
+            if (textBox == null) { return; }
+
+            textBox.SelectAll();
+        }
+        private void CreatedDateTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            this.cf.SetDate(sender as TextBox);
         }
         private void SetOrderToControls()
         {
-            this.CreatedDateTextBox.Text = $"{this.order.CreatedDate:d}";
-            this.NameTextBox.Text = this.order.Name;
-            this.ClientNameTextBox.Text = this.order.ClientName;
-            this.DeliveryDateTextBox.Text = $"{this.order.DeliveryDate:d}";
-            this.RemarksTextBox.Text = this.order.Remarks;
+            this.CreatedDateTextBox.Text = $"{this.oldOrder.CreatedDate:d}";
+            this.NameTextBox.Text = this.oldOrder.Name;
+            this.ClientNameTextBox.Text = this.oldOrder.ClientName;
+            this.DeliveryDateTextBox.Text = $"{this.oldOrder.DeliveryDate:d}";
+            this.RemarksTextBox.Text = this.oldOrder.Remarks;
 
-            this.ProductViewModels.AddRange(this.order.Products.Select(x => new ProductViewModel(x, this.productCateogryInfoDict.GetValueOrDefault(x.ProductCategoryInfoId)?.Name)));
+            this.ProductViewModels.AddRange(this.oldOrder.Products.Select(x => new ProductViewModel(x, this.productCateogryInfoDict.GetValueOrDefault(x.ProductCategoryInfoId)?.Name)));
         }
-
+        
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -69,22 +95,27 @@ namespace FurnitureApp.Contents.Orders.Order00200
 
         private void Update()
         {
-            this.order.CreatedDate = Utility.DateTimeFormatter.GetDateTime(this.CreatedDateTextBox.Text);
-            this.order.Name = this.NameTextBox.Text;
-            this.order.ClientName = this.ClientNameTextBox.Text;
-            this.order.DeliveryDate = Utility.DateTimeFormatter.GetDateTime(this.DeliveryDateTextBox.Text);
-            this.order.Remarks = this.RemarksTextBox.Text;
-            this.order.Products = this.ProductViewModels.Select(x => x.Model).ToList();
+            var newOrder = new Order { Id = this.oldOrder.Id };
 
-            if (this.order.Id == null)
+            newOrder.CreatedDate = Utility.DateTimeFormatter.GetDateTime(this.CreatedDateTextBox.Text);
+            newOrder.Name = this.NameTextBox.Text;
+            newOrder.ClientName = this.ClientNameTextBox.Text;
+            newOrder.DeliveryDate = Utility.DateTimeFormatter.GetDateTime(this.DeliveryDateTextBox.Text);
+            newOrder.Remarks = this.RemarksTextBox.Text;
+            newOrder.Products = this.ProductViewModels.Select(x => x.Model).ToList();
+
+            if (newOrder.CreatedDate == null) { throw new Exception("作成日が不適"); }
+            if (string.IsNullOrEmpty(newOrder.Name)) { throw new Exception("物件名が不適"); }
+
+            if (newOrder.Id == null)
             {
                 // add
-                this.cd.OrderRepository.Insert(this.order);
+                this.cd.OrderRepository.Insert(newOrder);
             }
             else
             {
                 // update
-                this.cd.OrderRepository.Update(this.order);
+                this.cd.OrderRepository.Update(newOrder);
             }
 
             this.IsChanged = true;
@@ -98,7 +129,24 @@ namespace FurnitureApp.Contents.Orders.Order00200
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                this.Delete();
+            }
+            catch (Exception ex)
+            {
+                this.logger.Error(ex);
+                this.cd.DialogService.ShowMessage(ex.Message);
+            }
+        }
 
+        private void Delete()
+        {
+            if (!this.cd.DialogService.ShowComfirmationMessageDialog("本当に削除しますか？")) { return; }
+
+            this.cd.OrderRepository.Delete(this.oldOrder);
+            this.IsChanged = true;
+            this.Close();
         }
 
         private void AddProductButton_Click(object sender, RoutedEventArgs e)
@@ -151,7 +199,7 @@ namespace FurnitureApp.Contents.Orders.Order00200
         }
         private void SetTotalAmount()
         {
-            this.TotalAmountTextBlock.Text = $"総額 {this.ProductViewModels.Sum(x => x.TotalAmount)}円";
+            this.TotalAmountTextBlock.Text = $"総額 {this.ProductViewModels.Sum(x => x.TotalAmount):#,0}円";
         }
     }
 }

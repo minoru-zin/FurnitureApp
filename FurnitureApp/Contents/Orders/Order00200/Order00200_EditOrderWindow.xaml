@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FurnitureApp.Contents.Orders.Order00200"
         mc:Ignorable="d"
-        Title="受注作成 Order00200_EditOrderWindow" Height="700" Width="1000">
+        Title="受注作成 Order00200_EditOrderWindow" Height="700" Width="1000"
+        KeyDown="Window_KeyDown"
+        Loaded="Window_Loaded">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -18,27 +20,43 @@
         <DockPanel Grid.Row="0"
                     Grid.Column="0">
             <StackPanel DockPanel.Dock="Top">
+                <StackPanel.Resources>
+                    <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+                        <Setter Property="Width" Value="60"/>
+                    </Style>
+                    <Style TargetType="TextBox" BasedOn="{StaticResource NumberTextBox}">
+                        <EventSetter Event="GotFocus" Handler="TextBox_GotFocus"/>
+                    </Style>
+                </StackPanel.Resources>
                 <DockPanel>
                     <Label DockPanel.Dock="Left" Content="作成日"/>
-                    <TextBox x:Name="CreatedDateTextBox"/>
+                    <TextBox x:Name="CreatedDateTextBox"
+                             LostFocus="CreatedDateTextBox_LostFocus"/>
                 </DockPanel>
                 <DockPanel>
                     <Label DockPanel.Dock="Left" Content="物件名"/>
-                    <TextBox x:Name="NameTextBox"/>
+                    <TextBox x:Name="NameTextBox"
+                             Style="{StaticResource HiraganaTextBox}"
+                             GotFocus="TextBox_GotFocus"/>
                 </DockPanel>
                 <DockPanel>
                     <Label DockPanel.Dock="Left" Content="提出先"/>
-                    <TextBox x:Name="ClientNameTextBox"/>
+                    <TextBox x:Name="ClientNameTextBox"
+                             Style="{StaticResource HiraganaTextBox}"
+                             GotFocus="TextBox_GotFocus"/>
                 </DockPanel>
                 <DockPanel>
                     <Label DockPanel.Dock="Left" Content="納品日"/>
-                    <TextBox x:Name="DeliveryDateTextBox"/>
+                    <TextBox x:Name="DeliveryDateTextBox"
+                             LostFocus="CreatedDateTextBox_LostFocus"/>
                 </DockPanel>
             </StackPanel>
             <DockPanel>
                 <Label DockPanel.Dock="Top" Content="備考"/>
                 <TextBox x:Name="RemarksTextBox"
-                         AcceptsReturn="True"/>
+                         AcceptsReturn="True"
+                         Style="{StaticResource HiraganaTextBox}"
+                         GotFocus="TextBox_GotFocus"/>
             </DockPanel>
         </DockPanel>
         <Grid Grid.Row="0"
@@ -67,19 +85,29 @@
                                         Width="*"
                                         Binding="{Binding Name}"/>
                     <DataGridTextColumn Header="W"
-                                        Binding="{Binding Width}"/>
+                                        MinWidth="40"
+                                        Binding="{Binding Width}"
+                                        ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                     <DataGridTextColumn Header="D"
-                                        Binding="{Binding Depth}"/>
+                                        MinWidth="40"
+                                        Binding="{Binding Depth}"
+                                        ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                     <DataGridTextColumn Header="H"
-                                        Binding="{Binding Height}"/>
-                    <DataGridTextColumn Header="単価"
-                                        Binding="{Binding UnitPriceText}"/>
+                                        MinWidth="40"
+                                        Binding="{Binding Height}"
+                                        ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                     <DataGridTextColumn Header="数量"
                                         Binding="{Binding Quantity}"
-                                        Width="35"/>
+                                        Width="35"
+                                        ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
+                    <DataGridTextColumn Header="単価"
+                                        MinWidth="55"
+                                        Binding="{Binding UnitPriceText}"
+                                        ElementStyle="{StaticResource RightGridCellTextBlock}"/>
                     <DataGridTextColumn Header="合計"
                                         Binding="{Binding TotalAmountText}"
-                                        Width="100"/>
+                                        Width="60"
+                                        ElementStyle="{StaticResource RightGridCellTextBlock}"/>
                 </DataGrid.Columns>
             </DataGrid>
             <TextBlock Grid.Row="2"
@@ -94,7 +122,8 @@
             <Button Content="削除"
                     Name="DeleteButton"
                     Width="100"
-                    Click="DeleteButton_Click"/>
+                    Click="DeleteButton_Click"
+                    IsTabStop="False"/>
         </StackPanel>
         <StackPanel Grid.Row="1"
                     Grid.Column="2"
