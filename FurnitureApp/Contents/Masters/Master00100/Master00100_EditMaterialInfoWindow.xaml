@@ -32,7 +32,8 @@
                 <Label Content="名称"/>
                 <TextBox x:Name="NameTextBox"
                          Style="{StaticResource HiraganaTextBox}"
-                         Width="250"/>
+                         Width="250"
+                         GotFocus="TextBox_GotFocus"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="厚さ"/>
