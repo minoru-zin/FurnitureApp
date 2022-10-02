@@ -80,10 +80,23 @@
                       MouseDoubleClick="ProductDataGrid_MouseDoubleClick">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="カテゴリ"
-                                        Binding="{Binding ProductCategoryName}"/>
+                                        Width="68"
+                                        Binding="{Binding ProductCategoryName}">
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+                                <Setter Property="ToolTip" Value="{Binding ProductCategoryName}"/>
+                            </Style>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
                     <DataGridTextColumn Header="名称"
                                         Width="*"
-                                        Binding="{Binding Name}"/>
+                                        Binding="{Binding Name}">
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+                                <Setter Property="ToolTip" Value="{Binding Name}"/>
+                            </Style>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
                     <DataGridTextColumn Header="W"
                                         MinWidth="40"
                                         Binding="{Binding Width}"
