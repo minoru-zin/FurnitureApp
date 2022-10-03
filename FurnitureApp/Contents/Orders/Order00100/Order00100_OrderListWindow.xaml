@@ -254,10 +254,15 @@
                                                     ElementStyle="{StaticResource RightGridCellTextBlock}"/>
                                 </DataGrid.Columns>
                             </DataGrid>
-                            <TextBlock Grid.Row="1"
-                                       x:Name="TotalAmountTextBlock2"
+                            <DockPanel Grid.Row="1">
+                                <Button Content="製品情報出力"
+                                        Name="DisplayProductInfoButton"
+                                        Click="DisplayProductInfoButton_Click"/>
+                                <TextBlock x:Name="TotalAmountTextBlock2"
                                        FontSize="25"
                                        TextAlignment="Right"/>
+                            </DockPanel>
+                            
                         </Grid>
                         
                         <TabControl Grid.Row="1">

@@ -8,6 +8,7 @@ using FurnitureApp.Models;
 using FurnitureApp.Repository.Orders;
 using FurnitureApp.Repository.ProductCategoryInfos;
 using FurnitureApp.Repository.Utilities;
+using FurnitureApp.Utility;
 using FurnitureApp.Utility.Extensions;
 using System;
 using System.Collections.Generic;
@@ -100,7 +101,7 @@ namespace FurnitureApp.Contents.Orders.Order00100
                 return;
             }
 
-            var orders = this.cd.OrderRepository.SelectFromCreatedDate((DateTime)createdDateF , (DateTime)createdDateT).OrderByDescending(x => x.CreatedDate).ToList();
+            var orders = this.cd.OrderRepository.SelectFromCreatedDate((DateTime)createdDateF, (DateTime)createdDateT).OrderByDescending(x => x.CreatedDate).ToList();
 
             this.OrderViewModels.Clear();
 
@@ -228,8 +229,8 @@ namespace FurnitureApp.Contents.Orders.Order00100
             this.FinishMarginTextBlock.Text = $"{p.FinishMargin}";
             this.CostTotalAmountTextBlock.Text = $"{p.Costs.Sum(x => x.TotalAmount):#,0}";
             this.CostTotalAmountTextBlock2.Text = $"合計 {p.Costs.Sum(x => x.TotalAmount):#,0}円";
-            this.BoardCostTotalAmountTextBlock.Text = $"{p.BoardCosts.Sum(x => x.TotalAmount) / p.Quantity :#,0}";
-            this.BoardCostTotalAmountTextBlock2.Text = $"合計 {p.BoardCosts.Sum(x => x.TotalAmount):#,0}円 ( {p.BoardCosts.Sum(x => x.TotalAmount) / p.Quantity :#,0}円 / 台　)";
+            this.BoardCostTotalAmountTextBlock.Text = $"{p.BoardCosts.Sum(x => x.TotalAmount) / p.Quantity:#,0}";
+            this.BoardCostTotalAmountTextBlock2.Text = $"合計 {p.BoardCosts.Sum(x => x.TotalAmount):#,0}円 ( {p.BoardCosts.Sum(x => x.TotalAmount) / p.Quantity:#,0}円 / 台　)";
             this.KoguchiPasteCostTotalAmountTextBlock.Text = $"{p.KoguchiPasteCosts.Sum(x => x.TotalAmount):#,0}";
             this.KoguchiPasteCostTotalAmountTextBlock2.Text = $"合計 {p.KoguchiPasteCosts.Sum(x => x.TotalAmount):#,0}円";
             this.FinishCutCostTotalAmountTextBlock.Text = $"{p.FinishCutCosts.Sum(x => x.TotalAmount):#,0}";
@@ -478,15 +479,573 @@ namespace FurnitureApp.Contents.Orders.Order00100
 
             var name = (this.OrderDataGrid.SelectedItem as OrderViewModel)?.Name;
 
-            var filePath = Path.Combine(this.cd.TempFileDirName,  $"{name}_原価計算.csv");
+            var filePath = Path.Combine(this.cd.TempFileDirName, $"{name}_原価計算.csv");
 
-            Utility.FileWriter.WriteLine(string.Join("\r\n", lines),filePath, false);
+            Utility.FileWriter.WriteLine(string.Join("\r\n", lines), filePath, false);
 
             var app = new ProcessStartInfo();
             app.FileName = filePath;
             app.UseShellExecute = true;
 
             Process.Start(app);
+        }
+
+        private void DisplayProductInfoButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                this.DisplayProductInfo();
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                this.cd.DialogService.ShowMessage(ex.Message);
+            }
+        }
+        private void DisplayProductInfo()
+        {
+            var orderVm = this.OrderDataGrid.SelectedItem as OrderViewModel;
+            var productVm = this.ProductDataGrid.SelectedItem as ProductViewModel;
+
+            if (orderVm == null || productVm == null)
+            {
+                this.cd.DialogService.ShowMessage("製品を選択してください");
+                return;
+            }
+
+            var o = orderVm.Model;
+            var p = productVm.Model;
+
+            var lines = new List<string>();
+            var fields = new List<string>();
+
+            fields.Add($@"""受注仕様""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""作成日""");
+            fields.Add($@"""""");
+            fields.Add($@"""{o.CreatedDate:d}""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""物件名""");
+            fields.Add($@"""""");
+            fields.Add($@"""{o.Name}""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""提出先""");
+            fields.Add($@"""""");
+            fields.Add($@"""{o.ClientName}""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""納品日""");
+            fields.Add($@"""""");
+            fields.Add($@"""{o.DeliveryDate:d}""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""備考""");
+            fields.Add($@"""""");
+            fields.Add($@"""{o.Remarks}""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""製品仕様""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""カテゴリ""");
+            fields.Add($@"""""");
+            fields.Add($@"""{productVm.ProductCategoryName}""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""製品名""");
+            fields.Add($@"""""");
+            fields.Add($@"""{productVm.Name}""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""数量""");
+            fields.Add($@"""""");
+            fields.Add($@"""{productVm.Quantity}""");
+            fields.Add($@"""台""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""本体寸法(W)""");
+            fields.Add($@"""""");
+            fields.Add($@"""{productVm.Width}""");
+            fields.Add($@"""mm""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""本体寸法(D)""");
+            fields.Add($@"""""");
+            fields.Add($@"""{productVm.Depth}""");
+            fields.Add($@"""mm""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""本体寸法(H)""");
+            fields.Add($@"""""");
+            fields.Add($@"""{productVm.Height}""");
+            fields.Add($@"""mm""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""フィラL(W)""");
+            fields.Add($@"""""");
+            fields.Add($@"""{p.FillerL}""");
+            fields.Add($@"""mm""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""フィラR(W)""");
+            fields.Add($@"""""");
+            fields.Add($@"""{p.FillerR}""");
+            fields.Add($@"""mm""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""LVL(W)""");
+            fields.Add($@"""""");
+            fields.Add($@"""{p.LvlWidth}""");
+            fields.Add($@"""mm""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""アンコピッチ""");
+            fields.Add($@"""""");
+            fields.Add($@"""{p.AnkoPitch}""");
+            fields.Add($@"""mm""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""台輪(H)""");
+            fields.Add($@"""""");
+            fields.Add($@"""{p.DaiwaHeight}""");
+            fields.Add($@"""mm""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""扉:天板隙間""");
+            fields.Add($@"""""");
+            fields.Add($@"""{p.TobiraTenitaSukima}""");
+            fields.Add($@"""mm""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""扉:天板控え""");
+            fields.Add($@"""""");
+            fields.Add($@"""{p.TobiraTenitaHikae}""");
+            fields.Add($@"""mm""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""扉:側板目地""");
+            fields.Add($@"""""");
+            fields.Add($@"""{p.TobiraGawaitaMokuji}""");
+            fields.Add($@"""mm""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""扉間木目地""");
+            fields.Add($@"""""");
+            fields.Add($@"""{p.TobiraKanMokuji}""");
+            fields.Add($@"""mm""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""木口貼り単価""");
+            fields.Add($@"""""");
+            fields.Add($@"""{p.KoguchiPasteUnitPrice}""");
+            fields.Add($@"""mm/円""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""仕上カット単価""");
+            fields.Add($@"""""");
+            fields.Add($@"""{p.FinishCutUnitPrice}""");
+            fields.Add($@"""mm/円""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""製作幅""");
+            fields.Add($@"""""");
+            fields.Add($@"""{p.FinishMargin}""");
+            fields.Add($@"""mm""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""部位""");
+            fields.Add($@"""製作縦""");
+            fields.Add($@"""製作横""");
+            fields.Add($@"""仕上縦""");
+            fields.Add($@"""仕上横""");
+            fields.Add($@"""厚さ""");
+            fields.Add($@"""数量""");
+            lines.Add(string.Join(",", fields));
+
+            foreach (var (vm, i) in this.BoardViewModels.WithIndex())
+            {
+                fields.Clear();
+                fields.Add($@"""{vm.BoardName}""");
+                fields.Add($@"""{this.BoardViewModels2[i].Length}""");
+                fields.Add($@"""{this.BoardViewModels2[i].Width}""");
+                fields.Add($@"""{vm.Length}""");
+                fields.Add($@"""{vm.Width}""");
+                fields.Add($@"""{this.BoardViewModels2[i].Thickness}""");
+                fields.Add($@"""{vm.Quantity}""");
+                lines.Add(string.Join(",", fields));
+            }
+
+            #region 板取計算
+            fields.Clear();
+            fields.Add($@"""""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""板取計算""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""名称""");
+            fields.Add($@"""縦""");
+            fields.Add($@"""横""");
+            fields.Add($@"""数量""");
+            fields.Add($@"""単価""");
+            fields.Add($@"""小計""");
+            lines.Add(string.Join(",", fields));
+
+            foreach (var (vm, i) in this.BoardCostViewModels.WithIndex())
+            {
+                fields.Clear();
+                fields.Add($@"""{vm.Name}""");
+                fields.Add($@"""{vm.Length}""");
+                fields.Add($@"""{vm.Width}""");
+                fields.Add($@"""{vm.Quantity}""");
+                fields.Add($@"""{vm.UnitPrice}""");
+                fields.Add($@"""{vm.TotalAmount}""");
+                lines.Add(string.Join(",", fields));
+            }
+            fields.Clear();
+            fields.Add($@"""""");
+            fields.Add($@"""""");
+            fields.Add($@"""""");
+            fields.Add($@"""""");
+            fields.Add($@"""合計""");
+            fields.Add($@"""{p.BoardCosts.Sum(x => x.TotalAmount):C}""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""""");
+            fields.Add($@"""""");
+            fields.Add($@"""""");
+            fields.Add($@"""""");
+            fields.Add($@"""一台当たり""");
+            fields.Add($@"""{p.BoardCosts.Sum(x => x.TotalAmount) / p.Quantity:C}""");
+            lines.Add(string.Join(",", fields));
+
+            #endregion
+
+            #region 木口貼り
+            fields.Clear();
+            fields.Add($@"""""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""木口貼り""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""部位""");
+            fields.Add($@"""縦""");
+            fields.Add($@"""横""");
+            fields.Add($@"""箇所""");
+            fields.Add($@"""長さ""");
+            fields.Add($@"""数量""");
+            fields.Add($@"""単価""");
+            fields.Add($@"""小計""");
+            lines.Add(string.Join(",", fields));
+
+            foreach (var (vm, i) in this.KoguchiPasteCostViewModels.WithIndex())
+            {
+                fields.Clear();
+                fields.Add($@"""{vm.BoardName}""");
+                fields.Add($@"""{vm.Length}""");
+                fields.Add($@"""{vm.Width}""");
+                fields.Add($@"""{vm.KoguchiMakeupArea}""");
+                fields.Add($@"""{vm.UnitLength}""");
+                fields.Add($@"""{vm.Quantity}""");
+                fields.Add($@"""{vm.UnitPrice}""");
+                fields.Add($@"""{vm.TotalAmount}""");
+                lines.Add(string.Join(",", fields));
+            }
+            fields.Clear();
+            fields.Add($@"""""");
+            fields.Add($@"""""");
+            fields.Add($@"""""");
+            fields.Add($@"""""");
+            fields.Add($@"""""");
+            fields.Add($@"""""");
+            fields.Add($@"""合計""");
+            fields.Add($@"""{p.KoguchiPasteCosts.Sum(x => x.TotalAmount):C}""");
+            lines.Add(string.Join(",", fields));
+
+            #endregion
+
+            #region 仕上カット
+            fields.Clear();
+            fields.Add($@"""""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""仕上カット""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""部位""");
+            fields.Add($@"""縦""");
+            fields.Add($@"""横""");
+            fields.Add($@"""外周""");
+            fields.Add($@"""数量""");
+            fields.Add($@"""単価""");
+            fields.Add($@"""小計""");
+            lines.Add(string.Join(",", fields));
+
+            foreach (var (vm, i) in this.FinishCutCostViewModels.WithIndex())
+            {
+                fields.Clear();
+                fields.Add($@"""{vm.BoardName}""");
+                fields.Add($@"""{vm.Length}""");
+                fields.Add($@"""{vm.Width}""");
+                fields.Add($@"""{vm.UnitLength}""");
+                fields.Add($@"""{vm.Quantity}""");
+                fields.Add($@"""{vm.UnitPrice}""");
+                fields.Add($@"""{vm.TotalAmount}""");
+                lines.Add(string.Join(",", fields));
+            }
+            fields.Clear();
+            fields.Add($@"""""");
+            fields.Add($@"""""");
+            fields.Add($@"""""");
+            fields.Add($@"""""");
+            fields.Add($@"""""");
+            fields.Add($@"""合計""");
+            fields.Add($@"""{p.FinishCutCosts.Sum(x => x.TotalAmount):C}""");
+            lines.Add(string.Join(",", fields));
+
+            #endregion
+
+            #region 化粧板貼り
+            fields.Clear();
+            fields.Add($@"""""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""化粧板貼り""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""部位""");
+            fields.Add($@"""縦""");
+            fields.Add($@"""横""");
+            fields.Add($@"""面積""");
+            fields.Add($@"""数量""");
+            fields.Add($@"""単価""");
+            fields.Add($@"""小計""");
+            lines.Add(string.Join(",", fields));
+
+            foreach (var (vm, i) in this.MakeupBoardPasteCostViewModels.WithIndex())
+            {
+                fields.Clear();
+                fields.Add($@"""{vm.BoardName}""");
+                fields.Add($@"""{vm.Length}""");
+                fields.Add($@"""{vm.Width}""");
+                fields.Add($@"""{vm.UnitLength}""");
+                fields.Add($@"""{vm.Quantity}""");
+                fields.Add($@"""{vm.UnitPrice}""");
+                fields.Add($@"""{vm.TotalAmount}""");
+                lines.Add(string.Join(",", fields));
+            }
+            fields.Clear();
+            fields.Add($@"""""");
+            fields.Add($@"""""");
+            fields.Add($@"""""");
+            fields.Add($@"""""");
+            fields.Add($@"""""");
+            fields.Add($@"""合計""");
+            fields.Add($@"""{p.MakeupBoardPasteCosts.Sum(x => x.TotalAmount):C}""");
+            lines.Add(string.Join(",", fields));
+
+            #endregion
+
+            #region 塗装
+            fields.Clear();
+            fields.Add($@"""""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""塗装""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""部位""");
+            fields.Add($@"""縦""");
+            fields.Add($@"""横""");
+            fields.Add($@"""箇所""");
+            fields.Add($@"""面積""");
+            fields.Add($@"""数量""");
+            fields.Add($@"""単価""");
+            fields.Add($@"""小計""");
+            lines.Add(string.Join(",", fields));
+
+            foreach (var (vm, i) in this.PaintCostViewModels.WithIndex())
+            {
+                fields.Clear();
+                fields.Add($@"""{vm.BoardName}""");
+                fields.Add($@"""{vm.Length}""");
+                fields.Add($@"""{vm.Width}""");
+                fields.Add($@"""{vm.PaintArea}""");
+                fields.Add($@"""{vm.UnitLength}""");
+                fields.Add($@"""{vm.Quantity}""");
+                fields.Add($@"""{vm.UnitPrice}""");
+                fields.Add($@"""{vm.TotalAmount}""");
+                lines.Add(string.Join(",", fields));
+            }
+            fields.Clear();
+            fields.Add($@"""""");
+            fields.Add($@"""""");
+            fields.Add($@"""""");
+            fields.Add($@"""""");
+            fields.Add($@"""""");
+            fields.Add($@"""""");
+            fields.Add($@"""合計""");
+            fields.Add($@"""{p.PaintCosts.Sum(x => x.TotalAmount):C}""");
+            lines.Add(string.Join(",", fields));
+
+            #endregion
+
+            #region 費用
+            fields.Clear();
+            fields.Add($@"""""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""費用""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""項目""");
+            fields.Add($@"""数量""");
+            fields.Add($@"""単価""");
+            fields.Add($@"""小計""");
+            lines.Add(string.Join(",", fields));
+
+            foreach (var (vm, i) in this.CostViewModels.WithIndex())
+            {
+                fields.Clear();
+                fields.Add($@"""{vm.Name}""");
+                fields.Add($@"""{vm.Quantity}""");
+                fields.Add($@"""{vm.UnitPrice}""");
+                fields.Add($@"""{vm.TotalAmount}""");
+                lines.Add(string.Join(",", fields));
+            }
+            fields.Clear();
+            fields.Add($@"""""");
+            fields.Add($@"""""");
+            fields.Add($@"""合計""");
+            fields.Add($@"""{p.Costs.Sum(x => x.TotalAmount):C}""");
+            lines.Add(string.Join(",", fields));
+
+            #endregion
+
+            fields.Clear();
+            fields.Add($@"""""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""総合計金額""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""""");
+            fields.Add($@"""合計""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""板取""");
+            fields.Add($@"""{p.BoardCosts.Sum(x => x.TotalAmount) / p.Quantity:C}""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""木口貼り""");
+            fields.Add($@"""{p.KoguchiPasteCosts.Sum(x => x.TotalAmount):C}""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""仕上カット""");
+            fields.Add($@"""{p.FinishCutCosts.Sum(x => x.TotalAmount):C}""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""化粧板貼り""");
+            fields.Add($@"""{p.MakeupBoardPasteCosts.Sum(x => x.TotalAmount):C}""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""塗装""");
+            fields.Add($@"""{p.PaintCosts.Sum(x => x.TotalAmount):C}""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""費用""");
+            fields.Add($@"""{p.Costs.Sum(x => x.TotalAmount):C}""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""総合計""");
+            fields.Add($@"""{p.GetUnitPrice():C}""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""総合計 × 台数""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""総合計""");
+            fields.Add($@"""台数""");
+            fields.Add($@"""総合計 × 台数""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""{p.GetUnitPrice():C}""");
+            fields.Add($@"""{p.Quantity}""");
+            fields.Add($@"""{p.GetUnitPrice() * p.Quantity:C}""");
+            lines.Add(string.Join(",", fields));
+
+            var filePath = Path.Combine(this.cd.TempFileDirName, $"{o.Name}_{p.Name}_原価計算詳細.csv");
+
+            Utility.FileWriter.WriteLine(string.Join("\r\n", lines), filePath, false);
+
+            var app = new ProcessStartInfo();
+            app.FileName = filePath;
+            app.UseShellExecute = true;
+
+            Process.Start(app);
+
         }
     }
 }
