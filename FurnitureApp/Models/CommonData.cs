@@ -81,6 +81,27 @@ namespace FurnitureApp.Models
             new DisplayInfo<KoguchiMakeupArea>(KoguchiMakeupArea.All, "全面"),
         };
         #endregion
+        #region 塗装箇所
+        public List<DisplayInfo<PaintArea>> PaintAreas { get; } = new List<DisplayInfo<PaintArea>>()
+        {
+            new DisplayInfo<PaintArea>(PaintArea.Nashi, "無し"),
+            new DisplayInfo<PaintArea>(PaintArea.OneSide_KoguchiFront, "片面_木口(正面)"),
+            new DisplayInfo<PaintArea>(PaintArea.OneSide_KoguchiBothSide, "片面_木口(左右)"),
+            new DisplayInfo<PaintArea>(PaintArea.OneSide_KoguchiFrontAndOneSide, "片面_木口(正面_左or右)"),
+            new DisplayInfo<PaintArea>(PaintArea.OneSide_KoguchiFrontAndBothSide, "片面_木口(正面_左右)"),
+            new DisplayInfo<PaintArea>(PaintArea.OneSide_KoguchiAll, "片面_木口(全面)"),
+            new DisplayInfo<PaintArea>(PaintArea.BothSide_KoguchiFront, "両面_木口(正面)"),
+            new DisplayInfo<PaintArea>(PaintArea.BothSide_KoguchiBothSide, "両面_木口(左右)"),
+            new DisplayInfo<PaintArea>(PaintArea.BothSide_KoguchiFrontAndOneSide, "両面_木口(正面_左or右)"),
+            new DisplayInfo<PaintArea>(PaintArea.BothSide_KoguchiFrontAndBothSide, "両面_木口(正面_左右)"),
+            new DisplayInfo<PaintArea>(PaintArea.BothSide_KoguchiAll, "両面_木口(全面)"),
+            new DisplayInfo<PaintArea>(PaintArea.KoguchiFront, "木口(正面)"),
+            new DisplayInfo<PaintArea>(PaintArea.KoguchiBothSide, "木口(左右)"),
+            new DisplayInfo<PaintArea>(PaintArea.KoguchiFrontAndOneSide, "木口(正面_左or右)"),
+            new DisplayInfo<PaintArea>(PaintArea.KoguchiFrontAndBothSide, "木口(正面_左右)"),
+            new DisplayInfo<PaintArea>(PaintArea.KoguchiAll, "木口(全面)"),
+        };
+        #endregion
 
         #region 木目方向
         public List<DisplayInfo<MokumeDirectionType>> MokumeDirectionTypes { get; } = new List<DisplayInfo<MokumeDirectionType>>
@@ -111,7 +132,7 @@ namespace FurnitureApp.Models
             this.ProductCategoryInfos.Clear();
             this.CostItemInfos.Clear();
             this.PaintCostItemInfos.Clear();
-            
+
 
             this.MaterialInfos.AddRange(this.MaterialInfoRepository.SelectAll());
             this.MaterialSizeInfos.AddRange(this.MaterialSizeInfoRepository.SelectAll());
@@ -119,7 +140,7 @@ namespace FurnitureApp.Models
             this.CostItemInfos.AddRange(this.CostItemInfoRepository.SelectAll());
             this.PaintCostItemInfos.AddRange(this.PaintCostItemInfoRepository.SelectAll());
 
-            
+
             this.MaterialInfoDict = this.MaterialInfos.ToDictionary(x => x.Id);
         }
     }

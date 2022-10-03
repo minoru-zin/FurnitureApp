@@ -254,6 +254,7 @@ namespace FurnitureApp.Repository.Orders
             clone.KoguchiPasteCosts = this.KoguchiPasteCosts.Select(x => x.Clone()).ToList();
             clone.FinishCutCosts = this.FinishCutCosts.Select(x => x.Clone()).ToList();
             clone.MakeupBoardPasteCosts = this.MakeupBoardPasteCosts.Select(x => x.Clone()).ToList();
+            clone.PaintCosts = this.PaintCosts.Select(x => x.Clone()).ToList();
             clone.Costs = this.Costs.Select(x => x.Clone()).ToList();
             clone.ProductFiles = this.ProductFiles.Select(x => x.Clone()).ToList();
             return clone;
@@ -265,9 +266,10 @@ namespace FurnitureApp.Repository.Orders
             var koguchiCost = this.KoguchiPasteCosts.Sum(x => x.TotalAmount) ?? 0;
             var finishCutCost = this.FinishCutCosts.Sum(x => x.TotalAmount) ?? 0;
             var makeCost = this.MakeupBoardPasteCosts.Sum(x => x.TotalAmount) ?? 0;
+            var paintCost = this.PaintCosts.Sum(x => x.TotalAmount) ?? 0;
             var cost = this.Costs.Sum(x => x.TotalAmount) ?? 0;
 
-            return boardCost + koguchiCost + finishCutCost + makeCost + cost;
+            return boardCost + koguchiCost + finishCutCost + makeCost + paintCost +  cost;
         }
     }
 }

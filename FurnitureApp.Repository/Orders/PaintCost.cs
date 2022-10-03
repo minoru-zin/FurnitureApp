@@ -53,6 +53,26 @@ namespace FurnitureApp.Repository.Orders
             get { return width; }
             set { width = value; }
         }
+        private double? thickness;
+        /// <summary>
+        /// 厚さ
+        /// </summary>
+        public double? Thickness
+        {
+            get { return thickness; }
+            set { thickness = value; }
+        }
+
+        private string paintName;
+        /// <summary>
+        /// 塗装名
+        /// </summary>
+        public string PaintName
+        {
+            get { return paintName; }
+            set { paintName = value; }
+        }
+
         private PaintArea paintArea;
         /// <summary>
         /// 塗装箇所

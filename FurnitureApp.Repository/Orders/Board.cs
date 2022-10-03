@@ -51,6 +51,20 @@ namespace FurnitureApp.Repository.Orders
             get { return koguchiKeshouAreaCode; }
             set { koguchiKeshouAreaCode = value; }
         }
+        private int? paintCostItemInfoId;
+
+        public int? PaintCostItemInfoId
+        {
+            get { return paintCostItemInfoId; }
+            set { paintCostItemInfoId = value; }
+        }
+        private PaintArea paintArea;
+
+        public PaintArea PaintArea
+        {
+            get { return paintArea; }
+            set { paintArea = value; }
+        }
 
         public List<BoardLayer> BoardLayers { get; set; } = new List<BoardLayer>();
 

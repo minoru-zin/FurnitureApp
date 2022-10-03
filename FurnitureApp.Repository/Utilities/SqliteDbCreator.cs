@@ -663,6 +663,8 @@ CREATE TABLE Boards (
     BoardCode integer,
     Quantity integer,
     KoguchiKeshouAreaCode integer,
+    PaintCostItemInfoId integer,
+    PaintArea integer,
     PRIMARY KEY(Id AUTOINCREMENT)
 )
 ";
@@ -803,7 +805,31 @@ CREATE INDEX IX_MakeupBoardPasteCosts ON MakeupBoardPasteCosts(ProductId)
 ";
                 c.Execute(sql);
                 #endregion
+                #region PaintCosts
+                sql = $@"
+CREATE TABLE PaintCosts (
+    Id  integer,
+    ProductId integer,
+    BoardTypeCode integer,
+    Length real,
+    Width real,
+    Thickness real,
+    PaintName text,
+    PaintArea integer,
+    UnitLength real,
+    Quantity integer,
+    UnitPrice real,
+    TotalAmount integer,
+    PRIMARY KEY(Id AUTOINCREMENT)
+)
+";
+                c.Execute(sql);
 
+                sql = $@"
+CREATE INDEX IX_PaintCosts ON KoguchiPasteCosts(ProductId)
+";
+                c.Execute(sql);
+                #endregion
                 #region ProductFiles
                 sql = $@"
 CREATE TABLE ProductFiles (

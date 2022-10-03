@@ -30,6 +30,8 @@ namespace FurnitureApp.Contents.Orders.Order00300
         public BoardType BoardType { get; }
         public List<DisplayInfo<MaterialInfo>> MaterialInfos { get; } = new List<DisplayInfo<MaterialInfo>>();
         public List<DisplayInfo<KoguchiMakeupArea>> KoguchiKeshouAreas { get; }
+        public List<DisplayInfo<int?>> PaintCostItemInfos { get; } = new List<DisplayInfo<int?>> { new DisplayInfo<int?>(null, "無し") };
+        public List<DisplayInfo<PaintArea>> PaintAreas { get; }
         public List<DisplayInfo<MokumeDirectionType>> MokumeDirectionTypes { get; }
         public ObservableCollection<BoardLayerViewModel> ViewModels { get; } = new ObservableCollection<BoardLayerViewModel>();
 
@@ -42,9 +44,12 @@ namespace FurnitureApp.Contents.Orders.Order00300
             this.MaterialInfos.AddRange(this.cd.MaterialInfos.Select(x => new DisplayInfo<MaterialInfo>(x, x.Name)));
             this.BoardTypeTextBlock.Text = this.cd.BoardTypes.First(x => x.Code == boardType).DisplayName;
             this.KoguchiKeshouAreas = this.cd.KoguchiKeshouAreas;
+            this.PaintCostItemInfos.AddRange(this.cd.PaintCostItemInfos.Select(x => new DisplayInfo<int?>(x.Id, x.Name)));
+            this.PaintAreas = this.cd.PaintAreas;
             this.MokumeDirectionTypes = this.cd.MokumeDirectionTypes;
 
             this.KoguchiKeshouAreaComboBox.SelectedValue = KoguchiMakeupArea.Nashi;
+            this.PaintAreaComboBox.SelectedValue = PaintArea.Nashi;
         }
         public BoardView()
         {
@@ -152,6 +157,8 @@ namespace FurnitureApp.Contents.Orders.Order00300
         {
             this.QuantityTextBox.Text = $"{board.Quantity}";
             this.KoguchiKeshouAreaComboBox.SelectedValue = board.KoguchiKeshouAreaCode;
+            this.PaintCostItemInfoComboBox.SelectedValue = board.PaintCostItemInfoId;
+            this.PaintAreaComboBox.SelectedValue = board.PaintArea;
             this.ViewModels.Clear();
             this.ViewModels.AddRange(board.BoardLayers.Select(x => new BoardLayerViewModel(x, this.cd.MaterialInfos.FirstOrDefault(m => m.Id == x.MaterialInfoId))));
             this.CalSumThickness();
@@ -180,6 +187,8 @@ namespace FurnitureApp.Contents.Orders.Order00300
                 BoardCode = this.BoardType,
                 Quantity = quantity,
                 KoguchiKeshouAreaCode = (KoguchiMakeupArea)this.KoguchiKeshouAreaComboBox.SelectedValue,
+                PaintCostItemInfoId = (int?)this.PaintCostItemInfoComboBox.SelectedValue,
+                PaintArea = (PaintArea)this.PaintAreaComboBox.SelectedValue,
                 BoardLayers = boardLayers,
             };
 

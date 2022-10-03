@@ -421,6 +421,11 @@ namespace FurnitureApp.Contents.Orders.Order00300
             this.Product.MakeupBoardPasteCosts.Clear();
             this.Product.MakeupBoardPasteCosts.AddRange(makeups);
 
+            // 塗装コスト
+            var paints = new PaintCostCalculator().GetPaintCosts(this.Product);
+            this.Product.PaintCosts.Clear();
+            this.Product.PaintCosts.AddRange(paints);
+
             // コスト
             this.Product.Costs.Clear();
             this.Product.Costs.AddRange(this.CostViewModels.Select(x => x.Model));
@@ -432,7 +437,5 @@ namespace FurnitureApp.Contents.Orders.Order00300
         {
             this.Close();
         }
-
-
     }
 }

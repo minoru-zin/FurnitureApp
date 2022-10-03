@@ -596,6 +596,46 @@
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </TabItem>
+                            <TabItem Header="塗装">
+                                <DataGrid ItemsSource="{Binding PaintCostViewModels}">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="部位"
+                                                            Binding="{Binding BoardName}"/>
+                                        <DataGridTextColumn Header="縦"
+                                                            MinWidth="60"
+                                                            Binding="{Binding Length}"
+                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
+                                        <DataGridTextColumn Header="横"
+                                                            MinWidth="60"
+                                                            Binding="{Binding Width}"
+                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
+                                        <DataGridTextColumn Header="厚さ"
+                                                            MinWidth="60"
+                                                            Binding="{Binding Thickness}"
+                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
+                                        <DataGridTextColumn Header="名称"
+                                                            Binding="{Binding Name}"/>
+                                        <DataGridTextColumn Header="箇所"
+                                                            Binding="{Binding PaintArea}"/>
+                                        <DataGridTextColumn Header="面積"
+                                                            MinWidth="60"
+                                                            Binding="{Binding UnitLength}"
+                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
+                                        <DataGridTextColumn Header="数量"
+                                                            MinWidth="35"
+                                                            Binding="{Binding Quantity}"
+                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
+                                        <DataGridTextColumn Header="単価"
+                                                            MinWidth="60"
+                                                            Binding="{Binding UnitPrice}"
+                                                            ElementStyle="{StaticResource RightGridCellTextBlock}"/>
+                                        <DataGridTextColumn Header="合計"
+                                                            MinWidth="60"
+                                                            Binding="{Binding TotalAmount}"
+                                                            ElementStyle="{StaticResource RightGridCellTextBlock}"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </TabItem>
                         </TabControl>
                     </Grid>
                 </TabItem>

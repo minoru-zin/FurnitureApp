@@ -8,10 +8,10 @@
              d:DesignHeight="450" d:DesignWidth="800"
              Name="Root"
              Background="LightGray">
-    <Grid Width="250"
-          Height="205">
+    <Grid Width="300"
+          Height="255">
         <Grid.RowDefinitions>
-            <RowDefinition Height="47"/>
+            <RowDefinition Height="90"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -20,77 +20,110 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Row="0"
               Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="43"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="160"/>
+                <ColumnDefinition Width="212"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock x:Name="BoardTypeTextBlock"
-                           FontSize="15"
-                           Width="73"
-                           FontWeight="Bold"/>
+                <DockPanel >
                     <StackPanel Orientation="Horizontal"
-                            VerticalAlignment="Center">
+                            VerticalAlignment="Center"
+                                DockPanel.Dock="Right">
                         <TextBlock Text="厚さ"/>
                         <TextBlock Name="SumThicknessTextBlock"
                            Width="25"
                            TextAlignment="Right"/>
                         <TextBlock Text="mm"/>
                     </StackPanel>
-                </StackPanel>
-                <DockPanel Grid.Row="1"
-                   Grid.Column="0">
+                    <TextBlock x:Name="BoardTypeTextBlock"
+                           FontSize="15"
+                           Width="73"
+                           FontWeight="Bold"
+                               HorizontalAlignment="Left"/>
+
+                </DockPanel>
+                <DockPanel Margin="0 1 0 0">
                     <TextBlock Text="木口化粧"
-                       VerticalAlignment="Center"
-                   DockPanel.Dock="Left"/>
+                               VerticalAlignment="Center"
+                               DockPanel.Dock="Left"/>
                     <ComboBox ItemsSource="{Binding KoguchiKeshouAreas}"
-                      FontSize="13"
-                      DisplayMemberPath="DisplayName"
-                      SelectedValuePath="Code"
-                      x:Name="KoguchiKeshouAreaComboBox"
-                      Width="112"
-                      HorizontalAlignment="Left"/>
+                              FontSize="13"
+                              DisplayMemberPath="DisplayName"
+                              SelectedValuePath="Code"
+                              x:Name="KoguchiKeshouAreaComboBox"
+                              />
                 </DockPanel>
             </StackPanel>
+            <DockPanel Grid.Row="1"
+                        Grid.ColumnSpan="2">
+                <DockPanel DockPanel.Dock="Top">
+                    <TextBlock Text="塗装名"
+                               Width="48"
+                               VerticalAlignment="Center"/>
+                    <ComboBox ItemsSource="{Binding PaintCostItemInfos}"
+                              DisplayMemberPath="DisplayName"
+                              SelectedValuePath="Code"
+                              FontSize="13"
+                              x:Name="PaintCostItemInfoComboBox"
+                              />
+                </DockPanel>
+                <DockPanel>
+                    <DockPanel DockPanel.Dock="Left">
+                        <TextBlock Text="塗装箇所"
+                               VerticalAlignment="Center"/>
+                        <ComboBox ItemsSource="{Binding PaintAreas}"
+                              DisplayMemberPath="DisplayName"
+                              SelectedValuePath="Code"
+                              FontSize="13"
+                              x:Name="PaintAreaComboBox"
+                              />
+                    </DockPanel>
+                </DockPanel>
+                
+            </DockPanel>
             <StackPanel Grid.Column="1"
-                        Orientation="Horizontal">
+                        Orientation="Horizontal"
+                        VerticalAlignment="Top">
                 <TextBox Name="QuantityTextBox"
-                         FontSize="30"
+                         FontSize="28"
                          Width="40"
                          TextAlignment="Center"
-                         Height="45"
+                         Height="40"
                          Margin="0 0 1 0"
                          VerticalAlignment="Center"
                          TextChanged="QuantityTextBox_TextChanged"
                          Style="{StaticResource NumberTextBox}"/>
                 <StackPanel>
-                    <Button FontSize="20"
-                            Margin="0"
+                    <Button FontSize="15"
+                            Margin="0 1 0 1"
                             Padding="0"
-                            Height="23"
+                            Height="20"
                             Width="20"
                             Name="CountUpButton"
                             Click="CountUpButton_Click">
                         <Button.Content>
                             <StackPanel VerticalAlignment="Bottom"
                                         >
-                                <TextBlock Text="+"
+                                <TextBlock Text="△"
                                        Margin="0"/>
                             </StackPanel>
                         </Button.Content>
                     </Button>
-                    <Button FontSize="20"
+                    <Button FontSize="15"
                             Margin="0"
                             Padding="0"
-                            Height="23"
+                            Height="20"
                             Width="20"
                             Name="CountDownButton"
                             Click="CountDownButton_Click">
                         <Button.Content>
                             <StackPanel VerticalAlignment="Bottom"
                                         >
-                                <TextBlock Text="-"
+                                <TextBlock Text="▽"
                                        Margin="0"/>
                             </StackPanel>
                         </Button.Content>

@@ -47,6 +47,7 @@ namespace FurnitureApp.Contents.Orders.Order00100
         public ObservableCollection<DisplayKoguchiPasteCostViewModel> KoguchiPasteCostViewModels { get; } = new ObservableCollection<DisplayKoguchiPasteCostViewModel>();
         public ObservableCollection<DisplayFinishCutCostViewModel> FinishCutCostViewModels { get; } = new ObservableCollection<DisplayFinishCutCostViewModel>();
         public ObservableCollection<DisplayMakeupBoardPasteCostViewModel> MakeupBoardPasteCostViewModels { get; } = new ObservableCollection<DisplayMakeupBoardPasteCostViewModel>();
+        public ObservableCollection<DisplayPaintCostViewModel> PaintCostViewModels { get; } = new ObservableCollection<DisplayPaintCostViewModel>();
 
 
         private Dictionary<int?, ProductCategoryInfo> productCateogryInfoDict;
@@ -118,6 +119,7 @@ namespace FurnitureApp.Contents.Orders.Order00100
             this.KoguchiPasteCostViewModels.Clear();
             this.FinishCutCostViewModels.Clear();
             this.MakeupBoardPasteCostViewModels.Clear();
+            this.PaintCostViewModels.Clear();
 
         }
         private void RefreshOrdersButton_Click(object sender, RoutedEventArgs e)
@@ -265,6 +267,9 @@ namespace FurnitureApp.Contents.Orders.Order00100
 
             this.MakeupBoardPasteCostViewModels.Clear();
             this.MakeupBoardPasteCostViewModels.AddRange(p.MakeupBoardPasteCosts.Select(x => new DisplayMakeupBoardPasteCostViewModel(x)));
+
+            this.PaintCostViewModels.Clear();
+            this.PaintCostViewModels.AddRange(p.PaintCosts.Select(x => new DisplayPaintCostViewModel(x)));
         }
 
         private void BoardDataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
