@@ -2,6 +2,7 @@
 using FurnitureApp.Repository.MaterialInfos;
 using FurnitureApp.Repository.MaterialSizeInfos;
 using FurnitureApp.Repository.Orders;
+using FurnitureApp.Repository.PaintCostItemInfos;
 using FurnitureApp.Repository.ProductCategoryInfos;
 using FurnitureApp.Repository.Utilities;
 using System;
@@ -30,6 +31,7 @@ namespace FurnitureApp.Models
         public MaterialSizeInfoRepository MaterialSizeInfoRepository = new MaterialSizeInfoRepository();
         public ProductCategoryInfoRepository ProductCategoryInfoRepository = new ProductCategoryInfoRepository();
         public CostItemInfoRepository CostItemInfoRepository = new CostItemInfoRepository();
+        public PaintCostItemInfoRepository PaintCostItemInfoRepository = new PaintCostItemInfoRepository();
         #endregion
 
         #region マスタ
@@ -37,6 +39,7 @@ namespace FurnitureApp.Models
         public List<MaterialSizeInfo> MaterialSizeInfos { get; } = new List<MaterialSizeInfo>();
         public List<ProductCategoryInfo> ProductCategoryInfos { get; } = new List<ProductCategoryInfo>();
         public List<CostItemInfo> CostItemInfos { get; } = new List<CostItemInfo>();
+        public List<PaintCostItemInfo> PaintCostItemInfos { get; } = new List<PaintCostItemInfo>();
 
         public Dictionary<int?, MaterialInfo> MaterialInfoDict { get; private set; }
         #endregion
@@ -107,12 +110,16 @@ namespace FurnitureApp.Models
             this.MaterialSizeInfos.Clear();
             this.ProductCategoryInfos.Clear();
             this.CostItemInfos.Clear();
+            this.PaintCostItemInfos.Clear();
+            
 
             this.MaterialInfos.AddRange(this.MaterialInfoRepository.SelectAll());
             this.MaterialSizeInfos.AddRange(this.MaterialSizeInfoRepository.SelectAll());
             this.ProductCategoryInfos.AddRange(this.ProductCategoryInfoRepository.SelectAll());
             this.CostItemInfos.AddRange(this.CostItemInfoRepository.SelectAll());
+            this.PaintCostItemInfos.AddRange(this.PaintCostItemInfoRepository.SelectAll());
 
+            
             this.MaterialInfoDict = this.MaterialInfos.ToDictionary(x => x.Id);
         }
     }

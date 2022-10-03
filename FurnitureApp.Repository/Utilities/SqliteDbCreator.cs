@@ -2,6 +2,7 @@
 using FurnitureApp.Repository.MaterialInfos;
 using FurnitureApp.Repository.MaterialSizeInfos;
 using FurnitureApp.Repository.Orders;
+using FurnitureApp.Repository.PaintCostItemInfos;
 using FurnitureApp.Repository.ProductCategoryInfos;
 using System;
 using System.Collections.Generic;
@@ -573,10 +574,21 @@ new MaterialInfo
             
             orders.Add(order);
 
+            var paintCostInfos = new List<PaintCostItemInfo>
+            {
+                new PaintCostItemInfo
+                {
+                    Sequence = 1,
+                    Name = "塗装1",
+                    UnitPrice = 150,
+                }
+            };
+
             new MaterialInfoRepository().Insert(materialInfos);
             new MaterialSizeInfoRepository().Insert(materialSizeInfos);
             new ProductCategoryInfoRepository().Insert(productCategoryInfos);
             new OrderRepository().Insert(orders);
+            new PaintCostItemInfoRepository().Insert(paintCostInfos);
         }
 
         private void CreateTables()
@@ -861,6 +873,19 @@ CREATE TABLE ProductCategoryInfos (
                 #region CostItemInfos
                 sql = $@"
 CREATE TABLE CostItemInfos (
+    Id  integer,
+    Name text,
+    Sequence  integer,
+    UnitPrice integer,
+    PRIMARY KEY(Id AUTOINCREMENT)
+)
+";
+                c.Execute(sql);
+                #endregion
+
+                #region PaintCostItemInfos
+                sql = $@"
+CREATE TABLE PaintCostItemInfos (
     Id  integer,
     Name text,
     Sequence  integer,
