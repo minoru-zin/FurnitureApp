@@ -61,6 +61,7 @@ namespace FurnitureApp.Contents.Masters.Master00500
         {
             this.SequenceTextBox.Text = $"{this.model.Sequence}";
             this.NameTextBox.Text = this.model.Name;
+            this.UnitPriceTextBox.Text = $"{this.model.UnitPrice}";
         }
 
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
