@@ -1,6 +1,7 @@
 ﻿using FurnitureApp.Models;
 using FurnitureApp.Repository.MaterialInfos;
 using FurnitureApp.Repository.MaterialSizeInfos;
+using FurnitureApp.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -37,14 +38,18 @@ namespace FurnitureApp.Contents.Masters.Master00200
         }
         private void DisplayInfos()
         {
-            this.ViewModels.Clear();
 
             this.cd.RefreshMasters();
 
+            var vms = new List<MaterialSizeInfoViewModel>();
+
             foreach (var m in this.cd.MaterialSizeInfos)
             {
-                this.ViewModels.Add(new MaterialSizeInfoViewModel(m, this.materialDict));
+                vms.Add(new MaterialSizeInfoViewModel(m, this.materialDict));
             }
+            
+            this.ViewModels.Clear();
+            this.ViewModels.AddRange(vms.OrderBy(x => x.MaterialName).ThenBy(x => x.Name));
         }
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
