@@ -1,0 +1,38 @@
+﻿<Window x:Class="FurnitureApp.Contents.Masters.Master00500.Master00500_PaintCostItemInfoListWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FurnitureApp.Contents.Masters.Master00400"
+        mc:Ignorable="d"
+        Title="塗装費用項目一覧 Master00500_PaintCostItemInfoListWindow" Height="500" Width="500">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0"
+                    HorizontalAlignment="Right">
+            <Button Content="＋"
+                    Width="35"
+                    Name="AddButton"
+                    Click="AddButton_Click"/>
+        </StackPanel>
+        <DataGrid Grid.Row="1" ItemsSource="{Binding ViewModels}"
+                  Name="DataGrid"
+                  MouseDoubleClick="DataGrid_MouseDoubleClick">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="順番"
+                                    Binding="{Binding Sequence}"
+                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
+                <DataGridTextColumn Header="名称"
+                                    Binding="{Binding Name}"
+                                    Width="*"/>
+                <DataGridTextColumn Header="単価"
+                                    Binding="{Binding UnitPrice}"
+                                    MinWidth="60"
+                                    ElementStyle="{StaticResource RightGridCellTextBlock}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
