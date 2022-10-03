@@ -2,6 +2,7 @@
 using FurnitureApp.Contents.Masters.Master00200;
 using FurnitureApp.Contents.Masters.Master00300;
 using FurnitureApp.Contents.Masters.Master00400;
+using FurnitureApp.Contents.Masters.Master00500;
 using FurnitureApp.Contents.Orders.Order00200;
 using FurnitureApp.Models;
 using FurnitureApp.Repository.Orders;
@@ -364,7 +365,20 @@ namespace FurnitureApp.Contents.Orders.Order00100
                 this.cd.DialogService.ShowMessage(ex.Message);
             }
         }
-
+        private void ShowPaintCostItemInfosButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var w = new Master00500_PaintCostItemInfoListWindow();
+                w.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                w.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                this.cd.DialogService.ShowMessage(ex.Message);
+            }
+        }
 
         #endregion
 
@@ -440,13 +454,15 @@ namespace FurnitureApp.Contents.Orders.Order00100
 
             var name = (this.OrderDataGrid.SelectedItem as OrderViewModel)?.Name;
 
-            var fileName = $"{name}_原価計算.csv";
+            var filePath = Path.Combine(this.cd.TempFileDirName,  $"{name}_原価計算.csv");
 
-            Utility.FileWriter.WriteLine(string.Join("\r\n", lines),
-                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), fileName), false);
+            Utility.FileWriter.WriteLine(string.Join("\r\n", lines),filePath, false);
 
-            this.cd.DialogService.ShowMessage($"デスクトップに「{fileName}」を出力しました");
+            var app = new ProcessStartInfo();
+            app.FileName = filePath;
+            app.UseShellExecute = true;
 
+            Process.Start(app);
         }
     }
 }

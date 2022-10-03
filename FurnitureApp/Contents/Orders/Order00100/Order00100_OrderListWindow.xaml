@@ -122,6 +122,10 @@
                         Width="120"
                         Name="ShowCostItemInfosButton"
                         Click="ShowCostItemInfosButton_Click"/>
+                <Button Content="塗装費用項目マスタ"
+                        Width="135"
+                        Name="ShowPaintCostItemInfosButton"
+                        Click="ShowPaintCostItemInfosButton_Click"/>
             </StackPanel>
             <TabControl Grid.Row="1">
                 <TabItem Header="原価計算">
