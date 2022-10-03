@@ -1,14 +1,34 @@
 ﻿using FurnitureApp.Repository.Orders;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace FurnitureApp.Contents.Orders.Order00400
 {
-    public class CostViewModel
+    public class CostViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void NotifyPropertyChanged(string PropertyName)
+        {
+            var e = new PropertyChangedEventArgs(PropertyName);
+            PropertyChanged?.Invoke(this, e);
+        }
+
         public string Name { get; set; }
-        public string UnitPrice { get; set; }
+
+        private string unitPrice;
+
+        public string UnitPrice
+        {
+            get { return unitPrice; }
+            set
+            {
+                unitPrice = value;
+                this.NotifyPropertyChanged(nameof(UnitPrice));
+            }
+        }
         public string Quantity { get; set; }
         public string TotalAmount { get; set; }
         public Cost Model
@@ -18,12 +38,12 @@ namespace FurnitureApp.Contents.Orders.Order00400
                 var unitPrice = Utility.NumberFormatter.GetNullInt(this.UnitPrice);
                 var quantity = Utility.NumberFormatter.GetNullInt(this.Quantity);
 
-                if(string.IsNullOrEmpty(this.Name) || unitPrice == null | quantity == null)
+                if (string.IsNullOrEmpty(this.Name) || unitPrice == null | quantity == null)
                 {
                     throw new Exception("未入力項目が存在します");
                 }
 
-                if(unitPrice <= 0 || quantity <= 0)
+                if (unitPrice <= 0 || quantity <= 0)
                 {
                     throw new Exception("0より大きい値を入力してください");
                 }

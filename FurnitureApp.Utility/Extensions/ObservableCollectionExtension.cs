@@ -15,11 +15,5 @@ namespace FurnitureApp.Utility.Extensions
                 source.Add(item);
             }
         }
-        public static void Update<T>(this ObservableCollection<T> source)
-        {
-            var temps = source.ToList();
-            source.Clear();
-            source.AddRange(temps);
-        }
     }
 }

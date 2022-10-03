@@ -120,6 +120,8 @@ namespace FurnitureApp.Contents.Orders.Order00100
             this.FinishCutCostViewModels.Clear();
             this.MakeupBoardPasteCostViewModels.Clear();
             this.PaintCostViewModels.Clear();
+            this.TotalAmountTextBlock.Text = "";
+            this.TotalAmountTextBlock2.Text = "";
 
         }
         private void RefreshOrdersButton_Click(object sender, RoutedEventArgs e)
@@ -175,6 +177,8 @@ namespace FurnitureApp.Contents.Orders.Order00100
 
                 this.ProductViewModels.Clear();
                 this.ProductViewModels.AddRange(vm.Model.Products.Select(x => new ProductViewModel(x, this.productCateogryInfoDict.GetValueOrDefault(x.ProductCategoryInfoId)?.Name)));
+                this.TotalAmountTextBlock.Text = $"総額 {this.ProductViewModels.Sum(x => x.TotalAmount):#,0}円";
+                this.TotalAmountTextBlock2.Text = $"総額 {this.ProductViewModels.Sum(x => x.TotalAmount):#,0}円";
             }
             catch (Exception ex)
             {
@@ -222,10 +226,25 @@ namespace FurnitureApp.Contents.Orders.Order00100
             this.KoguchiPasteUnitPriceTextBlcok.Text = $"{p.KoguchiPasteUnitPrice}";
             this.FinishCutUnitPriceTextBlock.Text = $"{p.FinishCutUnitPrice}";
             this.FinishMarginTextBlock.Text = $"{p.FinishMargin}";
+            this.CostTotalAmountTextBlock.Text = $"{p.Costs.Sum(x => x.TotalAmount):#,0}";
+            this.CostTotalAmountTextBlock2.Text = $"合計 {p.Costs.Sum(x => x.TotalAmount):#,0}円";
+            this.BoardCostTotalAmountTextBlock.Text = $"{p.BoardCosts.Sum(x => x.TotalAmount) / p.Quantity :#,0}";
+            this.BoardCostTotalAmountTextBlock2.Text = $"合計 {p.BoardCosts.Sum(x => x.TotalAmount):#,0}円 ( {p.BoardCosts.Sum(x => x.TotalAmount) / p.Quantity :#,0}円 / 台　)";
+            this.KoguchiPasteCostTotalAmountTextBlock.Text = $"{p.KoguchiPasteCosts.Sum(x => x.TotalAmount):#,0}";
+            this.KoguchiPasteCostTotalAmountTextBlock2.Text = $"合計 {p.KoguchiPasteCosts.Sum(x => x.TotalAmount):#,0}円";
+            this.FinishCutCostTotalAmountTextBlock.Text = $"{p.FinishCutCosts.Sum(x => x.TotalAmount):#,0}";
+            this.FinishCutCostTotalAmountTextBlock2.Text = $"合計 {p.FinishCutCosts.Sum(x => x.TotalAmount):#,0}円";
+            this.MakeupBoardPasteCostTotalAmountTextBlock.Text = $"{p.MakeupBoardPasteCosts.Sum(x => x.TotalAmount):#,0}";
+            this.MakeupBoardPasteCostTotalAmountTextBlock2.Text = $"合計 {p.MakeupBoardPasteCosts.Sum(x => x.TotalAmount):#,0}円";
+            this.PaintCostTotalAmountTextBlock.Text = $"{p.PaintCosts.Sum(x => x.TotalAmount):#,0}";
+            this.PaintCostTotalAmountTextBlock2.Text = $"合計 {p.PaintCosts.Sum(x => x.TotalAmount):#,0}円";
+            this.ProductUnitPriceTextBlock.Text = $"{p.GetUnitPrice():#,0}";
+
 
             var boardSizes = new BoardSizeCalculator(p).GetBoardSizes();
 
             this.BoardViewModels.Clear();
+            this.BoardLayerViewModels.Clear();
 
             foreach (var boardType in this.cd.BoardTypes.Select(x => x.Code))
             {

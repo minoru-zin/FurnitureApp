@@ -115,8 +115,6 @@ namespace FurnitureApp.Contents.Orders.Order00400
             if (costItemInfo == null) { return; }
             vm.Name = costItemInfo.Name;
             vm.UnitPrice = $"{costItemInfo.UnitPrice}";
-
-            this.ViewModels.Update();
         }
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {

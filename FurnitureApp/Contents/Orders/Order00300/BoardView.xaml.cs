@@ -107,13 +107,11 @@ namespace FurnitureApp.Contents.Orders.Order00300
 
             if (index == 0) { return; }
 
-            var clone = this.ViewModels.ToList()[index];
-
             this.ViewModels.Remove(vm);
 
-            this.ViewModels.Insert(index - 1, clone);
+            this.ViewModels.Insert(index - 1, vm);
 
-            this.BoardLayerDataGrid.SelectedItem = clone;
+            this.BoardLayerDataGrid.SelectedItem = vm;
         }
 
         private void DownButton_Click(object sender, RoutedEventArgs e)
@@ -142,11 +140,9 @@ namespace FurnitureApp.Contents.Orders.Order00300
 
             if (vm == null) { return; }
 
-            vm.PasteUnitPrice = $"{vm.MaterialInfo.PasteUnitPrice}";
+            vm.PasteUnitPrice = $"{vm.MaterialInfo?.PasteUnitPrice}";
 
             this.CalSumThickness();
-
-            this.ViewModels.Update();
         }
 
         private void CalSumThickness()
