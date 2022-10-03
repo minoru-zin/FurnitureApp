@@ -17,9 +17,29 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Contents\Masters\Master00500\Master00500_PaintCostItemInfoListWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Contents\Masters\Master00500\Master00500_EditPaintCostItemInfoWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Contents\Masters\Master00500\Master00500_PaintCostItemInfoListWindow.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Contents\Masters\Master00500\Master00500_EditPaintCostItemInfoWindow.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 
 </Project>
