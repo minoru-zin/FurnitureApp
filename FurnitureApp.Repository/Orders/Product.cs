@@ -234,6 +234,10 @@ namespace FurnitureApp.Repository.Orders
         /// </summary>
         public List<MakeupBoardPasteCost> MakeupBoardPasteCosts { get; set; } = new List<MakeupBoardPasteCost>();
         /// <summary>
+        /// 塗装コスト
+        /// </summary>
+        public List<PaintCost> PaintCosts { get; set; } = new List<PaintCost>();
+        /// <summary>
         /// コストリスト
         /// </summary>
         public List<Cost> Costs { get; set; } = new List<Cost>();

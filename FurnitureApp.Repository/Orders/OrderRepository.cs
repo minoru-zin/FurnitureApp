@@ -32,6 +32,7 @@ namespace FurnitureApp.Repository.Orders
                 var koguchiPasteCostDao = new KoguchiPasteCostDao(c, null);
                 var finishCutCostDao = new FinishCutCostDao(c, null);
                 var makeupBoardPasteCostDao = new MakeupBoardPasteCostDao(c, null);
+                var paintCostDao = new PaintCostDao(c, null);
                 var costDao = new CostDao(c, null);
                 var productFilePathDao = new ProductFileDao(c, null);
 
@@ -39,7 +40,7 @@ namespace FurnitureApp.Repository.Orders
                 {
                     this.SetOrderProperties(order,
                         productDao, boardDao, boardLayerDao,
-                        boardCostDao, koguchiPasteCostDao, finishCutCostDao, makeupBoardPasteCostDao, costDao, productFilePathDao);
+                        boardCostDao, koguchiPasteCostDao, finishCutCostDao, makeupBoardPasteCostDao, paintCostDao, costDao, productFilePathDao);
                 }
             });
 
@@ -47,7 +48,7 @@ namespace FurnitureApp.Repository.Orders
         }
         private void SetOrderProperties(Order order,
             ProductDao productDao, BoardDao boardDao, BoardLayerDao boardLayerDao,
-            BoardCostDao boardCostDao, KoguchiPasteCostDao koguchiPasteCostDao, FinishCutCostDao finishCutCostDao, MakeupBoardPasteCostDao makeupBoardPasteCostDao, CostDao costDao, ProductFileDao productFilePathDao)
+            BoardCostDao boardCostDao, KoguchiPasteCostDao koguchiPasteCostDao, FinishCutCostDao finishCutCostDao, MakeupBoardPasteCostDao makeupBoardPasteCostDao, PaintCostDao paintCostDao, CostDao costDao, ProductFileDao productFilePathDao)
         {
             order.Products = productDao.SelectByOrderId((int)order.Id).ToList();
 
@@ -64,6 +65,7 @@ namespace FurnitureApp.Repository.Orders
                 product.KoguchiPasteCosts = koguchiPasteCostDao.SelectByProductId((int)product.Id).ToList();
                 product.FinishCutCosts = finishCutCostDao.SelectByProductId((int)product.Id).ToList();
                 product.MakeupBoardPasteCosts = makeupBoardPasteCostDao.SelectByProductId((int)product.Id).ToList();
+                product.PaintCosts = paintCostDao.SelectByProductId((int)product.Id).ToList();
                 product.Costs = costDao.SelectByProductId((int)product.Id).ToList();
                 product.ProductFiles = productFilePathDao.SelectByProductId((int)product.Id).ToList();
             }
@@ -83,12 +85,13 @@ namespace FurnitureApp.Repository.Orders
                 var koguchiPasteCostDao = new KoguchiPasteCostDao(c, null);
                 var finishCutCostDao = new FinishCutCostDao(c, null);
                 var makeupBoardPasteCostDao = new MakeupBoardPasteCostDao(c, null);
+                var paintCostDao = new PaintCostDao(c, null);
                 var costDao = new CostDao(c, null);
                 var productFilePathDao = new ProductFileDao(c, null);
 
                 this.SetOrderProperties(order,
                         productDao, boardDao, boardLayerDao,
-                        boardCostDao, koguchiPasteCostDao, finishCutCostDao, makeupBoardPasteCostDao, costDao, productFilePathDao);
+                        boardCostDao, koguchiPasteCostDao, finishCutCostDao, makeupBoardPasteCostDao,  paintCostDao, costDao, productFilePathDao);
             });
 
             return order;
@@ -110,6 +113,7 @@ namespace FurnitureApp.Repository.Orders
                 var koguchiPasteCostDao = new KoguchiPasteCostDao(c, t);
                 var finishCutCostDao = new FinishCutCostDao(c, t);
                 var makeupBoardPasteCostDao = new MakeupBoardPasteCostDao(c, t);
+                var paintCostDao = new PaintCostDao(c, null);
                 var costDao = new CostDao(c, t);
                 var productFilePathDao = new ProductFileDao(c, t);
 
@@ -120,7 +124,7 @@ namespace FurnitureApp.Repository.Orders
 
                     this.InsertOrderProperties(order,
                         productDao, boardDao, boardLayerDao,
-                        boardCostDao, koguchiPasteCostDao, finishCutCostDao, makeupBoardPasteCostDao, costDao, productFilePathDao);
+                        boardCostDao, koguchiPasteCostDao, finishCutCostDao, makeupBoardPasteCostDao, paintCostDao,  costDao, productFilePathDao);
                 }
 
                 foreach (var order in orders)
@@ -139,7 +143,7 @@ namespace FurnitureApp.Repository.Orders
         }
         private void InsertOrderProperties(Order order,
             ProductDao productDao, BoardDao boardDao, BoardLayerDao boardLayerDao,
-            BoardCostDao boardCostDao, KoguchiPasteCostDao koguchiPasteCostDao, FinishCutCostDao finishCutCostDao, MakeupBoardPasteCostDao makeupBoardPasteCostDao, CostDao costDao, ProductFileDao productFileDao)
+            BoardCostDao boardCostDao, KoguchiPasteCostDao koguchiPasteCostDao, FinishCutCostDao finishCutCostDao, MakeupBoardPasteCostDao makeupBoardPasteCostDao,PaintCostDao paintCostDao, CostDao costDao, ProductFileDao productFileDao)
         {
             order.Products.ForEach(x => x.OrderId = order.Id);
 
@@ -181,6 +185,11 @@ namespace FurnitureApp.Repository.Orders
                     cost.ProductId = productId;
                     makeupBoardPasteCostDao.Insert(cost);
                 }
+                foreach(var cost in product.PaintCosts)
+                {
+                    cost.ProductId = productId;
+                    paintCostDao.Insert(cost);
+                }
                 foreach (var cost in product.Costs)
                 {
                     cost.ProductId = productId;
@@ -210,6 +219,7 @@ namespace FurnitureApp.Repository.Orders
                 var koguchiPasteCostDao = new KoguchiPasteCostDao(c, t);
                 var finishCutCostDao = new FinishCutCostDao(c, t);
                 var makeupBoardPasteCostDao = new MakeupBoardPasteCostDao(c, t);
+                var paintCostDao = new PaintCostDao(c, null);
                 var costDao = new CostDao(c, t);
                 var productFilePathDao = new ProductFileDao(c, t);
 
@@ -220,12 +230,12 @@ namespace FurnitureApp.Repository.Orders
 
                     this.DeleteOrderProperties(oldOrder,
                         productDao, boardDao, boardLayerDao,
-                        boardCostDao, koguchiPasteCostDao, finishCutCostDao, makeupBoardPasteCostDao, costDao, productFilePathDao);
+                        boardCostDao, koguchiPasteCostDao, finishCutCostDao, makeupBoardPasteCostDao, paintCostDao, costDao, productFilePathDao);
                     orderDao.Update(order);
 
                     this.InsertOrderProperties(order,
                         productDao, boardDao, boardLayerDao,
-                        boardCostDao, koguchiPasteCostDao, finishCutCostDao, makeupBoardPasteCostDao, costDao, productFilePathDao);
+                        boardCostDao, koguchiPasteCostDao, finishCutCostDao, makeupBoardPasteCostDao, paintCostDao, costDao, productFilePathDao);
                 }
 
                 foreach (var order in orders)
@@ -269,6 +279,7 @@ namespace FurnitureApp.Repository.Orders
                 var koguchiPasteCostDao = new KoguchiPasteCostDao(c, t);
                 var finishCutCostDao = new FinishCutCostDao(c, t);
                 var makeupBoardPasteCostDao = new MakeupBoardPasteCostDao(c, t);
+                var paintCostDao = new PaintCostDao(c, null);
                 var costDao = new CostDao(c, t);
                 var productFileDao = new ProductFileDao(c, t);
 
@@ -276,7 +287,7 @@ namespace FurnitureApp.Repository.Orders
                 {
                     orderDao.DeleteById((int)order.Id);
                     this.DeleteOrderProperties(order, productDao, boardDao, boardLayerDao,
-                        boardCostDao, koguchiPasteCostDao, finishCutCostDao, makeupBoardPasteCostDao, costDao, productFileDao);
+                        boardCostDao, koguchiPasteCostDao, finishCutCostDao, makeupBoardPasteCostDao, paintCostDao, costDao, productFileDao);
                 }
 
                 foreach (var order in orders)
@@ -290,7 +301,7 @@ namespace FurnitureApp.Repository.Orders
             });
         }
         private void DeleteOrderProperties(Order order, ProductDao productDao, BoardDao boardDao, BoardLayerDao boardLayerDao,
-            BoardCostDao boardCostDao, KoguchiPasteCostDao koguchiPasteCostDao, FinishCutCostDao finishCutCostDao, MakeupBoardPasteCostDao makeupBoardPasteCostDao, CostDao costDao, ProductFileDao productFileDao)
+            BoardCostDao boardCostDao, KoguchiPasteCostDao koguchiPasteCostDao, FinishCutCostDao finishCutCostDao, MakeupBoardPasteCostDao makeupBoardPasteCostDao, PaintCostDao paintCostDao, CostDao costDao, ProductFileDao productFileDao)
         {
             productDao.DeleteByOrderId((int)order.Id);
 
@@ -307,6 +318,7 @@ namespace FurnitureApp.Repository.Orders
                 koguchiPasteCostDao.DeleteByProductId((int)product.Id);
                 finishCutCostDao.DeleteByProductId((int)product.Id);
                 makeupBoardPasteCostDao.DeleteByProductId((int)product.Id);
+                paintCostDao.DeleteByProductId((int)product.Id);
                 costDao.DeleteByProductId((int)product.Id);
                 productFileDao.DeleteByProductId((int)product.Id);
             }

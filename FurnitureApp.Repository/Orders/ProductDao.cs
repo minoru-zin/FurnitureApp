@@ -15,6 +15,7 @@ namespace FurnitureApp.Repository.Orders
             nameof(Product.KoguchiPasteCosts),
             nameof(Product.FinishCutCosts),
             nameof(Product.MakeupBoardPasteCosts),
+            nameof(Product.PaintCosts),
             nameof(Product.Costs),
             nameof(Product.ProductFiles))
         {
