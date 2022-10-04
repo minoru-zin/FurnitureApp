@@ -375,7 +375,7 @@
                                                 <Label Content="円/mm"/>
                                             </StackPanel>
                                             <StackPanel Orientation="Horizontal">
-                                                <Label Content="仕上げ単価"/>
+                                                <Label Content="仕上カット単価"/>
                                                 <TextBlock Name="FinishCutUnitPriceTextBlock"/>
                                                 <Label Content="円/mm"/>
                                             </StackPanel>
