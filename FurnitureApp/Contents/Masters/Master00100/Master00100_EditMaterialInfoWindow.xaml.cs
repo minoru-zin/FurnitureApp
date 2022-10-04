@@ -2,6 +2,7 @@
 using FurnitureApp.Repository.MaterialInfos;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -61,6 +62,10 @@ namespace FurnitureApp.Contents.Masters.Master00100
         {
             this.cf.SetIntNumberTextBox(sender as TextBox);
         }
+        private void CodeTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            this.cf.SetIntNumberTextBox(sender as TextBox);
+        }
 
         private void ThicknessTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
@@ -74,10 +79,20 @@ namespace FurnitureApp.Contents.Masters.Master00100
         private void SetInfoToControls()
         {
             this.SequenceTextBox.Text = $"{this.model.Sequence}";
+            this.CodeTextBox.Text = $"{this.model.Code}";
             this.NameTextBox.Text = this.model.Name;
             this.ThicknessTextBox.Text = $"{this.model.Thickness}";
             this.PasteUnitPriceTextBox.Text = $"{this.model.PasteUnitPrice}";
             this.CutTypeComboBox.SelectedValue = this.model.CutType;
+
+            if(this.model.Id == null)
+            {
+                this.CodeTextBox.Text = $"{(this.cd.MaterialInfos.Max(x => x.Code) ?? 0) + 1}";
+            }
+            else
+            {
+                this.CodeTextBox.IsEnabled = false;
+            }
         }
 
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
@@ -96,12 +111,14 @@ namespace FurnitureApp.Contents.Masters.Master00100
         private void Update()
         {
             this.model.Sequence = Utility.NumberFormatter.GetNullInt(this.SequenceTextBox.Text) ?? 0;
+            this.model.Code = Utility.NumberFormatter.GetNullInt(this.CodeTextBox.Text);
             this.model.Name = this.NameTextBox.Text;
             this.model.Thickness = Utility.NumberFormatter.GetNullDouble(this.ThicknessTextBox.Text) ?? 0;
             this.model.PasteUnitPrice = Utility.NumberFormatter.GetNullInt(this.PasteUnitPriceTextBox.Text);
             this.model.CutType = (CutType)this.CutTypeComboBox.SelectedValue;
 
             if (this.model.Sequence <= 0) { throw new Exception("順番が不適"); }
+            if (this.model.Code == null) { throw new Exception("コードが不適"); }
             if (string.IsNullOrEmpty(this.model.Name)) { throw new Exception("名称が不適"); }
             if (this.model.Thickness <= 0) { throw new Exception("厚さが不適"); }
             if (this.model.PasteUnitPrice < 0) { throw new Exception("貼り単価が不適"); }

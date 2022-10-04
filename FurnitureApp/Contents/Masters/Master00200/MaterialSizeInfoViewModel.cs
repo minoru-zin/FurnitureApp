@@ -1,4 +1,5 @@
-﻿using FurnitureApp.Repository.MaterialInfos;
+﻿using FurnitureApp.Models;
+using FurnitureApp.Repository.MaterialInfos;
 using FurnitureApp.Repository.MaterialSizeInfos;
 using System;
 using System.Collections.Generic;
@@ -14,10 +15,11 @@ namespace FurnitureApp.Contents.Masters.Master00200
         public double? Width { get; }
         public string UnitPrice { get; }
         public MaterialSizeInfo Model { get; }
-        public MaterialSizeInfoViewModel(MaterialSizeInfo m, Dictionary<int?, MaterialInfo> materialDict)
+        private CommonData cd = CommonData.GetInstance();
+        public MaterialSizeInfoViewModel(MaterialSizeInfo m)
         {
             this.Model = m;
-            this.MaterialName = materialDict.GetValueOrDefault(m.MaterialInfoId)?.Name;
+            this.MaterialName = this.cd.MaterialInfoDict.GetValueOrDefault(m.MaterialInfoCode)?.Name;
             this.Name = m.Name;
             this.Length = m.Length;
             this.Width = m.Width;

@@ -12,14 +12,14 @@ namespace FurnitureApp.Repository.MaterialSizeInfos
         public MaterialSizeInfoDao(SQLiteConnection connection, SQLiteTransaction transaction) : base(connection, transaction, $"{nameof(MaterialSizeInfo)}s")
         {
         }
-        public bool ExistMaterialInfoId(int? materialInfoId)
+        public bool ExistMaterialInfoCode(int? materialInfoCode)
         {
             #region SQL
             var sql = $@"
 SELECT Id 
 FROM {this.tableName}
 WHERE
-{nameof(MaterialSizeInfo.MaterialInfoId)} = {materialInfoId}
+{nameof(MaterialSizeInfo.MaterialInfoCode)} = {materialInfoCode}
 LIMIT 1
 ";
             #endregion

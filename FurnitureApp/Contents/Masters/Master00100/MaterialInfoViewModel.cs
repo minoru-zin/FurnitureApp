@@ -10,6 +10,7 @@ namespace FurnitureApp.Contents.Masters.Master00100
     public class MaterialInfoViewModel
     {
         public int? Sequence { get; }
+        public int? Code { get; }
         public string Name { get; }
         public double? Thickness { get; }
         public int? PasteUnitPrice { get; }
@@ -20,6 +21,7 @@ namespace FurnitureApp.Contents.Masters.Master00100
         {
             this.Model = m;
             this.Sequence = m.Sequence;
+            this.Code = m.Code;
             this.Name = m.Name;
             this.Thickness = m.Thickness;
             this.PasteUnitPrice = m.PasteUnitPrice;

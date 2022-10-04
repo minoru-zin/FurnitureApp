@@ -177,7 +177,7 @@ namespace FurnitureApp.Contents.Orders.Order00100
                 if (vm == null) { return; }
 
                 this.ProductViewModels.Clear();
-                this.ProductViewModels.AddRange(vm.Model.Products.Select(x => new ProductViewModel(x, this.productCateogryInfoDict.GetValueOrDefault(x.ProductCategoryInfoId)?.Name)));
+                this.ProductViewModels.AddRange(vm.Model.Products.Select(x => new ProductViewModel(x, this.productCateogryInfoDict.GetValueOrDefault(x.ProductCategoryInfoCode)?.Name)));
                 this.TotalAmountTextBlock.Text = $"総額 {this.ProductViewModels.Sum(x => x.TotalAmount):#,0}円";
                 this.TotalAmountTextBlock2.Text = $"総額 {this.ProductViewModels.Sum(x => x.TotalAmount):#,0}円";
             }
@@ -207,7 +207,7 @@ namespace FurnitureApp.Contents.Orders.Order00100
 
         private void SetProductToControls(Product p)
         {
-            this.ProductCategoryNameTextBlock.Text = this.productCateogryInfoDict.GetValueOrDefault(p.ProductCategoryInfoId)?.Name;
+            this.ProductCategoryNameTextBlock.Text = this.productCateogryInfoDict.GetValueOrDefault(p.ProductCategoryInfoCode)?.Name;
             this.NameTextBlock.Text = p.Name;
             this.QuantityTextBlock.Text = $"{p.Quantity}";
             this.BodyWidthTextBlock.Text = $"{p.BodyWidth}";

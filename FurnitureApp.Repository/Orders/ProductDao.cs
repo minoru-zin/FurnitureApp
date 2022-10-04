@@ -47,14 +47,14 @@ WHERE
             this.connection.Execute(sql, null, this.transaction);
 
         }
-        public bool ExistProductCategoryInfoId(int? productCategoryInfoId)
+        public bool ExistProductCategoryInfoCode(int? productCategoryInfoId)
         {
             #region SQL
             var sql = $@"
 SELECT Id 
 FROM {this.tableName}
 WHERE
-{nameof(Product.ProductCategoryInfoId)} = {productCategoryInfoId}
+{nameof(Product.ProductCategoryInfoCode)} = {productCategoryInfoId}
 LIMIT 1
 ";
             #endregion
@@ -63,14 +63,14 @@ LIMIT 1
 
             return id != null;
         }
-        public IEnumerable<Product> SelectByProductCategoryInfoId(int productCategoryInfoId)
+        public IEnumerable<Product> SelectByProductCategoryInfoCode(int productCategoryInfoCode)
         {
             #region SQL
             var sql = $@"
 SELECT *
 FROM {this.tableName}
 WHERE
-{nameof(Product.ProductCategoryInfoId)} = {productCategoryInfoId}
+{nameof(Product.ProductCategoryInfoCode)} = {productCategoryInfoCode}
 ";
             #endregion
 

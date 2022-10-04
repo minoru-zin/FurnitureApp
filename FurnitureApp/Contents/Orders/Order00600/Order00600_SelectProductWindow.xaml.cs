@@ -44,11 +44,11 @@ namespace FurnitureApp.Contents.Orders.Order00600
         {
             this.ProductViewModels.Clear();
 
-            var pId = this.ProductCategoryInfoComboBox.SelectedValue as int?;
+            var pCode = this.ProductCategoryInfoComboBox.SelectedValue as int?;
 
-            if (pId == null) { return; }
+            if (pCode == null) { return; }
 
-            this.ProductViewModels.AddRange(this.cd.OrderRepository.SelectTopOnlyByProductCategoryInfoId((int)pId).Select(x => new Order00600_ProductViewModel(x)));
+            this.ProductViewModels.AddRange(this.cd.OrderRepository.SelectTopOnlyByProductCategoryInfoCode((int)pCode).Select(x => new Order00600_ProductViewModel(x)));
         }
         private void ProductDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {

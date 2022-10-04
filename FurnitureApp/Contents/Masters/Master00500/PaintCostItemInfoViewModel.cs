@@ -7,15 +7,17 @@ namespace FurnitureApp.Contents.Masters.Master00500
 {
     public class PaintCostItemInfoViewModel
     {
-        public string Name { get; }
         public int? Sequence { get; }
+        public int? Code { get; }
+        public string Name { get; }
         public string UnitPrice { get; }
         public PaintCostItemInfo Model { get; }
         public PaintCostItemInfoViewModel(PaintCostItemInfo costItemInfo)
         {
             this.Model = costItemInfo;
-            this.Name = costItemInfo.Name;
             this.Sequence = costItemInfo.Sequence;
+            this.Code = costItemInfo.Code;
+            this.Name = costItemInfo.Name;
             this.UnitPrice = $"{costItemInfo.UnitPrice:C}";
         }
     }

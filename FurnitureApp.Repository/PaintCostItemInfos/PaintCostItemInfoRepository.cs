@@ -1,4 +1,5 @@
-﻿using FurnitureApp.Repository.Utilities;
+﻿using FurnitureApp.Repository.Orders;
+using FurnitureApp.Repository.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,6 +61,15 @@ namespace FurnitureApp.Repository.PaintCostItemInfos
         {
             RepositoryAction.Transaction((c, t) =>
             {
+                var boardDao = new BoardDao(c, t);
+
+                foreach (var m in ms)
+                {
+                    if (boardDao.ExistPaintCostItemInfoCode(m.Code))
+                    {
+                        throw new Exception($"板情報で使用されています : {m.Name}");
+                    }
+                }
                 var PaintCostItemInfoDao = new PaintCostItemInfoDao(c, t);
 
                 foreach (var m in ms)

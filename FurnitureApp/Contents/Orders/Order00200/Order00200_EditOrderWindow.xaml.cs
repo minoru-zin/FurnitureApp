@@ -77,7 +77,7 @@ namespace FurnitureApp.Contents.Orders.Order00200
             this.DeliveryDateTextBox.Text = $"{this.oldOrder.DeliveryDate:d}";
             this.RemarksTextBox.Text = this.oldOrder.Remarks;
 
-            this.ProductViewModels.AddRange(this.oldOrder.Products.Select(x => new ProductViewModel(x, this.productCateogryInfoDict.GetValueOrDefault(x.ProductCategoryInfoId)?.Name)));
+            this.ProductViewModels.AddRange(this.oldOrder.Products.Select(x => new ProductViewModel(x, this.productCateogryInfoDict.GetValueOrDefault(x.ProductCategoryInfoCode)?.Name)));
         }
         
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
@@ -159,7 +159,7 @@ namespace FurnitureApp.Contents.Orders.Order00200
 
                 if (!w.IsChanged) { return; }
 
-                this.ProductViewModels.Add(new ProductViewModel(w.Product, this.productCateogryInfoDict.GetValueOrDefault(w.Product.ProductCategoryInfoId)?.Name));
+                this.ProductViewModels.Add(new ProductViewModel(w.Product, this.productCateogryInfoDict.GetValueOrDefault(w.Product.ProductCategoryInfoCode)?.Name));
 
                 this.SetTotalAmount();
             }
@@ -187,7 +187,7 @@ namespace FurnitureApp.Contents.Orders.Order00200
 
                 this.ProductViewModels.Remove(vm);
 
-                this.ProductViewModels.Insert(index, new ProductViewModel(w.Product, this.productCateogryInfoDict.GetValueOrDefault(w.Product.ProductCategoryInfoId)?.Name));
+                this.ProductViewModels.Insert(index, new ProductViewModel(w.Product, this.productCateogryInfoDict.GetValueOrDefault(w.Product.ProductCategoryInfoCode)?.Name));
 
                 this.SetTotalAmount();
             }

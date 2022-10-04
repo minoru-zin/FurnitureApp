@@ -65,7 +65,7 @@ namespace FurnitureApp.Repository.ProductCategoryInfos
                 
                 foreach (var m in ms)
                 {
-                    if (productDao.ExistProductCategoryInfoId(m.Id))
+                    if (productDao.ExistProductCategoryInfoCode(m.Code))
                     {
                         throw new Exception($"製品情報で使用されています : {m.Name}");
                     }

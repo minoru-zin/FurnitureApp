@@ -51,12 +51,12 @@ namespace FurnitureApp.Repository.Orders
             get { return koguchiKeshouAreaCode; }
             set { koguchiKeshouAreaCode = value; }
         }
-        private int? paintCostItemInfoId;
+        private int? paintCostItemInfoCode;
 
-        public int? PaintCostItemInfoId
+        public int? PaintCostItemInfoCode
         {
-            get { return paintCostItemInfoId; }
-            set { paintCostItemInfoId = value; }
+            get { return paintCostItemInfoCode; }
+            set { paintCostItemInfoCode = value; }
         }
         private PaintArea paintArea;
 
@@ -70,7 +70,7 @@ namespace FurnitureApp.Repository.Orders
 
         public double GetThickness(Dictionary<int?, MaterialInfo> materialInfoDict)
         {
-            return this.BoardLayers.Sum(x => materialInfoDict.GetValueOrDefault(x.MaterialInfoId)?.Thickness ?? 0);
+            return this.BoardLayers.Sum(x => materialInfoDict.GetValueOrDefault(x.MaterialInfoCode)?.Thickness ?? 0);
         }
         public Board Clone()
         {

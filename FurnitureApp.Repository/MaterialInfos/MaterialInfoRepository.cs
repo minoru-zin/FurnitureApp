@@ -67,11 +67,11 @@ namespace FurnitureApp.Repository.MaterialInfos
 
                 foreach (var m in ms)
                 {
-                    if (materialSizeInfoDao.ExistMaterialInfoId(m.Id))
+                    if (materialSizeInfoDao.ExistMaterialInfoCode(m.Code))
                     {
                         throw new Exception($"素材規格マスタで使用されています : {m.Name}");
                     }
-                    if (boardLayerDao.ExistMaterialInfoId(m.Id))
+                    if (boardLayerDao.ExistMaterialInfoCode(m.Code))
                     {
                         throw new Exception($"層情報で使用されています : {m.Name}");
                     }

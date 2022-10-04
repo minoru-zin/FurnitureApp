@@ -35,6 +35,7 @@ namespace FurnitureApp.Repository.Utilities
                 new MaterialInfo
                 {
                     Sequence = 10,
+                    Code = 1,
                     Name = "ポストホーム",
                     Thickness = 1,
                     CutType = CutType.Normal
@@ -42,6 +43,7 @@ namespace FurnitureApp.Repository.Utilities
 new MaterialInfo
                 {
                     Sequence = 20,
+                    Code = 2,
                     Name = "人口大理石",
                     Thickness = 1,
                     CutType = CutType.Normal
@@ -49,6 +51,7 @@ new MaterialInfo
 new MaterialInfo
                 {
                     Sequence = 30,
+                    Code = 3,
                     Name = "メラミン1t",
                     Thickness = 1,
                     CutType = CutType.Normal
@@ -56,6 +59,7 @@ new MaterialInfo
 new MaterialInfo
                 {
                     Sequence = 40,
+                    Code = 4,
                     Name = "ポリ合板2.5t",
                     Thickness = 2.5,
                     CutType = CutType.Normal
@@ -63,6 +67,7 @@ new MaterialInfo
 new MaterialInfo
                 {
                     Sequence = 50,
+                    Code = 5,
                     Name = "ラワンベニヤ2.5t",
                     Thickness = 2.5,
                     CutType = CutType.Normal
@@ -70,6 +75,7 @@ new MaterialInfo
 new MaterialInfo
                 {
                     Sequence = 60,
+                    Code = 6,
                     Name = "ポリ合板3.8t",
                     Thickness = 3.8,
                     CutType = CutType.Normal
@@ -77,6 +83,7 @@ new MaterialInfo
 new MaterialInfo
                 {
                     Sequence = 70,
+                    Code = 7,
                     Name = "Rベニヤ2.5t",
                     Thickness = 2.5,
                     CutType = CutType.Normal
@@ -84,6 +91,7 @@ new MaterialInfo
 new MaterialInfo
                 {
                     Sequence = 80,
+                    Code = 8,
                     Name = "Rベニヤ4t",
                     Thickness = 4,
                     CutType = CutType.Normal
@@ -91,6 +99,7 @@ new MaterialInfo
 new MaterialInfo
                 {
                     Sequence = 90,
+                    Code = 9,
                     Name = "Rベニヤ5.5t",
                     Thickness = 5.5,
                     CutType = CutType.Normal
@@ -98,6 +107,7 @@ new MaterialInfo
 new MaterialInfo
                 {
                     Sequence = 100,
+                    Code = 10,
                     Name = "Rベニヤ9t",
                     Thickness = 9,
                     CutType = CutType.Normal
@@ -105,6 +115,7 @@ new MaterialInfo
 new MaterialInfo
                 {
                     Sequence = 110,
+                    Code = 11,
                     Name = "LVL12t",
                     Thickness = 12,
                     CutType = CutType.Lvl
@@ -112,6 +123,7 @@ new MaterialInfo
 new MaterialInfo
                 {
                     Sequence = 120,
+                    Code = 12,
                     Name = "LVL15t",
                     Thickness = 15,
                     CutType = CutType.Lvl
@@ -119,6 +131,7 @@ new MaterialInfo
 new MaterialInfo
                 {
                     Sequence = 130,
+                    Code = 13,
                     Name = "LC12t",
                     Thickness = 12,
                     CutType = CutType.Normal
@@ -126,6 +139,7 @@ new MaterialInfo
 new MaterialInfo
                 {
                     Sequence = 140,
+                    Code = 14,
                     Name = "LC15t",
                     Thickness = 15,
                     CutType = CutType.Normal
@@ -133,6 +147,7 @@ new MaterialInfo
 new MaterialInfo
                 {
                     Sequence = 150,
+                    Code = 15,
                     Name = "LC18t",
                     Thickness = 18,
                     CutType = CutType.Normal
@@ -140,6 +155,7 @@ new MaterialInfo
 new MaterialInfo
                 {
                     Sequence = 160,
+                    Code = 16,
                     Name = "LC21t",
                     Thickness = 21,
                     CutType = CutType.Normal
@@ -147,6 +163,7 @@ new MaterialInfo
 new MaterialInfo
                 {
                     Sequence = 170,
+                    Code = 17,
                     Name = "LC24t",
                     Thickness = 24,
                     CutType = CutType.Normal
@@ -156,7 +173,7 @@ new MaterialInfo
             {
                 new MaterialSizeInfo
                 {
-                    MaterialInfoId = 5,
+                    MaterialInfoCode = 5,
                     Name = "ラワンベニヤ2.5t",
                     Length = 1820,
                     Width = 910,
@@ -164,7 +181,7 @@ new MaterialInfo
                 },
                 new MaterialSizeInfo
                 {
-                    MaterialInfoId = 5,
+                    MaterialInfoCode = 5,
                     Name = "ラワンベニヤ2.5t",
                     Length = 2430,
                     Width = 1230,
@@ -172,7 +189,7 @@ new MaterialInfo
                 },
                 new MaterialSizeInfo
                 {
-                    MaterialInfoId = 4,
+                    MaterialInfoCode = 4,
                     Name = "ポリ合板2.5t LP",
                     Length = 1820,
                     Width = 910,
@@ -180,7 +197,7 @@ new MaterialInfo
                 },
                 new MaterialSizeInfo
                 {
-                    MaterialInfoId = 4,
+                    MaterialInfoCode = 4,
                     Name = "ポリ合板2.5t LP",
                     Length = 2430,
                     Width = 1230,
@@ -188,7 +205,7 @@ new MaterialInfo
                 },
                 new MaterialSizeInfo
                 {
-                    MaterialInfoId = 12,
+                    MaterialInfoCode = 12,
                     Name = "LVL15t",
                     Length = 3900,
                     Width = 45,
@@ -196,7 +213,7 @@ new MaterialInfo
                 },
                 new MaterialSizeInfo
                 {
-                    MaterialInfoId = 11,
+                    MaterialInfoCode = 11,
                     Name = "LVL12t",
                     Length = 3900,
                     Width = 45,
@@ -204,7 +221,7 @@ new MaterialInfo
                 },
                 new MaterialSizeInfo
                 {
-                    MaterialInfoId = 3,
+                    MaterialInfoCode = 3,
                     Name = "メラミン1t TJ",
                     Length = 1820,
                     Width = 910,
@@ -212,7 +229,7 @@ new MaterialInfo
                 },
                 new MaterialSizeInfo
                 {
-                    MaterialInfoId = 3,
+                    MaterialInfoCode = 3,
                     Name = "メラミン1t TJ",
                     Length = 2430,
                     Width = 1230,
@@ -220,7 +237,7 @@ new MaterialInfo
                 },
                 new MaterialSizeInfo
                 {
-                    MaterialInfoId = 13,
+                    MaterialInfoCode = 13,
                     Name = "LC12t",
                     Length = 1820,
                     Width = 910,
@@ -228,7 +245,7 @@ new MaterialInfo
                 },
                 new MaterialSizeInfo
                 {
-                    MaterialInfoId = 13,
+                    MaterialInfoCode = 13,
                     Name = "LC12t",
                     Length = 2430,
                     Width = 1230,
@@ -236,7 +253,7 @@ new MaterialInfo
                 },
                 new MaterialSizeInfo
                 {
-                    MaterialInfoId = 14,
+                    MaterialInfoCode = 14,
                     Name = "LC15t",
                     Length = 1820,
                     Width = 910,
@@ -244,7 +261,7 @@ new MaterialInfo
                 },
                 new MaterialSizeInfo
                 {
-                    MaterialInfoId = 14,
+                    MaterialInfoCode = 14,
                     Name = "LC15t",
                     Length = 2430,
                     Width = 1230,
@@ -252,7 +269,7 @@ new MaterialInfo
                 },
                 new MaterialSizeInfo
                 {
-                    MaterialInfoId = 15,
+                    MaterialInfoCode = 15,
                     Name = "LC18t",
                     Length = 1820,
                     Width = 910,
@@ -260,7 +277,7 @@ new MaterialInfo
                 },
                 new MaterialSizeInfo
                 {
-                    MaterialInfoId = 15,
+                    MaterialInfoCode = 15,
                     Name = "LC18t",
                     Length = 2430,
                     Width = 1230,
@@ -273,11 +290,13 @@ new MaterialInfo
                 new ProductCategoryInfo
                 {
                     Sequence = 1,
+                    Code = 1,
                     Name = "洗面台",
                 },
                 new ProductCategoryInfo
                 {
                     Sequence = 2,
+                    Code = 2,
                     Name = "収納棚",
                 }
             };
@@ -290,7 +309,7 @@ new MaterialInfo
             order.Remarks = "なし";
 
             var product1 = new Product();
-            product1.ProductCategoryInfoId = 1;
+            product1.ProductCategoryInfoCode = 1;
             product1.Name = "洗面台";
             product1.Quantity = 1;
             product1.BodyWidth = 3600;
@@ -314,9 +333,9 @@ new MaterialInfo
                 Quantity = 1,
                 BoardLayers = new List<BoardLayer>
                 {
-                    new BoardLayer{ MaterialInfoId = 5,},
-                    new BoardLayer{ MaterialInfoId = 12,},
-                    new BoardLayer{ MaterialInfoId = 4,},
+                    new BoardLayer{ MaterialInfoCode = 5,},
+                    new BoardLayer{ MaterialInfoCode = 12,},
+                    new BoardLayer{ MaterialInfoCode = 4,},
                 }
             });
             product1.Boards.Add(new Board
@@ -325,9 +344,9 @@ new MaterialInfo
                 Quantity = 2,
                 BoardLayers = new List<BoardLayer>
                 {
-                    new BoardLayer{ MaterialInfoId = 4,},
-                    new BoardLayer{ MaterialInfoId = 11,},
-                    new BoardLayer{ MaterialInfoId = 4,},
+                    new BoardLayer{ MaterialInfoCode = 4,},
+                    new BoardLayer{ MaterialInfoCode = 11,},
+                    new BoardLayer{ MaterialInfoCode = 4,},
                 }
             });
             product1.Boards.Add(new Board
@@ -336,9 +355,9 @@ new MaterialInfo
                 Quantity = 3,
                 BoardLayers = new List<BoardLayer>
                 {
-                    new BoardLayer{ MaterialInfoId = 4,},
-                    new BoardLayer{ MaterialInfoId = 12,},
-                    new BoardLayer{ MaterialInfoId = 4,},
+                    new BoardLayer{ MaterialInfoCode = 4,},
+                    new BoardLayer{ MaterialInfoCode = 12,},
+                    new BoardLayer{ MaterialInfoCode = 4,},
                 }
             });
             product1.Boards.Add(new Board
@@ -347,9 +366,9 @@ new MaterialInfo
                 Quantity = 8,
                 BoardLayers = new List<BoardLayer>
                 {
-                    new BoardLayer{ MaterialInfoId = 3,},
-                    new BoardLayer{ MaterialInfoId = 12,},
-                    new BoardLayer{ MaterialInfoId = 4,},
+                    new BoardLayer{ MaterialInfoCode = 3,},
+                    new BoardLayer{ MaterialInfoCode = 12,},
+                    new BoardLayer{ MaterialInfoCode = 4,},
                 }
             });
             product1.Boards.Add(new Board
@@ -358,8 +377,8 @@ new MaterialInfo
                 Quantity = 1,
                 BoardLayers = new List<BoardLayer>
                 {
-                    new BoardLayer{ MaterialInfoId = 4,},
-                    new BoardLayer{ MaterialInfoId = 12,},
+                    new BoardLayer{ MaterialInfoCode = 4,},
+                    new BoardLayer{ MaterialInfoCode = 12,},
                 }
             });
             product1.Boards.Add(new Board
@@ -368,9 +387,9 @@ new MaterialInfo
                 Quantity = 1,
                 BoardLayers = new List<BoardLayer>
                 {
-                    new BoardLayer{ MaterialInfoId = 4,},
-                    new BoardLayer{ MaterialInfoId = 12,},
-                    new BoardLayer{ MaterialInfoId = 5,},
+                    new BoardLayer{ MaterialInfoCode = 4,},
+                    new BoardLayer{ MaterialInfoCode = 12,},
+                    new BoardLayer{ MaterialInfoCode = 5,},
                 }
             });
             product1.Boards.Add(new Board
@@ -379,8 +398,8 @@ new MaterialInfo
                 Quantity = 1,
                 BoardLayers = new List<BoardLayer>
                 {
-                    new BoardLayer{ MaterialInfoId = 4,},
-                    new BoardLayer{ MaterialInfoId = 12,},
+                    new BoardLayer{ MaterialInfoCode = 4,},
+                    new BoardLayer{ MaterialInfoCode = 12,},
                 }
             });
             product1.Boards.Add(new Board
@@ -389,7 +408,7 @@ new MaterialInfo
                 Quantity = 1,
                 BoardLayers = new List<BoardLayer>
                 {
-                    new BoardLayer{ MaterialInfoId = 12,},
+                    new BoardLayer{ MaterialInfoCode = 12,},
                 }
             });
             product1.Boards.Add(new Board
@@ -398,8 +417,8 @@ new MaterialInfo
                 Quantity = 1,
                 BoardLayers = new List<BoardLayer>
                 {
-                    new BoardLayer{ MaterialInfoId = 4,},
-                    new BoardLayer{ MaterialInfoId = 12,},
+                    new BoardLayer{ MaterialInfoCode = 4,},
+                    new BoardLayer{ MaterialInfoCode = 12,},
                 }
             });
             product1.Boards.Add(new Board
@@ -408,8 +427,8 @@ new MaterialInfo
                 Quantity = 1,
                 BoardLayers = new List<BoardLayer>
                 {
-                    new BoardLayer{ MaterialInfoId = 4,},
-                    new BoardLayer{ MaterialInfoId = 12,},
+                    new BoardLayer{ MaterialInfoCode = 4,},
+                    new BoardLayer{ MaterialInfoCode = 12,},
                 }
             });
 
@@ -426,7 +445,7 @@ new MaterialInfo
             order.Remarks = "なし";
 
             var product2 = new Product();
-            product2.ProductCategoryInfoId = 2;
+            product2.ProductCategoryInfoCode = 2;
             product2.Name = "収納棚　外：メラミン　内：ポリ";
             product2.Quantity = 1;
             product2.BodyWidth = 800;
@@ -450,11 +469,11 @@ new MaterialInfo
                 Quantity = 1,
                 BoardLayers = new List<BoardLayer>
                 {
-                    new BoardLayer{ MaterialInfoId = 3,},
-                    new BoardLayer{ MaterialInfoId = 5,},
-                    new BoardLayer{ MaterialInfoId = 13,},
-                    new BoardLayer{ MaterialInfoId = 5,},
-                    new BoardLayer{ MaterialInfoId = 3,},
+                    new BoardLayer{ MaterialInfoCode = 3,},
+                    new BoardLayer{ MaterialInfoCode = 5,},
+                    new BoardLayer{ MaterialInfoCode = 13,},
+                    new BoardLayer{ MaterialInfoCode = 5,},
+                    new BoardLayer{ MaterialInfoCode = 3,},
                 }
             });
             product2.Boards.Add(new Board
@@ -463,9 +482,9 @@ new MaterialInfo
                 Quantity = 1,
                 BoardLayers = new List<BoardLayer>
                 {
-                    new BoardLayer{ MaterialInfoId = 5,},
-                    new BoardLayer{ MaterialInfoId = 12,},
-                    new BoardLayer{ MaterialInfoId = 4,},
+                    new BoardLayer{ MaterialInfoCode = 5,},
+                    new BoardLayer{ MaterialInfoCode = 12,},
+                    new BoardLayer{ MaterialInfoCode = 4,},
                 }
             });
             product2.Boards.Add(new Board
@@ -474,10 +493,10 @@ new MaterialInfo
                 Quantity = 2,
                 BoardLayers = new List<BoardLayer>
                 {
-                    new BoardLayer{ MaterialInfoId = 3,},
-                    new BoardLayer{ MaterialInfoId = 5,},
-                    new BoardLayer{ MaterialInfoId = 12,},
-                    new BoardLayer{ MaterialInfoId = 4,},
+                    new BoardLayer{ MaterialInfoCode = 3,},
+                    new BoardLayer{ MaterialInfoCode = 5,},
+                    new BoardLayer{ MaterialInfoCode = 12,},
+                    new BoardLayer{ MaterialInfoCode = 4,},
                 }
             });
             product2.Boards.Add(new Board
@@ -486,9 +505,9 @@ new MaterialInfo
                 Quantity = 2,
                 BoardLayers = new List<BoardLayer>
                 {
-                    new BoardLayer{ MaterialInfoId = 4,},
-                    new BoardLayer{ MaterialInfoId = 12,},
-                    new BoardLayer{ MaterialInfoId = 4,},
+                    new BoardLayer{ MaterialInfoCode = 4,},
+                    new BoardLayer{ MaterialInfoCode = 12,},
+                    new BoardLayer{ MaterialInfoCode = 4,},
                 }
             });
             product2.Boards.Add(new Board
@@ -497,11 +516,11 @@ new MaterialInfo
                 Quantity = 2,
                 BoardLayers = new List<BoardLayer>
                 {
-                    new BoardLayer{ MaterialInfoId = 3,},
-                    new BoardLayer{ MaterialInfoId = 5,},
-                    new BoardLayer{ MaterialInfoId = 13,},
-                    new BoardLayer{ MaterialInfoId = 5,},
-                    new BoardLayer{ MaterialInfoId = 3,},
+                    new BoardLayer{ MaterialInfoCode = 3,},
+                    new BoardLayer{ MaterialInfoCode = 5,},
+                    new BoardLayer{ MaterialInfoCode = 13,},
+                    new BoardLayer{ MaterialInfoCode = 5,},
+                    new BoardLayer{ MaterialInfoCode = 3,},
                 }
             });
             product2.Boards.Add(new Board
@@ -510,8 +529,8 @@ new MaterialInfo
                 Quantity = 1,
                 BoardLayers = new List<BoardLayer>
                 {
-                    new BoardLayer{ MaterialInfoId = 4,},
-                    new BoardLayer{ MaterialInfoId = 12,},
+                    new BoardLayer{ MaterialInfoCode = 4,},
+                    new BoardLayer{ MaterialInfoCode = 12,},
                 }
             });
             product2.Boards.Add(new Board
@@ -520,9 +539,9 @@ new MaterialInfo
                 Quantity = 1,
                 BoardLayers = new List<BoardLayer>
                 {
-                    new BoardLayer{ MaterialInfoId = 4,},
-                    new BoardLayer{ MaterialInfoId = 12,},
-                    new BoardLayer{ MaterialInfoId = 5,},
+                    new BoardLayer{ MaterialInfoCode = 4,},
+                    new BoardLayer{ MaterialInfoCode = 12,},
+                    new BoardLayer{ MaterialInfoCode = 5,},
                 }
             });
             product2.Boards.Add(new Board
@@ -531,8 +550,8 @@ new MaterialInfo
                 Quantity = 1,
                 BoardLayers = new List<BoardLayer>
                 {
-                    new BoardLayer{ MaterialInfoId = 3,},
-                    new BoardLayer{ MaterialInfoId = 15,},
+                    new BoardLayer{ MaterialInfoCode = 3,},
+                    new BoardLayer{ MaterialInfoCode = 15,},
                 }
             });
             product2.Boards.Add(new Board
@@ -541,7 +560,7 @@ new MaterialInfo
                 Quantity = 1,
                 BoardLayers = new List<BoardLayer>
                 {
-                    new BoardLayer{ MaterialInfoId = 15,},
+                    new BoardLayer{ MaterialInfoCode = 15,},
                 }
             });
             product2.Boards.Add(new Board
@@ -550,8 +569,8 @@ new MaterialInfo
                 Quantity = 1,
                 BoardLayers = new List<BoardLayer>
                 {
-                    new BoardLayer{ MaterialInfoId = 3,},
-                    new BoardLayer{ MaterialInfoId = 15,},
+                    new BoardLayer{ MaterialInfoCode = 3,},
+                    new BoardLayer{ MaterialInfoCode = 15,},
                 }
             });
             product2.Boards.Add(new Board
@@ -560,8 +579,8 @@ new MaterialInfo
                 Quantity = 1,
                 BoardLayers = new List<BoardLayer>
                 {
-                    new BoardLayer{ MaterialInfoId = 3,},
-                    new BoardLayer{ MaterialInfoId = 5,},
+                    new BoardLayer{ MaterialInfoCode = 3,},
+                    new BoardLayer{ MaterialInfoCode = 5,},
                 }
             });
 
@@ -579,6 +598,7 @@ new MaterialInfo
                 new PaintCostItemInfo
                 {
                     Sequence = 1,
+                    Code = 1,
                     Name = "塗装1",
                     UnitPrice = 150,
                 }
@@ -620,7 +640,7 @@ CREATE INDEX IX_Orders ON Orders(CreatedDate)
 CREATE TABLE Products (
 Id integer,    
 OrderId integer,
-ProductCategoryInfoId integer,
+ProductCategoryInfoCode integer,
 Name text,
 Quantity integer,
 BodyWidth real,
@@ -649,7 +669,7 @@ CREATE INDEX IX_Products ON Products(OrderId)
 ";
                 c.Execute(sql);
                 sql = $@"
-CREATE INDEX IX_Products2 ON Products(ProductCategoryInfoId,Name)
+CREATE INDEX IX_Products2 ON Products(ProductCategoryInfoCode, Name)
 ";
                 c.Execute(sql);
 
@@ -663,7 +683,7 @@ CREATE TABLE Boards (
     BoardCode integer,
     Quantity integer,
     KoguchiKeshouAreaCode integer,
-    PaintCostItemInfoId integer,
+    PaintCostItemInfoCode integer,
     PaintArea integer,
     PRIMARY KEY(Id AUTOINCREMENT)
 )
@@ -681,7 +701,7 @@ CREATE TABLE BoardLayers (
     Id  integer,
     BoardId  integer,
     Sequence  integer,
-    MaterialInfoId text,
+    MaterialInfoCode integer,
     PasteUnitPrice int,
     MokumeDirectionCode int,
     PRIMARY KEY(Id AUTOINCREMENT)
@@ -805,6 +825,7 @@ CREATE INDEX IX_MakeupBoardPasteCosts ON MakeupBoardPasteCosts(ProductId)
 ";
                 c.Execute(sql);
                 #endregion
+
                 #region PaintCosts
                 sql = $@"
 CREATE TABLE PaintCosts (
@@ -830,6 +851,7 @@ CREATE INDEX IX_PaintCosts ON KoguchiPasteCosts(ProductId)
 ";
                 c.Execute(sql);
                 #endregion
+                
                 #region ProductFiles
                 sql = $@"
 CREATE TABLE ProductFiles (
@@ -848,11 +870,11 @@ CREATE INDEX IX_ProductFiles ON ProductFiles(ProductId)
                 c.Execute(sql);
                 #endregion
 
-
                 #region MaterialInfos
                 sql = $@"
 CREATE TABLE MaterialInfos (
 Id integer,
+Code integer,
 Name text,
 Sequence integer,
 Thickness real,
@@ -869,7 +891,7 @@ PRIMARY KEY(Id AUTOINCREMENT)
                 sql = $@"
 CREATE TABLE MaterialSizeInfos (
 Id integer,
-MaterialInfoId integer,
+MaterialInfoCode integer,
 Name text,
 Length real,
 Width real,
@@ -879,7 +901,7 @@ PRIMARY KEY(Id AUTOINCREMENT)
 ";
                 c.Execute(sql);
                 sql = $@"
-CREATE INDEX IX_MaterialSizeInfos ON MaterialSizeInfos(MaterialInfoId)
+CREATE INDEX IX_MaterialSizeInfos ON MaterialSizeInfos(MaterialInfoCode)
 ";
                 c.Execute(sql);
                 #endregion
@@ -888,6 +910,7 @@ CREATE INDEX IX_MaterialSizeInfos ON MaterialSizeInfos(MaterialInfoId)
                 sql = $@"
 CREATE TABLE ProductCategoryInfos (
     Id  integer,
+    Code integer,
     Name text,
     Sequence  integer,
     PRIMARY KEY(Id AUTOINCREMENT)
@@ -913,6 +936,7 @@ CREATE TABLE CostItemInfos (
                 sql = $@"
 CREATE TABLE PaintCostItemInfos (
     Id  integer,
+    Code integer,
     Name text,
     Sequence  integer,
     UnitPrice integer,

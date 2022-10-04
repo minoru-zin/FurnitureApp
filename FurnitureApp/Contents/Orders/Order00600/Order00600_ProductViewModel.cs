@@ -20,7 +20,7 @@ namespace FurnitureApp.Contents.Orders.Order00600
         public Order00600_ProductViewModel(Product product)
         {
             this.Model = product;
-            this.ProductCategoryName = this.cd.ProductCategoryInfos.FirstOrDefault(x => x.Id == product.ProductCategoryInfoId)?.Name;
+            this.ProductCategoryName = this.cd.ProductCategoryInfos.FirstOrDefault(x => x.Id == product.ProductCategoryInfoCode)?.Name;
             this.Name = product.Name;
             this.Width = product.BodyWidth;
             this.Depth = product.BodyDepth;

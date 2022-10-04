@@ -33,14 +33,14 @@ namespace FurnitureApp.Repository.Orders
             get { return sequence; }
             set { sequence = value; }
         }
-        private int? materialInfoId;
+        private int? materialInfoCode;
         /// <summary>
         /// 素材Id
         /// </summary>
-        public int? MaterialInfoId
+        public int? MaterialInfoCode
         {
-            get { return materialInfoId; }
-            set { materialInfoId = value; }
+            get { return materialInfoCode; }
+            set { materialInfoCode = value; }
         }
         private int? pasteUnitPrice;
         /// <summary>
@@ -72,8 +72,17 @@ namespace FurnitureApp.Repository.Orders
     /// </summary>
     public enum MokumeDirectionType
     {
+        /// <summary>
+        /// 無し
+        /// </summary>
         Nashi,
+        /// <summary>
+        /// 縦
+        /// </summary>
         Length,
+        /// <summary>
+        /// 横
+        /// </summary>
         Width,
     }
 }

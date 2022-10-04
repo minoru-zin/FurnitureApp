@@ -15,6 +15,16 @@ namespace FurnitureApp.Repository.ProductCategoryInfos
             get { return id; }
             set { id = value; }
         }
+        private int? code;
+        /// <summary>
+        /// コード
+        /// </summary>
+        public int? Code
+        {
+            get { return code; }
+            set { code = value; }
+        }
+
         private string name;
         /// <summary>
         /// 名称

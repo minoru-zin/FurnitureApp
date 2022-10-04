@@ -2,6 +2,7 @@
 using FurnitureApp.Repository.PaintCostItemInfos;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -57,11 +58,25 @@ namespace FurnitureApp.Contents.Masters.Master00500
         {
             this.cf.SetIntNumberTextBox(sender as TextBox);
         }
+        private void CodeTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            this.cf.SetIntNumberTextBox(sender as TextBox);
+        }
         private void SetInfoToControls()
         {
             this.SequenceTextBox.Text = $"{this.model.Sequence}";
+            this.CodeTextBox.Text = $"{this.model.Code}";
             this.NameTextBox.Text = this.model.Name;
             this.UnitPriceTextBox.Text = $"{this.model.UnitPrice}";
+
+            if (this.model.Id == null)
+            {
+                this.CodeTextBox.Text = $"{(this.cd.PaintCostItemInfos.Max(x => x.Code) ?? 0) + 1}";
+            }
+            else
+            {
+                this.CodeTextBox.IsEnabled = false;
+            }
         }
 
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
@@ -80,10 +95,12 @@ namespace FurnitureApp.Contents.Masters.Master00500
         private void Update()
         {
             this.model.Sequence = Utility.NumberFormatter.GetNullInt(this.SequenceTextBox.Text) ?? 0;
+            this.model.Code = Utility.NumberFormatter.GetNullInt(this.CodeTextBox.Text);
             this.model.Name = this.NameTextBox.Text;
             this.model.UnitPrice = Utility.NumberFormatter.GetNullInt(this.UnitPriceTextBox.Text) ?? 0;
 
             if (this.model.Sequence <= 0) { throw new Exception("順番が不適"); }
+            if (this.model.Code == null) { throw new Exception("コードが不適"); }
             if (string.IsNullOrEmpty(this.model.Name)) { throw new Exception("名称が不適"); }
             if (this.model.UnitPrice < 0) { throw new Exception("単価が不適"); }
 
@@ -113,6 +130,8 @@ namespace FurnitureApp.Contents.Masters.Master00500
             this.IsChanged = true;
             this.Close();
         }
+
+
     }
 }
 

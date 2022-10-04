@@ -41,5 +41,21 @@ WHERE
             this.connection.Execute(sql, null, this.transaction);
 
         }
+        public bool ExistPaintCostItemInfoCode(int? paintCostItemInfoCode)
+        {
+            #region SQL
+            var sql = $@"
+SELECT Id 
+FROM {this.tableName}
+WHERE
+{nameof(Board.PaintCostItemInfoCode)} = {paintCostItemInfoCode}
+LIMIT 1
+";
+            #endregion
+
+            var id = this.connection.Query<int?>(sql, null, this.transaction);
+
+            return id != null;
+        }
     }
 }

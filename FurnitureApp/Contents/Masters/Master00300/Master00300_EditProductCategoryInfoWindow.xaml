@@ -29,6 +29,12 @@
                          LostFocus="SequenceTextBox_LostFocus"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
+                <Label Content="コード"/>
+                <TextBox x:Name="CodeTextBox"
+                         LostFocus="CodeTextBox_LostFocus"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
                 <Label Content="名称"/>
                 <TextBox x:Name="NameTextBox"
                          Style="{StaticResource HiraganaTextBox}"

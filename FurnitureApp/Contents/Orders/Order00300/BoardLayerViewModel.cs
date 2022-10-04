@@ -32,7 +32,7 @@ namespace FurnitureApp.Contents.Orders.Order00300
             {
                 return new BoardLayer
                 {
-                    MaterialInfoId = this.MaterialInfo.Id,
+                    MaterialInfoCode = this.MaterialInfo.Id,
                     PasteUnitPrice = Utility.NumberFormatter.GetNullInt(this.PasteUnitPrice),
                     MokumeDirectionCode = MokumeDirectionType,
                 };

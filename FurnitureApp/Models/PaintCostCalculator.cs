@@ -21,7 +21,7 @@ namespace FurnitureApp.Models
 
             foreach (var board in product.Boards)
             {
-                if (board.PaintCostItemInfoId == null) { continue; }
+                if (board.PaintCostItemInfoCode == null) { continue; }
                 if (board.PaintArea == PaintArea.Nashi) { continue; }
 
                 var boardSize = boardSizes.First(x => x.BoardType == board.BoardCode);
@@ -53,7 +53,7 @@ namespace FurnitureApp.Models
 
         private PaintCost GetCost(Board board, BoardSize boardSize, double frontLength, double sideLength)
         {
-            var info = this.cd.PaintCostItemInfos.First(x => x.Id == board.PaintCostItemInfoId);
+            var info = this.cd.PaintCostItemInfos.First(x => x.Id == board.PaintCostItemInfoCode);
 
             var cost = new PaintCost
             {

@@ -153,10 +153,10 @@ namespace FurnitureApp.Contents.Orders.Order00300
         {
             this.QuantityTextBox.Text = $"{board.Quantity}";
             this.KoguchiKeshouAreaComboBox.SelectedValue = board.KoguchiKeshouAreaCode;
-            this.PaintCostItemInfoComboBox.SelectedValue = board.PaintCostItemInfoId;
+            this.PaintCostItemInfoComboBox.SelectedValue = board.PaintCostItemInfoCode;
             this.PaintAreaComboBox.SelectedValue = board.PaintArea;
             this.ViewModels.Clear();
-            this.ViewModels.AddRange(board.BoardLayers.Select(x => new BoardLayerViewModel(x, this.cd.MaterialInfos.FirstOrDefault(m => m.Id == x.MaterialInfoId))));
+            this.ViewModels.AddRange(board.BoardLayers.Select(x => new BoardLayerViewModel(x, this.cd.MaterialInfos.FirstOrDefault(m => m.Id == x.MaterialInfoCode))));
             this.CalSumThickness();
         }
         public Board GetBoardOrDefault()
@@ -183,7 +183,7 @@ namespace FurnitureApp.Contents.Orders.Order00300
                 BoardCode = this.BoardType,
                 Quantity = quantity,
                 KoguchiKeshouAreaCode = (KoguchiMakeupArea)this.KoguchiKeshouAreaComboBox.SelectedValue,
-                PaintCostItemInfoId = (int?)this.PaintCostItemInfoComboBox.SelectedValue,
+                PaintCostItemInfoCode = (int?)this.PaintCostItemInfoComboBox.SelectedValue,
                 PaintArea = (PaintArea)this.PaintAreaComboBox.SelectedValue,
                 BoardLayers = boardLayers,
             };

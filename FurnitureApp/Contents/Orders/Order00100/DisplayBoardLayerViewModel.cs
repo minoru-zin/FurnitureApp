@@ -17,7 +17,7 @@ namespace FurnitureApp.Contents.Orders.Order00100
         private CommonData cd = CommonData.GetInstance();
         public DisplayBoardLayerViewModel(BoardLayer boardLayer)
         {
-            var materialInfo = this.cd.MaterialInfoDict.GetValueOrDefault(boardLayer.MaterialInfoId);
+            var materialInfo = this.cd.MaterialInfoDict.GetValueOrDefault(boardLayer.MaterialInfoCode);
             this.MaterialName = materialInfo?.Name;
             this.Thickness = materialInfo?.Thickness;
             this.PasteUnitPrice = boardLayer.PasteUnitPrice;

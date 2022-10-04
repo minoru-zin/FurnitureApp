@@ -36,7 +36,7 @@ namespace FurnitureApp.Contents.Masters.Master00200
 
             var materialInfos = this.cd.MaterialInfoRepository.SelectAll();
 
-            this.Materials.AddRange(materialInfos.Select(x => new DisplayInfo<int?>(x.Id, x.Name)));
+            this.Materials.AddRange(materialInfos.Select(x => new DisplayInfo<int?>(x.Code, x.Name)));
 
             this.SetInfoToControls();
         }
@@ -79,7 +79,7 @@ namespace FurnitureApp.Contents.Masters.Master00200
         }
         private void SetInfoToControls()
         {
-            this.MaterialComboBox.SelectedValue = this.model.MaterialInfoId;
+            this.MaterialComboBox.SelectedValue = this.model.MaterialInfoCode;
             this.NameTextBox.Text = this.model.Name;
             this.LengthTextBox.Text = $"{this.model.Length}";
             this.WidthTextBox.Text = $"{this.model.Width}";
@@ -101,13 +101,13 @@ namespace FurnitureApp.Contents.Masters.Master00200
 
         private void Update()
         {
-            this.model.MaterialInfoId = (int?)this.MaterialComboBox.SelectedValue;
+            this.model.MaterialInfoCode = (int?)this.MaterialComboBox.SelectedValue;
             this.model.Name = this.NameTextBox.Text;
             this.model.Length = Utility.NumberFormatter.GetNullDouble(this.LengthTextBox.Text) ?? 0;
             this.model.Width = Utility.NumberFormatter.GetNullDouble(this.WidthTextBox.Text) ?? 0;
             this.model.UnitPrice = Utility.NumberFormatter.GetNullInt(this.UnitPriceTextBox.Text) ?? 0;
 
-            if (this.model.MaterialInfoId == null) { throw new Exception("素材が不適"); }
+            if (this.model.MaterialInfoCode == null) { throw new Exception("素材が不適"); }
             if (string.IsNullOrEmpty(this.model.Name)) { throw new Exception("名称が不適"); }
             if (this.model.Length <= 0) { throw new Exception("縦が不適"); }
             if (this.model.Width <= 0) { throw new Exception("横が不適"); }

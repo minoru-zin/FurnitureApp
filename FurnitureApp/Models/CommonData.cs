@@ -141,7 +141,7 @@ namespace FurnitureApp.Models
             this.PaintCostItemInfos.AddRange(this.PaintCostItemInfoRepository.SelectAll());
 
 
-            this.MaterialInfoDict = this.MaterialInfos.ToDictionary(x => x.Id);
+            this.MaterialInfoDict = this.MaterialInfos.ToDictionary(x => x.Code);
         }
     }
 }

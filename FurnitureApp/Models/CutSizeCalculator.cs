@@ -57,7 +57,7 @@ namespace FurnitureApp.Models
 
                 foreach (var boardLayer in board.BoardLayers)
                 {
-                    var materialInfo = this.cd.MaterialInfos.First(x => x.Id == boardLayer.MaterialInfoId);
+                    var materialInfo = this.cd.MaterialInfos.First(x => x.Id == boardLayer.MaterialInfoCode);
 
                     switch (materialInfo.CutType)
                     {

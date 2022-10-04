@@ -34,7 +34,7 @@ namespace FurnitureApp.Models
 
             foreach (var g in oldCutSizes.GroupBy(x => new { x.MaterialInfoId, x.MaterialName }))
             {
-                var ms = materialSizeInfos.Where(x => x.MaterialInfoId == g.Key.MaterialInfoId).ToList();
+                var ms = materialSizeInfos.Where(x => x.MaterialInfoCode == g.Key.MaterialInfoId).ToList();
 
                 if (ms.Count == 0) { throw new Exception($"素材マスタ Id : {g.Key.MaterialInfoId} Name : {g.Key.MaterialName} に紐づく素材規格マスタが存在しません"); }
 
@@ -97,7 +97,7 @@ namespace FurnitureApp.Models
                 var xml = this.GetDefautInstance($"Sheet{i + 1}");
 
                 // 原材リスト
-                foreach (var m in materialSizeInfos.Where(x => x.MaterialInfoId == g.Key.MaterialInfoId))
+                foreach (var m in materialSizeInfos.Where(x => x.MaterialInfoCode == g.Key.MaterialInfoId))
                 {
                     xml.SourceBoardList.Add(new BoardXml
                     {

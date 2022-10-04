@@ -104,7 +104,7 @@ namespace FurnitureApp.Contents.Orders.Order00300
         }
         private void SetProductToControls()
         {
-            this.ProductCategoryInfoComboBox.SelectedValue = this.Product.ProductCategoryInfoId;
+            this.ProductCategoryInfoComboBox.SelectedValue = this.Product.ProductCategoryInfoCode;
             this.NameTextBox.Text = this.Product.Name;
             this.QuantityTextBox.Text = $"{this.Product.Quantity}";
             this.BodyWidthTextBox.Text = $"{this.Product.BodyWidth}";
@@ -351,7 +351,7 @@ namespace FurnitureApp.Contents.Orders.Order00300
         {
             this.SetProdut();
 
-            if (this.Product.ProductCategoryInfoId == null) { throw new Exception("カテゴリが不適"); }
+            if (this.Product.ProductCategoryInfoCode == null) { throw new Exception("カテゴリが不適"); }
             if (string.IsNullOrEmpty(this.Product.Name)) { throw new Exception("製品名が不適"); }
             if (this.Product.Quantity < 1) { throw new Exception("数量が不適"); }
 
@@ -360,7 +360,7 @@ namespace FurnitureApp.Contents.Orders.Order00300
         }
         private void SetProductWithoutCosts()
         {
-            this.Product.ProductCategoryInfoId = (int?)this.ProductCategoryInfoComboBox.SelectedValue;
+            this.Product.ProductCategoryInfoCode = (int?)this.ProductCategoryInfoComboBox.SelectedValue;
             this.Product.Name = this.NameTextBox.Text;
             this.Product.Quantity = Utility.NumberFormatter.GetNullInt(this.QuantityTextBox.Text) ?? 0;
             this.Product.BodyWidth = Utility.NumberFormatter.GetNullDouble(this.BodyWidthTextBox.Text) ?? 0;

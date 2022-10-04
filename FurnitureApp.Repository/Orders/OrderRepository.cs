@@ -324,13 +324,13 @@ namespace FurnitureApp.Repository.Orders
             }
         }
 
-        public IEnumerable<Product> SelectTopOnlyByProductCategoryInfoId(int productCategoryInfoId)
+        public IEnumerable<Product> SelectTopOnlyByProductCategoryInfoCode(int productCategoryInfoCode)
         {
             IEnumerable<Product> products = null;
 
             RepositoryAction.Query(c =>
             {
-                products = new ProductDao(c, null).SelectByProductCategoryInfoId(productCategoryInfoId);
+                products = new ProductDao(c, null).SelectByProductCategoryInfoCode(productCategoryInfoCode);
             });
 
             return products;

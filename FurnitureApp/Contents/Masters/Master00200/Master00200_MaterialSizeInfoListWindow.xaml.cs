@@ -32,8 +32,6 @@ namespace FurnitureApp.Contents.Masters.Master00200
             InitializeComponent();
             this.DataContext = this;
 
-            this.materialDict = this.cd.MaterialInfos.ToDictionary(x => x.Id);
-
             this.DisplayInfos();
         }
         private void DisplayInfos()
@@ -45,7 +43,7 @@ namespace FurnitureApp.Contents.Masters.Master00200
 
             foreach (var m in this.cd.MaterialSizeInfos)
             {
-                vms.Add(new MaterialSizeInfoViewModel(m, this.materialDict));
+                vms.Add(new MaterialSizeInfoViewModel(m));
             }
             
             this.ViewModels.Clear();

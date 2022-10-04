@@ -15,14 +15,14 @@ namespace FurnitureApp.Repository.MaterialSizeInfos
             get { return id; }
             set { id = value; }
         }
-        private int? materialInfoId;
+        private int? materialInfoCode;
         /// <summary>
-        /// 素材Id
+        /// 素材コード
         /// </summary>
-        public int? MaterialInfoId
+        public int? MaterialInfoCode
         {
-            get { return materialInfoId; }
-            set { materialInfoId = value; }
+            get { return materialInfoCode; }
+            set { materialInfoCode = value; }
         }
         private string name;
         /// <summary>

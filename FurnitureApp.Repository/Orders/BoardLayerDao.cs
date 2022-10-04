@@ -39,14 +39,14 @@ WHERE
             this.connection.Execute(sql, null, this.transaction);
 
         }
-        public bool ExistMaterialInfoId(int? materialInfoId)
+        public bool ExistMaterialInfoCode(int? materialInfoId)
         {
             #region SQL
             var sql = $@"
 SELECT Id 
 FROM {this.tableName}
 WHERE
-{nameof(BoardLayer.MaterialInfoId)} = {materialInfoId}
+{nameof(BoardLayer.MaterialInfoCode)} = {materialInfoId}
 LIMIT 1
 ";
             #endregion

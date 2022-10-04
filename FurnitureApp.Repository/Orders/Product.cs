@@ -25,14 +25,14 @@ namespace FurnitureApp.Repository.Orders
             get { return orderId; }
             set { orderId = value; }
         }
-        private int? productCategoryInfoId;
+        private int? productCategoryInfoCode;
         /// <summary>
         /// 製品カテゴリ
         /// </summary>
-        public int? ProductCategoryInfoId
+        public int? ProductCategoryInfoCode
         {
-            get { return productCategoryInfoId; }
-            set { productCategoryInfoId = value; }
+            get { return productCategoryInfoCode; }
+            set { productCategoryInfoCode = value; }
         }
         private string name;
         /// <summary>
