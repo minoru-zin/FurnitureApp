@@ -25,12 +25,12 @@
                 <DataGridTextColumn Header="順番"
                                     Binding="{Binding Sequence}"
                                     ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
-                <DataGridTextColumn Header="コード"
-                                    Binding="{Binding Code}"/>
                 <DataGridTextColumn Header="名称"
                                     Binding="{Binding Name}"
                                     Width="*"/>
-                </DataGrid.Columns>
+                <DataGridTextColumn Header="コード"
+                                    Binding="{Binding Code}"/>
+            </DataGrid.Columns>
         </DataGrid>
     </Grid>
 </Window>
