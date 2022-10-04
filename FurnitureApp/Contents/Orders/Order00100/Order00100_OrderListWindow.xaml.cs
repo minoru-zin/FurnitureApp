@@ -230,7 +230,7 @@ namespace FurnitureApp.Contents.Orders.Order00100
             this.CostTotalAmountTextBlock.Text = $"{p.Costs.Sum(x => x.TotalAmount):#,0}";
             this.CostTotalAmountTextBlock2.Text = $"合計 {p.Costs.Sum(x => x.TotalAmount):#,0}円";
             this.BoardCostTotalAmountTextBlock.Text = $"{p.BoardCosts.Sum(x => x.TotalAmount) / p.Quantity:#,0}";
-            this.BoardCostTotalAmountTextBlock2.Text = $"合計 {p.BoardCosts.Sum(x => x.TotalAmount):#,0}円 ( {p.BoardCosts.Sum(x => x.TotalAmount) / p.Quantity:#,0}円 / 台　)";
+            this.BoardCostTotalAmountTextBlock2.Text = $"合計 {p.BoardCosts.Sum(x => x.TotalAmount):#,0}円 ( {p.BoardCosts.Sum(x => x.TotalAmount) / p.Quantity:#,0}円 / 台 )";
             this.KoguchiPasteCostTotalAmountTextBlock.Text = $"{p.KoguchiPasteCosts.Sum(x => x.TotalAmount):#,0}";
             this.KoguchiPasteCostTotalAmountTextBlock2.Text = $"合計 {p.KoguchiPasteCosts.Sum(x => x.TotalAmount):#,0}円";
             this.FinishCutCostTotalAmountTextBlock.Text = $"{p.FinishCutCosts.Sum(x => x.TotalAmount):#,0}";

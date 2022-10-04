@@ -270,14 +270,15 @@
                         <RowDefinition Height="35"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="0"
-                                Orientation="Horizontal"
-                                HorizontalAlignment="Right">
+                    <DockPanel Grid.Row="0">
+                        <TextBlock Text="1台当たりの費用"
+                                   FontSize="25"/>
                         <Button Content="＋"
+                                HorizontalAlignment="Right"
                                 Width="35"
                                 Name="EditCostButton"
                                 Click="EditCostButton_Click"/>
-                    </StackPanel>
+                    </DockPanel>
                     <DataGrid Grid.Row="1"
                               ItemsSource="{Binding CostViewModels}"
                               Name="CostDataGrid"

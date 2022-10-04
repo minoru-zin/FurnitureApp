@@ -257,7 +257,8 @@
                             <DockPanel Grid.Row="1">
                                 <Button Content="製品情報出力"
                                         Name="DisplayProductInfoButton"
-                                        Click="DisplayProductInfoButton_Click"/>
+                                        Click="DisplayProductInfoButton_Click"
+                                        Width="150"/>
                                 <TextBlock x:Name="TotalAmountTextBlock2"
                                        FontSize="25"
                                        TextAlignment="Right"/>
