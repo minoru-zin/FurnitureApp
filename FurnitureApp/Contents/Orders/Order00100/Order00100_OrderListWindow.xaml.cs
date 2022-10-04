@@ -4,6 +4,7 @@ using FurnitureApp.Contents.Masters.Master00300;
 using FurnitureApp.Contents.Masters.Master00400;
 using FurnitureApp.Contents.Masters.Master00500;
 using FurnitureApp.Contents.Orders.Order00200;
+using FurnitureApp.Contents.Orders.Order00700;
 using FurnitureApp.Models;
 using FurnitureApp.Repository.Orders;
 using FurnitureApp.Repository.ProductCategoryInfos;
@@ -491,8 +492,21 @@ namespace FurnitureApp.Contents.Orders.Order00100
         }
         private void ImportButton_Click(object sender, RoutedEventArgs e)
         {
-
-
+            try
+            {
+                var w = new Order00700_ImportOrderWindow();
+                w.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                w.ShowDialog();
+                if (w.IsChanged)
+                {
+                    this.DisplayOrders();
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                this.cd.DialogService.ShowMessage(ex.Message);
+            }
         }
 
         private void ExportButton_Click(object sender, RoutedEventArgs e)
@@ -540,8 +554,6 @@ namespace FurnitureApp.Contents.Orders.Order00100
 
             this.cd.DialogService.ShowMessage($"デスクトップに「{Path.GetFileName(coreDirPath)}」フォルダを出力しました");
         }
-
-
 
         private void DisplayProductInfoButton_Click(object sender, RoutedEventArgs e)
         {

@@ -41,6 +41,11 @@ namespace FurnitureApp.Contents.Orders.Order00300
             this.DataContext = this;
 
             this.BoardType = boardType;
+
+            if(boardType == BoardType.Tanaita)
+            {
+                this.BoardCountUnitTextBlock.Text = "段";
+            }
             this.MaterialInfos.AddRange(this.cd.MaterialInfos.Select(x => new DisplayInfo<MaterialInfo>(x, x.Name)));
             this.BoardTypeTextBlock.Text = this.cd.BoardTypes.First(x => x.Code == boardType).DisplayName;
             this.KoguchiKeshouAreas = this.cd.KoguchiKeshouAreas;

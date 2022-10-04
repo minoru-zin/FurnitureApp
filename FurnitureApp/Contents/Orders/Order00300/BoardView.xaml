@@ -132,7 +132,8 @@
                 <TextBlock Text="枚"
                            Margin="0 0 25 0"
                            FontSize="25"
-                           VerticalAlignment="Center"/>
+                           VerticalAlignment="Center"
+                           Name="BoardCountUnitTextBlock"/>
 
             </StackPanel>
         </Grid>
