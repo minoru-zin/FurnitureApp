@@ -489,6 +489,59 @@ namespace FurnitureApp.Contents.Orders.Order00100
 
             Process.Start(app);
         }
+        private void ImportButton_Click(object sender, RoutedEventArgs e)
+        {
+
+
+        }
+
+        private void ExportButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                this.Export();
+            }
+            catch (Exception ex)
+            {
+                this.logger.Error(ex);
+                this.cd.DialogService.ShowMessage(ex.Message);
+            }
+        }
+        private void Export()
+        {
+            var orders = new List<Order>();
+
+            foreach (OrderViewModel vm in this.OrderDataGrid.SelectedItems)
+            {
+                orders.Add(vm.Model);
+            }
+
+            if (!orders.Any())
+            {
+                this.cd.DialogService.ShowMessage("エクスポートしたい受注を選択してください");
+                return;
+            }
+
+            var coreDirPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), $"Export_{DateTime.Now:yyyyMMddHHmmss}");
+
+
+            foreach (var order in orders)
+            {
+                var dirPath = Path.Combine(coreDirPath, $"{order.Id}");
+                Utility.DirectoryCreator.CreateSafely(dirPath);
+                Utility.XmlWriter.WriteXml(order, Path.Combine(dirPath, this.cd.ExportOrderFileName));
+                foreach (var pf in order.Products.SelectMany(x => x.ProductFiles))
+                {
+                    var sPath = this.cd.OrderRepository.GetProductFilePath(order.Id, pf.FileName);
+                    var dPath = Path.Combine(dirPath, pf.FileName);
+                    File.Copy(sPath, dPath);
+                }
+            }
+
+            this.cd.DialogService.ShowMessage($"デスクトップに「{Path.GetFileName(coreDirPath)}」フォルダを出力しました");
+        }
+
+
 
         private void DisplayProductInfoButton_Click(object sender, RoutedEventArgs e)
         {
@@ -1047,5 +1100,6 @@ namespace FurnitureApp.Contents.Orders.Order00100
             Process.Start(app);
 
         }
+
     }
 }

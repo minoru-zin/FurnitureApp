@@ -182,11 +182,22 @@
                             </DataGrid.Columns>
                         </DataGrid>
                         <DockPanel Grid.Row="1">
-                            <Button Grid.Row="1"
-                                x:Name="OutputButton"
-                                Click="OutputButton_Click"
-                                Content="原価計算ファイル出力"
-                                    Width="150"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Button x:Name="OutputButton"
+                                        Click="OutputButton_Click"
+                                        Content="原価計算ファイル出力"
+                                        Width="150"/>
+                                <Button x:Name="ImportButton"
+                                        Click="ImportButton_Click"
+                                        Content="インポート"
+                                        ToolTip="受注データの取り込み"
+                                        Width="150"/>
+                                <Button x:Name="ExportButton"
+                                        ToolTip="受注一覧から選択されたデータの出力"
+                                        Click="ExportButton_Click"
+                                        Content="エクスポート"
+                                        Width="150"/>
+                            </StackPanel>
                             <TextBlock x:Name="TotalAmountTextBlock"
                                        TextAlignment="Right"
                                        FontSize="25"/>
