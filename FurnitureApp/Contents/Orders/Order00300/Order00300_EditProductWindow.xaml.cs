@@ -45,7 +45,7 @@ namespace FurnitureApp.Contents.Orders.Order00300
             InitializeComponent();
             this.DataContext = this;
             this.Product = product.Clone();
-            this.ProductCategoryInfos.AddRange(this.cd.ProductCategoryInfos.Select(x => new DisplayInfo<int?>(x.Id, x.Name)));
+            this.ProductCategoryInfos.AddRange(this.cd.ProductCategoryInfos.Select(x => new DisplayInfo<int?>(x.Code, x.Name)));
             this.InitializeControls();
             this.SetProductToControls();
         }

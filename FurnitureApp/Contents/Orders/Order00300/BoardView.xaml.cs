@@ -49,7 +49,7 @@ namespace FurnitureApp.Contents.Orders.Order00300
             this.MaterialInfos.AddRange(this.cd.MaterialInfos.Select(x => new DisplayInfo<MaterialInfo>(x, x.Name)));
             this.BoardTypeTextBlock.Text = this.cd.BoardTypes.First(x => x.Code == boardType).DisplayName;
             this.KoguchiKeshouAreas = this.cd.KoguchiKeshouAreas;
-            this.PaintCostItemInfos.AddRange(this.cd.PaintCostItemInfos.Select(x => new DisplayInfo<int?>(x.Id, x.Name)));
+            this.PaintCostItemInfos.AddRange(this.cd.PaintCostItemInfos.Select(x => new DisplayInfo<int?>(x.Code, x.Name)));
             this.PaintAreas = this.cd.PaintAreas;
             this.MokumeDirectionTypes = this.cd.MokumeDirectionTypes;
 

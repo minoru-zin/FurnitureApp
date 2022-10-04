@@ -47,6 +47,7 @@ namespace FurnitureApp.Models
         public List<PaintCostItemInfo> PaintCostItemInfos { get; } = new List<PaintCostItemInfo>();
 
         public Dictionary<int?, MaterialInfo> MaterialInfoDict { get; private set; }
+        public Dictionary<int?, ProductCategoryInfo> ProductCategoryInfoDict { get; private set; }
         #endregion
 
         #region BoardType 板タイプ
@@ -147,6 +148,7 @@ namespace FurnitureApp.Models
 
 
             this.MaterialInfoDict = this.MaterialInfos.ToDictionary(x => x.Code);
+            this.ProductCategoryInfoDict = this.ProductCategoryInfos.ToDictionary(x => x.Code);
         }
     }
 }

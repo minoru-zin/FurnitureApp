@@ -1,4 +1,5 @@
-﻿using FurnitureApp.Repository.Orders;
+﻿using FurnitureApp.Models;
+using FurnitureApp.Repository.Orders;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,11 +19,11 @@ namespace FurnitureApp.Contents.Orders.Order00200
         public int? TotalAmount { get; }
         public string TotalAmountText { get; }
         public Product Model { get; }
-
-        public ProductViewModel(Product product, string productCategoryName)
+        private CommonData cd = CommonData.GetInstance();
+        public ProductViewModel(Product product)
         {
             this.Model = product;
-            this.ProductCategoryName = productCategoryName;
+            this.ProductCategoryName = this.cd.ProductCategoryInfoDict.GetValueOrDefault(product.ProductCategoryInfoCode)?.Name;
             this.Name = product.Name;
             this.Width = product.BodyWidth;
             this.Depth = product.BodyDepth;

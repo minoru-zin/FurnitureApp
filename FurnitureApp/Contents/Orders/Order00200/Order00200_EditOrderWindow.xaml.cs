@@ -30,7 +30,6 @@ namespace FurnitureApp.Contents.Orders.Order00200
 
         public ObservableCollection<ProductViewModel> ProductViewModels { get; } = new ObservableCollection<ProductViewModel>();
         
-        private Dictionary<int?, ProductCategoryInfo> productCateogryInfoDict;
         private Order oldOrder;
         public bool IsChanged = false;
         public Order00200_EditOrderWindow(Order order)
@@ -38,7 +37,6 @@ namespace FurnitureApp.Contents.Orders.Order00200
             InitializeComponent();
             this.DataContext = this;
             this.oldOrder = order.Clone();
-            this.productCateogryInfoDict = this.cd.ProductCategoryInfos.ToDictionary(x => x.Id);
             this.SetOrderToControls();
             this.SetTotalAmount();
             if (order.Id == null) { this.CreatedDateTextBox.Text = $"{DateTime.Now:d}"; }
@@ -77,7 +75,7 @@ namespace FurnitureApp.Contents.Orders.Order00200
             this.DeliveryDateTextBox.Text = $"{this.oldOrder.DeliveryDate:d}";
             this.RemarksTextBox.Text = this.oldOrder.Remarks;
 
-            this.ProductViewModels.AddRange(this.oldOrder.Products.Select(x => new ProductViewModel(x, this.productCateogryInfoDict.GetValueOrDefault(x.ProductCategoryInfoCode)?.Name)));
+            this.ProductViewModels.AddRange(this.oldOrder.Products.Select(x => new ProductViewModel(x)));
         }
         
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
@@ -159,7 +157,7 @@ namespace FurnitureApp.Contents.Orders.Order00200
 
                 if (!w.IsChanged) { return; }
 
-                this.ProductViewModels.Add(new ProductViewModel(w.Product, this.productCateogryInfoDict.GetValueOrDefault(w.Product.ProductCategoryInfoCode)?.Name));
+                this.ProductViewModels.Add(new ProductViewModel(w.Product));
 
                 this.SetTotalAmount();
             }
@@ -187,7 +185,7 @@ namespace FurnitureApp.Contents.Orders.Order00200
 
                 this.ProductViewModels.Remove(vm);
 
-                this.ProductViewModels.Insert(index, new ProductViewModel(w.Product, this.productCateogryInfoDict.GetValueOrDefault(w.Product.ProductCategoryInfoCode)?.Name));
+                this.ProductViewModels.Insert(index, new ProductViewModel(w.Product));
 
                 this.SetTotalAmount();
             }

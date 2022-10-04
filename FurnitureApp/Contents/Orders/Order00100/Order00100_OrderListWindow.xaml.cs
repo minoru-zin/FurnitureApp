@@ -51,15 +51,13 @@ namespace FurnitureApp.Contents.Orders.Order00100
         public ObservableCollection<DisplayMakeupBoardPasteCostViewModel> MakeupBoardPasteCostViewModels { get; } = new ObservableCollection<DisplayMakeupBoardPasteCostViewModel>();
         public ObservableCollection<DisplayPaintCostViewModel> PaintCostViewModels { get; } = new ObservableCollection<DisplayPaintCostViewModel>();
 
-
-        private Dictionary<int?, ProductCategoryInfo> productCateogryInfoDict;
         public Order00100_OrderListWindow()
         {
             InitializeComponent();
             this.DataContext = this;
             this.CreatedDateFTextBox.Text = $"{DateTime.Now.Date.AddMonths(-6):d}";
             this.CreatedDateTTextBox.Text = $"{DateTime.Now:d}";
-            this.productCateogryInfoDict = this.cd.ProductCategoryInfos.ToDictionary(x => x.Id);
+            
 
             this.DisplayOrders();
         }
@@ -178,7 +176,7 @@ namespace FurnitureApp.Contents.Orders.Order00100
                 if (vm == null) { return; }
 
                 this.ProductViewModels.Clear();
-                this.ProductViewModels.AddRange(vm.Model.Products.Select(x => new ProductViewModel(x, this.productCateogryInfoDict.GetValueOrDefault(x.ProductCategoryInfoCode)?.Name)));
+                this.ProductViewModels.AddRange(vm.Model.Products.Select(x => new ProductViewModel(x)));
                 this.TotalAmountTextBlock.Text = $"総額 {this.ProductViewModels.Sum(x => x.TotalAmount):#,0}円";
                 this.TotalAmountTextBlock2.Text = $"総額 {this.ProductViewModels.Sum(x => x.TotalAmount):#,0}円";
             }
@@ -208,7 +206,7 @@ namespace FurnitureApp.Contents.Orders.Order00100
 
         private void SetProductToControls(Product p)
         {
-            this.ProductCategoryNameTextBlock.Text = this.productCateogryInfoDict.GetValueOrDefault(p.ProductCategoryInfoCode)?.Name;
+            this.ProductCategoryNameTextBlock.Text = this.cd.ProductCategoryInfoDict.GetValueOrDefault(p.ProductCategoryInfoCode)?.Name;
             this.NameTextBlock.Text = p.Name;
             this.QuantityTextBlock.Text = $"{p.Quantity}";
             this.BodyWidthTextBlock.Text = $"{p.BodyWidth}";
