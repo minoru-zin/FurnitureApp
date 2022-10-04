@@ -28,7 +28,7 @@
                 <DataGridTextColumn Header="名称"
                                     Binding="{Binding Name}"
                                     Width="*"/>
-                <DataGridTextColumn Header="単価"
+                <DataGridTextColumn Header="単価(円/303^2)"
                                     Binding="{Binding UnitPrice}"
                                     MinWidth="60"
                                     ElementStyle="{StaticResource RightGridCellTextBlock}"/>
