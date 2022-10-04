@@ -18,6 +18,10 @@ namespace FurnitureApp.Models
         private static CommonData commonData = new CommonData();
         public readonly string TempFileDirName = "TempFiles";
         public readonly string ExportOrderFileName = "Order.xml";
+        public readonly string ExportMaterialInfoFileName = "MaterialInfos.xml";
+        public readonly string ExportProductCategoryInfoFileName = "ProductCategoryInfos.xml";
+        public readonly string ExportPaintCostItemInfoFileName = "PaintCostItemInfos.xml";
+        
 
         #region メッセージダイアログ
         /// <summary>

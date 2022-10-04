@@ -538,6 +538,10 @@ namespace FurnitureApp.Contents.Orders.Order00100
 
             var coreDirPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), $"Export_{DateTime.Now:yyyyMMddHHmmss}");
 
+            Utility.DirectoryCreator.CreateSafely(coreDirPath);
+            Utility.XmlWriter.WriteXml(this.cd.MaterialInfos, Path.Combine(coreDirPath, this.cd.ExportMaterialInfoFileName));
+            Utility.XmlWriter.WriteXml(this.cd.ProductCategoryInfos, Path.Combine(coreDirPath, this.cd.ExportProductCategoryInfoFileName));
+            Utility.XmlWriter.WriteXml(this.cd.PaintCostItemInfos, Path.Combine(coreDirPath, this.cd.ExportPaintCostItemInfoFileName));
 
             foreach (var order in orders)
             {
