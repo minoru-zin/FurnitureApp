@@ -55,7 +55,7 @@ namespace FurnitureApp.Contents.Orders.Order00100
         {
             InitializeComponent();
             this.DataContext = this;
-            this.CreatedDateFTextBox.Text = $"{DateTime.Now.Date.AddMonths(-6):d}";
+            this.CreatedDateFTextBox.Text = $"{DateTime.Now.Date.AddYears(-1):d}";
             this.CreatedDateTTextBox.Text = $"{DateTime.Now:d}";
             
 
@@ -100,7 +100,7 @@ namespace FurnitureApp.Contents.Orders.Order00100
                 return;
             }
 
-            var orders = this.cd.OrderRepository.SelectFromCreatedDate((DateTime)createdDateF, (DateTime)createdDateT).OrderByDescending(x => x.CreatedDate).ToList();
+            var orders = this.cd.OrderRepository.SelectFromCreatedDate((DateTime)createdDateF, (DateTime)createdDateT).OrderByDescending(x => x.CreatedDate).ThenByDescending(x => x.Id).ToList();
 
             this.OrderViewModels.Clear();
 
