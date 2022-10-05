@@ -110,16 +110,7 @@ namespace FurnitureApp.Contents.Orders.Order00100
             }
 
             this.ProductViewModels.Clear();
-            this.BoardViewModels.Clear();
-            this.BoardLayerViewModels.Clear();
-            this.CostViewModels.Clear();
-            this.ProductFileViewModels.Clear();
-            this.BoardViewModels2.Clear();
-            this.BoardCostViewModels.Clear();
-            this.KoguchiPasteCostViewModels.Clear();
-            this.FinishCutCostViewModels.Clear();
-            this.MakeupBoardPasteCostViewModels.Clear();
-            this.PaintCostViewModels.Clear();
+            this.ResetProductPropertyViewModels();
             this.TotalAmountTextBlock.Text = "";
             this.TotalAmountTextBlock2.Text = "";
 
@@ -179,6 +170,10 @@ namespace FurnitureApp.Contents.Orders.Order00100
                 this.ProductViewModels.AddRange(vm.Model.Products.Select(x => new ProductViewModel(x)));
                 this.TotalAmountTextBlock.Text = $"総額 {this.ProductViewModels.Sum(x => x.TotalAmount):#,0}円";
                 this.TotalAmountTextBlock2.Text = $"総額 {this.ProductViewModels.Sum(x => x.TotalAmount):#,0}円";
+                if (this.ProductViewModels.Any())
+                {
+                    this.ProductDataGrid.SelectedItem = this.ProductViewModels[0];
+                }
             }
             catch (Exception ex)
             {
@@ -193,6 +188,8 @@ namespace FurnitureApp.Contents.Orders.Order00100
             {
                 var vm = this.ProductDataGrid.SelectedItem as ProductViewModel;
 
+                this.ResetProductPropertyViewModels();
+
                 if (vm == null) { return; }
 
                 this.SetProductToControls(vm.Model);
@@ -203,7 +200,19 @@ namespace FurnitureApp.Contents.Orders.Order00100
                 this.cd.DialogService.ShowMessage(ex.Message);
             }
         }
-
+        private void ResetProductPropertyViewModels()
+        {
+            this.BoardViewModels.Clear();
+            this.BoardLayerViewModels.Clear();
+            this.CostViewModels.Clear();
+            this.ProductFileViewModels.Clear();
+            this.BoardViewModels2.Clear();
+            this.BoardCostViewModels.Clear();
+            this.KoguchiPasteCostViewModels.Clear();
+            this.FinishCutCostViewModels.Clear();
+            this.MakeupBoardPasteCostViewModels.Clear();
+            this.PaintCostViewModels.Clear();
+        }
         private void SetProductToControls(Product p)
         {
             this.ProductCategoryNameTextBlock.Text = this.cd.ProductCategoryInfoDict.GetValueOrDefault(p.ProductCategoryInfoCode)?.Name;
