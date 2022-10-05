@@ -191,12 +191,12 @@
                                         Click="ImportButton_Click"
                                         Content="インポート"
                                         ToolTip="受注データの取り込み"
-                                        Width="150"/>
+                                        Width="70"/>
                                 <Button x:Name="ExportButton"
                                         ToolTip="受注一覧から選択されたデータの出力"
                                         Click="ExportButton_Click"
                                         Content="エクスポート"
-                                        Width="150"/>
+                                        Width="80"/>
                             </StackPanel>
                             <TextBlock x:Name="TotalAmountTextBlock"
                                        TextAlignment="Right"
@@ -520,16 +520,7 @@
                                                Name="CostTotalAmountTextBlock2"/>
                                 </Grid>
                             </TabItem>
-                            <TabItem Header="画像">
-                                <DataGrid ItemsSource="{Binding ProductFileViewModels}"
-                                          Name="ProductFileDataGrid"
-                                          MouseDoubleClick="ProductFileDataGrid_MouseDoubleClick">
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn Header="ファイル名"
-                                                            Binding="{Binding DisplayName}"/>
-                                    </DataGrid.Columns>
-                                </DataGrid>
-                            </TabItem>
+                            
                             <TabItem Header="製作寸法">
                                 <DataGrid Grid.Row="0"
                                           ItemsSource="{Binding BoardViewModels2}">
@@ -789,6 +780,16 @@
                                                TextAlignment="Right"
                                                Name="PaintCostTotalAmountTextBlock2"/>
                                 </Grid>
+                            </TabItem>
+                            <TabItem Header="画像">
+                                <DataGrid ItemsSource="{Binding ProductFileViewModels}"
+                                          Name="ProductFileDataGrid"
+                                          MouseDoubleClick="ProductFileDataGrid_MouseDoubleClick">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="ファイル名"
+                                                            Binding="{Binding DisplayName}"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
                             </TabItem>
                         </TabControl>
                     </Grid>
