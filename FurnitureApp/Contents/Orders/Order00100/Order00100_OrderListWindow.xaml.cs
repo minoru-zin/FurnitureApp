@@ -311,7 +311,7 @@ namespace FurnitureApp.Contents.Orders.Order00100
 
                 var orderId = (this.ProductDataGrid.SelectedItem as ProductViewModel).Model.OrderId;
                 var sourceFilePath = this.cd.OrderRepository.GetProductFilePath(orderId, vm.Model.FileName);
-                var destFilePath = Path.Combine(this.cd.TempFileDirName, vm.Model.FileName);
+                var destFilePath = Path.Combine(this.cd.TempFileDirName, $"{vm.DisplayName}{Path.GetExtension(vm.Model.FileName)}");
 
                 Utility.DirectoryCreator.CreateSafely(Path.GetDirectoryName(destFilePath));
 

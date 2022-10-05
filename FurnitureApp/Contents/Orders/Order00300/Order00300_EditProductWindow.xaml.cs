@@ -273,7 +273,7 @@ namespace FurnitureApp.Contents.Orders.Order00300
                     sourceFilePath = vm.Model.SourceFilePath;
                 }
 
-                var destFilePath = Path.Combine(this.cd.TempFileDirName, vm.Model.FileName);
+                var destFilePath = Path.Combine(this.cd.TempFileDirName, $"{vm.Model.DisplayName}{Path.GetExtension(vm.Model.FileName)}" );
 
                 Utility.DirectoryCreator.CreateSafely(Path.GetDirectoryName(destFilePath));
 
