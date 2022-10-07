@@ -14,6 +14,7 @@ namespace FurnitureApp.Contents.Masters.Master00200
         public double? Length { get; }
         public double? Width { get; }
         public string UnitPrice { get; }
+        public DateTime? UpdatedDate { get; }
         public MaterialSizeInfo Model { get; }
         private CommonData cd = CommonData.GetInstance();
         public MaterialSizeInfoViewModel(MaterialSizeInfo m)
@@ -24,6 +25,7 @@ namespace FurnitureApp.Contents.Masters.Master00200
             this.Length = m.Length;
             this.Width = m.Width;
             this.UnitPrice = $"{m.UnitPrice:C}";
+            this.UpdatedDate = m.UpdatedDate;
         }
     }
 }

@@ -41,6 +41,12 @@
                          Width="250"
                          GotFocus="TextBox_GotFocus"/>
             </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="更新日"/>
+                <TextBox x:Name="UpdatedDateTextBox"
+                         Width="250"
+                         GotFocus="UpdatedDateTextBox_GotFocus"/>
+            </StackPanel>
         </StackPanel>
         <DockPanel Grid.Row="1">
             <Button Name="DeleteButton"

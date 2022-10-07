@@ -77,6 +77,10 @@ namespace FurnitureApp.Contents.Masters.Master00200
         {
             this.cf.SetIntNumberTextBox(sender as TextBox);
         }
+        private void UpdatedDateTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            this.cf.SetDate(this.UpdatedDateTextBox);
+        }
         private void SetInfoToControls()
         {
             this.MaterialComboBox.SelectedValue = this.model.MaterialInfoCode;
@@ -84,6 +88,7 @@ namespace FurnitureApp.Contents.Masters.Master00200
             this.LengthTextBox.Text = $"{this.model.Length}";
             this.WidthTextBox.Text = $"{this.model.Width}";
             this.UnitPriceTextBox.Text = $"{this.model.UnitPrice}";
+            this.UpdatedDateTextBox.Text = $"{this.model.UpdatedDate:d}";
         }
 
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
@@ -106,12 +111,14 @@ namespace FurnitureApp.Contents.Masters.Master00200
             this.model.Length = Utility.NumberFormatter.GetNullDouble(this.LengthTextBox.Text) ?? 0;
             this.model.Width = Utility.NumberFormatter.GetNullDouble(this.WidthTextBox.Text) ?? 0;
             this.model.UnitPrice = Utility.NumberFormatter.GetNullInt(this.UnitPriceTextBox.Text) ?? 0;
+            this.model.UpdatedDate = Utility.DateTimeFormatter.GetDateTime(this.UpdatedDateTextBox.Text);
 
             if (this.model.MaterialInfoCode == null) { throw new Exception("素材が不適"); }
             if (string.IsNullOrEmpty(this.model.Name)) { throw new Exception("名称が不適"); }
             if (this.model.Length <= 0) { throw new Exception("縦が不適"); }
             if (this.model.Width <= 0) { throw new Exception("横が不適"); }
             if (this.model.UnitPrice < 0) { throw new Exception("単価が不適"); }
+            if (this.model.UpdatedDate == null) { throw new Exception("更新日が不適"); }
 
             if (this.model.Id == null)
             {

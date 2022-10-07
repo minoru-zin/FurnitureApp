@@ -84,5 +84,30 @@ namespace FurnitureApp.Contents.Masters.Master00500
                 this.cd.DialogService.ShowMessage(ex.Message);
             }
         }
+
+        private void CopyButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var vm = this.DataGrid.SelectedItem as PaintCostItemInfoViewModel;
+
+                if (vm == null) { return; }
+
+                var clone = vm.Model.Clone();
+                clone.Id = null;
+                var w = new Master00500_EditPaintCostItemInfoWindow(clone);
+                w.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                w.ShowDialog();
+                if (w.IsChanged)
+                {
+                    this.DisplayInfos();
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                this.cd.DialogService.ShowMessage(ex.Message);
+            }
+        }
     }
 }

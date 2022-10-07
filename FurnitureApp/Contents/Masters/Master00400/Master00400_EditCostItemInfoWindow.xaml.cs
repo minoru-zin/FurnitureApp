@@ -57,11 +57,17 @@ namespace FurnitureApp.Contents.Masters.Master00400
         {
             this.cf.SetIntNumberTextBox(sender as TextBox);
         }
+        private void UpdatedDateTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            this.cf.SetDate(sender as TextBox);
+        }
         private void SetInfoToControls()
         {
             this.SequenceTextBox.Text = $"{this.model.Sequence}";
+            this.CategoryNameTextBox.Text = this.model.CategoryName;
             this.NameTextBox.Text = this.model.Name;
             this.UnitPriceTextBox.Text = $"{this.model.UnitPrice}";
+            this.UpdatedDateTextBox.Text = $"{this.model.UpdatedDate:d}";
         }
 
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
@@ -80,12 +86,17 @@ namespace FurnitureApp.Contents.Masters.Master00400
         private void Update()
         {
             this.model.Sequence = Utility.NumberFormatter.GetNullInt(this.SequenceTextBox.Text) ?? 0;
+            this.model.CategoryName = this.CategoryNameTextBox.Text;
             this.model.Name = this.NameTextBox.Text;
             this.model.UnitPrice = Utility.NumberFormatter.GetNullInt(this.UnitPriceTextBox.Text) ?? 0;
+            this.model.UpdatedDate = Utility.DateTimeFormatter.GetDateTime(this.UpdatedDateTextBox.Text);
 
             if (this.model.Sequence <= 0) { throw new Exception("順番が不適"); }
+            if (string.IsNullOrEmpty(this.model.CategoryName)) { throw new Exception("カテゴリ名が不適"); }
             if (string.IsNullOrEmpty(this.model.Name)) { throw new Exception("名称が不適"); }
             if (this.model.UnitPrice < 0) { throw new Exception("単価が不適"); }
+            if (this.model.UpdatedDate == null) { throw new Exception("更新日が不適"); }
+
 
             if (this.model.Id == null)
             {
@@ -113,6 +124,8 @@ namespace FurnitureApp.Contents.Masters.Master00400
             this.IsChanged = true;
             this.Close();
         }
+
+        
     }
 }
 

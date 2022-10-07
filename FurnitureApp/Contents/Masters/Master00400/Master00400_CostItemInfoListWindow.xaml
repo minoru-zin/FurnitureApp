@@ -5,18 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FurnitureApp.Contents.Masters.Master00400"
         mc:Ignorable="d"
-        Title="費用項目一覧 Master00400_CostItemInfoListWindow" Height="500" Width="500">
+        Title="費用項目一覧 Master00400_CostItemInfoListWindow" Height="600" Width="600">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0"
-                    HorizontalAlignment="Right">
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
             <Button Content="＋"
                     Width="35"
                     Name="AddButton"
                     Click="AddButton_Click"/>
+            <Button Content="複製"
+                    Width="50"
+                    Name="CopyButton"
+                    Click="CopyButton_Click"/>
         </StackPanel>
         <DataGrid Grid.Row="1" ItemsSource="{Binding ViewModels}"
                   Name="DataGrid"
@@ -25,6 +30,9 @@
                 <DataGridTextColumn Header="順番"
                                     Binding="{Binding Sequence}"
                                     ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
+                <DataGridTextColumn Header="カテゴリ名"
+                                    Binding="{Binding CategoryName}"/>
+
                 <DataGridTextColumn Header="名称"
                                     Binding="{Binding Name}"
                                     Width="*"/>
@@ -32,6 +40,10 @@
                                     Binding="{Binding UnitPrice}"
                                     MinWidth="60"
                                     ElementStyle="{StaticResource RightGridCellTextBlock}"/>
+                <DataGridTextColumn Header="更新日"
+                                    Binding="{Binding UpdatedDate, StringFormat=yyyy/MM/dd}"
+                                    />
+
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

@@ -62,12 +62,16 @@ namespace FurnitureApp.Contents.Masters.Master00300
         {
             this.cf.SetIntNumberTextBox(sender as TextBox);
         }
+        private void UpdatedDateTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            this.cf.SetDate(this.UpdatedDateTextBox);
+        }
         private void SetInfoToControls()
         {
             this.SequenceTextBox.Text = $"{this.model.Sequence}";
             this.CodeTextBox.Text = $"{this.model.Code}";
             this.NameTextBox.Text = this.model.Name;
-
+            this.UpdatedDateTextBox.Text = $"{this.model.UpdatedDate:d}";
             if (this.model.Id == null)
             {
                 this.CodeTextBox.Text = $"{(this.cd.ProductCategoryInfos.Max(x => x.Code) ?? 0) + 1}";
@@ -96,10 +100,13 @@ namespace FurnitureApp.Contents.Masters.Master00300
             this.model.Sequence = Utility.NumberFormatter.GetNullInt(this.SequenceTextBox.Text) ?? 0;
             this.model.Code = Utility.NumberFormatter.GetNullInt(this.CodeTextBox.Text);
             this.model.Name = this.NameTextBox.Text;
+            this.model.UpdatedDate = Utility.DateTimeFormatter.GetDateTime(this.UpdatedDateTextBox.Text);
 
             if (this.model.Sequence <= 0) { throw new Exception("順番が不適"); }
             if (this.model.Code == null) { throw new Exception("コードが不適"); }
             if (string.IsNullOrEmpty(this.model.Name)) { throw new Exception("名称が不適"); }
+            if (this.model.UpdatedDate == null) { throw new Exception("更新日が不適"); }
+
 
             if (this.model.Id == null)
             {
@@ -140,6 +147,7 @@ namespace FurnitureApp.Contents.Masters.Master00300
             this.IsChanged = true;
             this.Close();
         }
-        
+
+       
     }
 }

@@ -10,6 +10,7 @@ namespace FurnitureApp.Contents.Masters.Master00300
         public int? Sequence { get; }
         public int? Code { get; }
         public string Name { get; }
+        public DateTime? UpdatedDate { get; }
         public ProductCategoryInfo Model { get; }
 
         public ProductCategoryInfoViewModel(ProductCategoryInfo m)
@@ -18,6 +19,7 @@ namespace FurnitureApp.Contents.Masters.Master00300
             this.Sequence = m.Sequence;
             this.Code = m.Code;
             this.Name = m.Name;
+            this.UpdatedDate = m.UpdatedDate;
         }
     }
 }
