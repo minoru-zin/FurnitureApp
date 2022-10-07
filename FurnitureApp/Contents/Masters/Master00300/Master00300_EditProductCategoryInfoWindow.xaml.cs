@@ -71,7 +71,8 @@ namespace FurnitureApp.Contents.Masters.Master00300
             this.SequenceTextBox.Text = $"{this.model.Sequence}";
             this.CodeTextBox.Text = $"{this.model.Code}";
             this.NameTextBox.Text = this.model.Name;
-            this.UpdatedDateTextBox.Text = $"{this.model.UpdatedDate:d}";
+            this.UpdatedDateTextBox.Text = $"{DateTime.Now.Date:d}";
+
             if (this.model.Id == null)
             {
                 this.CodeTextBox.Text = $"{(this.cd.ProductCategoryInfos.Max(x => x.Code) ?? 0) + 1}";

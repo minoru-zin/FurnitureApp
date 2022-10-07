@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FurnitureApp.Contents.Masters.Master00400"
         mc:Ignorable="d"
-        Title="塗装費用項目一覧 Master00500_PaintCostItemInfoListWindow" Height="600" Width="600">
+        Title="塗装費用項目一覧 Master00500_PaintCostItemInfoListWindow" Height="800" Width="800">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
@@ -40,7 +40,8 @@
                 <DataGridTextColumn Header="コード"
                                     Binding="{Binding Code}"/>
                 <DataGridTextColumn Header="更新日"
-                                    Binding="{Binding UpdatedDate, StringFormat=yyyy/MM/dd}"/>
+                                    Binding="{Binding UpdatedDate, StringFormat=yyyy/MM/dd}"
+                                    Width="70"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

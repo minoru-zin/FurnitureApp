@@ -32,7 +32,6 @@ namespace FurnitureApp.Contents.Masters.Master00100
             InitializeComponent();
             this.DataContext = this;
             this.model = m.Clone();
-            this.model.UpdatedDate = DateTime.Now.Date;
             this.CutTypes = this.cd.CutTypes;
             
             this.SetInfoToControls();
@@ -89,7 +88,7 @@ namespace FurnitureApp.Contents.Masters.Master00100
             this.ThicknessTextBox.Text = $"{this.model.Thickness}";
             this.PasteUnitPriceTextBox.Text = $"{this.model.PasteUnitPrice}";
             this.CutTypeComboBox.SelectedValue = this.model.CutType;
-            this.UpdatedDateTextBox.Text = $"{this.model.UpdatedDate:d}";
+            this.UpdatedDateTextBox.Text = $"{DateTime.Now.Date:d}";
 
             if(this.model.Id == null)
             {

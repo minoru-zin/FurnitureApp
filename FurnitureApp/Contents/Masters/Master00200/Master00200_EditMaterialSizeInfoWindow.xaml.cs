@@ -88,7 +88,7 @@ namespace FurnitureApp.Contents.Masters.Master00200
             this.LengthTextBox.Text = $"{this.model.Length}";
             this.WidthTextBox.Text = $"{this.model.Width}";
             this.UnitPriceTextBox.Text = $"{this.model.UnitPrice}";
-            this.UpdatedDateTextBox.Text = $"{this.model.UpdatedDate:d}";
+            this.UpdatedDateTextBox.Text = $"{DateTime.Now.Date:d}";
         }
 
         private void UpdateButton_Click(object sender, RoutedEventArgs e)

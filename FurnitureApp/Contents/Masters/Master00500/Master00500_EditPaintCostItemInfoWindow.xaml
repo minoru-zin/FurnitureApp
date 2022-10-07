@@ -47,6 +47,11 @@
                 <TextBox x:Name="UnitPriceTextBox"
                          LostFocus="SequenceTextBox_LostFocus"/>
             </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="更新日"/>
+                <TextBox x:Name="UpdatedDateTextBox"
+                         LostFocus="UpdatedDateTextBox_LostFocus"/>
+            </StackPanel>
         </StackPanel>
         <DockPanel Grid.Row="1">
             <Button Name="DeleteButton"
