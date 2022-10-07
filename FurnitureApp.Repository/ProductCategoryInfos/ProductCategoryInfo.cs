@@ -43,6 +43,15 @@ namespace FurnitureApp.Repository.ProductCategoryInfos
             get { return sequence; }
             set { sequence = value; }
         }
+        private DateTime? updatedDate;
+        /// <summary>
+        /// 更新日
+        /// </summary>
+        public DateTime? UpdatedDate
+        {
+            get { return updatedDate; }
+            set { updatedDate = value; }
+        }
         public ProductCategoryInfo Clone()
         {
             return (ProductCategoryInfo)MemberwiseClone();

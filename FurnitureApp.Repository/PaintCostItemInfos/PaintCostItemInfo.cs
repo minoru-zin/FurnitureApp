@@ -52,7 +52,15 @@ namespace FurnitureApp.Repository.PaintCostItemInfos
             get { return unitPrice; }
             set { unitPrice = value; }
         }
-
+        private DateTime? updatedDate;
+        /// <summary>
+        /// 更新日
+        /// </summary>
+        public DateTime? UpdatedDate
+        {
+            get { return updatedDate; }
+            set { updatedDate = value; }
+        }
         public PaintCostItemInfo Clone()
         {
             return (PaintCostItemInfo)MemberwiseClone();

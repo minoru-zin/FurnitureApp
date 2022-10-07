@@ -880,6 +880,7 @@ Sequence integer,
 Thickness real,
 PasteUnitPrice integer,
 CutType integer,
+UpdatedDate date,
 PRIMARY KEY(Id AUTOINCREMENT)
 )
 ";
@@ -896,6 +897,7 @@ Name text,
 Length real,
 Width real,
 UnitPrice integer,
+UpdatedDate date,
 PRIMARY KEY(Id AUTOINCREMENT)
 )
 ";
@@ -913,6 +915,7 @@ CREATE TABLE ProductCategoryInfos (
     Code integer,
     Name text,
     Sequence  integer,
+UpdatedDate date,
     PRIMARY KEY(Id AUTOINCREMENT)
 )
 ";
@@ -926,6 +929,7 @@ CREATE TABLE CostItemInfos (
     Name text,
     Sequence  integer,
     UnitPrice integer,
+UpdatedDate date,
     PRIMARY KEY(Id AUTOINCREMENT)
 )
 ";
@@ -940,6 +944,7 @@ CREATE TABLE PaintCostItemInfos (
     Name text,
     Sequence  integer,
     UnitPrice integer,
+UpdatedDate date,
     PRIMARY KEY(Id AUTOINCREMENT)
 )
 ";

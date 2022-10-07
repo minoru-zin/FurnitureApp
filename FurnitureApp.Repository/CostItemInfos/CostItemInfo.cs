@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FurnitureApp.Repository.CostItemInfos
 {
-   public  class CostItemInfo
+    public class CostItemInfo
     {
         private int? id;
         /// <summary>
@@ -41,6 +41,25 @@ namespace FurnitureApp.Repository.CostItemInfos
         {
             get { return unitPrice; }
             set { unitPrice = value; }
+        }
+        private string categoryName;
+        /// <summary>
+        /// カテゴリ名
+        /// </summary>
+        public string CategoryName
+        {
+            get { return categoryName; }
+            set { categoryName = value; }
+        }
+
+        private DateTime? updatedDate;
+        /// <summary>
+        /// 更新日
+        /// </summary>
+        public DateTime? UpdatedDate
+        {
+            get { return updatedDate; }
+            set { updatedDate = value; }
         }
 
         public CostItemInfo Clone()

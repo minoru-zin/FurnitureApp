@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FurnitureApp.Contents.Masters.Master00100"
         mc:Ignorable="d"
-        Title="素材 Master00100_EditMaterialInfoWindow" Height="230" Width="500"
+        Title="素材 Master00100_EditMaterialInfoWindow" Height="260" Width="500"
         KeyDown="Window_KeyDown"
         Loaded="Window_Loaded">
     <Grid Margin="10">
@@ -58,6 +58,12 @@
                           SelectedValuePath="Code"
                           Width="250"/>
             </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="更新日"/>
+                <TextBox x:Name="UpdatedDateTextBox"
+                         LostFocus="UpdatedDateTextBox_LostFocus"/>
+            </StackPanel>
+
         </StackPanel>
         <DockPanel Grid.Row="1">
             <Button Name="DeleteButton"

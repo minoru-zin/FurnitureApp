@@ -32,6 +32,7 @@ namespace FurnitureApp.Contents.Masters.Master00100
             InitializeComponent();
             this.DataContext = this;
             this.model = m.Clone();
+            this.model.UpdatedDate = DateTime.Now.Date;
             this.CutTypes = this.cd.CutTypes;
             
             this.SetInfoToControls();
@@ -76,6 +77,10 @@ namespace FurnitureApp.Contents.Masters.Master00100
         {
             this.cf.SetDoubleNumberTextBox(sender as TextBox);
         }
+        private void UpdatedDateTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            this.cf.SetDate(sender as TextBox);
+        }
         private void SetInfoToControls()
         {
             this.SequenceTextBox.Text = $"{this.model.Sequence}";
@@ -84,9 +89,11 @@ namespace FurnitureApp.Contents.Masters.Master00100
             this.ThicknessTextBox.Text = $"{this.model.Thickness}";
             this.PasteUnitPriceTextBox.Text = $"{this.model.PasteUnitPrice}";
             this.CutTypeComboBox.SelectedValue = this.model.CutType;
+            this.UpdatedDateTextBox.Text = $"{this.model.UpdatedDate:d}";
 
             if(this.model.Id == null)
             {
+                this.SequenceTextBox.Text = "";
                 this.CodeTextBox.Text = $"{(this.cd.MaterialInfos.Max(x => x.Code) ?? 0) + 1}";
             }
             else
@@ -116,12 +123,14 @@ namespace FurnitureApp.Contents.Masters.Master00100
             this.model.Thickness = Utility.NumberFormatter.GetNullDouble(this.ThicknessTextBox.Text) ?? 0;
             this.model.PasteUnitPrice = Utility.NumberFormatter.GetNullInt(this.PasteUnitPriceTextBox.Text);
             this.model.CutType = (CutType)this.CutTypeComboBox.SelectedValue;
+            this.model.UpdatedDate = Utility.DateTimeFormatter.GetDateTime(this.UpdatedDateTextBox.Text);
 
             if (this.model.Sequence <= 0) { throw new Exception("順番が不適"); }
             if (this.model.Code == null) { throw new Exception("コードが不適"); }
             if (string.IsNullOrEmpty(this.model.Name)) { throw new Exception("名称が不適"); }
             if (this.model.Thickness <= 0) { throw new Exception("厚さが不適"); }
             if (this.model.PasteUnitPrice < 0) { throw new Exception("貼り単価が不適"); }
+            if (this.model.UpdatedDate == null) { throw new Exception("更新日が不適"); }
 
             if (this.model.Id == null)
             {
@@ -149,5 +158,7 @@ namespace FurnitureApp.Contents.Masters.Master00100
             this.IsChanged = true;
             this.Close();
         }
+
+        
     }
 }

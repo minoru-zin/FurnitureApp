@@ -70,7 +70,15 @@ namespace FurnitureApp.Repository.MaterialInfos
             get { return cutType; }
             set { cutType = value; }
         }
-
+        private DateTime? updatedDate;
+        /// <summary>
+        /// 更新日
+        /// </summary>
+        public DateTime? UpdatedDate
+        {
+            get { return updatedDate; }
+            set { updatedDate = value; }
+        }
         public MaterialInfo Clone()
         {
             return (MaterialInfo)MemberwiseClone();
