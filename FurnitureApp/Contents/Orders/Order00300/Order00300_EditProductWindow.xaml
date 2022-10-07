@@ -269,6 +269,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="35"/>
                         <RowDefinition Height="*"/>
+                        <RowDefinition Height="35"/>
                     </Grid.RowDefinitions>
                     <DockPanel Grid.Row="0">
                         <TextBlock Text="1台当たりの費用"
@@ -292,6 +293,7 @@
                                                 Binding="{Binding Quantity}"/>
                         </DataGrid.Columns>
                     </DataGrid>
+                    <TextBlock Grid.Row="2" FontSize="25" TextAlignment="Right" Name="TotalCostAmountTextBlock"/>
                 </Grid>
             </TabItem>
             <TabItem Header="ファイル">

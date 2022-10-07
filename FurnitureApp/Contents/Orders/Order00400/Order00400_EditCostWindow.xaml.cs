@@ -26,7 +26,10 @@ namespace FurnitureApp.Contents.Orders.Order00400
         private NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private CommonData cd = CommonData.GetInstance();
 
-        public List<DisplayInfo<CostItemInfo>> CostItemInfos { get; }
+        private List<DisplayInfo<CostItemInfo>> allCostItemInfos;
+        public List<string> Categories { get; }
+        public ObservableCollection<DisplayInfo<CostItemInfo>> CostItemInfos { get; } = new ObservableCollection<DisplayInfo<CostItemInfo>>();
+
         public List<Cost> Costs { get; } = new List<Cost>();
         public bool IsChanged { get; private set; } = false;
         public ObservableCollection<CostViewModel> ViewModels { get; } = new ObservableCollection<CostViewModel>();
@@ -35,8 +38,37 @@ namespace FurnitureApp.Contents.Orders.Order00400
         {
             InitializeComponent();
             this.DataContext = this;
-            this.CostItemInfos = this.cd.CostItemInfos.Select(x => new DisplayInfo<CostItemInfo>(x, x.Name)).ToList();
+            this.Categories = this.cd.CostItemInfos.GroupBy(x => x.CategoryName).Select(x => x.Key).ToList();
+            this.allCostItemInfos = this.cd.CostItemInfos.Select(x => new DisplayInfo<CostItemInfo>(x, x.Name)).ToList();
+            this.CostItemInfos.AddRange(this.allCostItemInfos);
+            this.SetCostItemInfos(null);
             this.ViewModels.AddRange(costs.Select(x => new CostViewModel(x)));
+        }
+        private void SetCostItemInfos(string categoryName)
+        {
+            var vm = this.CostDataGrid.SelectedItem as CostViewModel;
+
+            if(vm == null) { return; }
+
+            var name = vm.Name;
+
+            this.CostItemInfos.Clear();
+
+            var costs = this.allCostItemInfos.Where(x => x.Code.CategoryName == categoryName);
+
+            if (costs.Any())
+            {
+                this.CostItemInfos.AddRange(costs);
+            }
+            else
+            {
+                this.CostItemInfos.AddRange(this.allCostItemInfos);
+            }
+
+            if (!string.IsNullOrEmpty(name))
+            {
+            vm.Name = name;
+            }
         }
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
@@ -102,7 +134,11 @@ namespace FurnitureApp.Contents.Orders.Order00400
 
             this.CostDataGrid.SelectedItem = clone;
         }
-
+        private void CategoryNameComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var comboBox = sender as ComboBox;
+            this.SetCostItemInfos(comboBox.SelectedValue as string);
+        }
         private void NameComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;
@@ -110,7 +146,7 @@ namespace FurnitureApp.Contents.Orders.Order00400
 
             if (vm == null) { return; }
 
-            var costItemInfo =  comboBox.SelectedValue as CostItemInfo;
+            var costItemInfo = comboBox.SelectedValue as CostItemInfo;
 
             if (costItemInfo == null) { return; }
             vm.Name = costItemInfo.Name;
@@ -143,6 +179,13 @@ namespace FurnitureApp.Contents.Orders.Order00400
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void UnitPriceTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var total = this.ViewModels.Sum(x => (Utility.NumberFormatter.GetNullInt(x.UnitPrice) * Utility.NumberFormatter.GetNullInt(x.Quantity)) ?? 0);
+
+            this.TotalAmountTextBloxk.Text = $"合計 {total:#,0}円";
         }
     }
 }

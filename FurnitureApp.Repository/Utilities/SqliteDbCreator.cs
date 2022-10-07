@@ -926,6 +926,7 @@ UpdatedDate date,
                 sql = $@"
 CREATE TABLE CostItemInfos (
     Id  integer,
+    CategoryName text,
     Name text,
     Sequence  integer,
     UnitPrice integer,

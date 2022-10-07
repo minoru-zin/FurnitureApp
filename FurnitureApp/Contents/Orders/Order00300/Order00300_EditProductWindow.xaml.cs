@@ -135,6 +135,8 @@ namespace FurnitureApp.Contents.Orders.Order00300
 
             #region コストセット
             this.CostViewModels.AddRange(this.Product.Costs.Select(x => new CostViewModel(x)));
+            this.SetTotalCostAmountTextBlock();
+
             #endregion
 
             #region ファイルセット
@@ -166,6 +168,10 @@ namespace FurnitureApp.Contents.Orders.Order00300
             }
         }
         #region コスト
+        private void SetTotalCostAmountTextBlock()
+        {
+            this.TotalCostAmountTextBlock.Text = $"合計 {this.CostViewModels.Sum(x => x.TotalAmount):#,0}円";
+        }
         private void EditCostButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -203,10 +209,12 @@ namespace FurnitureApp.Contents.Orders.Order00300
                 this.CostViewModels.Clear();
                 this.CostViewModels.AddRange(w.Costs.Select(x => new CostViewModel(x)));
             }
+            this.SetTotalCostAmountTextBlock();
         }
         #endregion
 
         #region ファイル
+        
         private void AddProductFileButton_Click(object sender, RoutedEventArgs e)
         {
             try

@@ -15,9 +15,19 @@ namespace FurnitureApp.Contents.Orders.Order00400
             var e = new PropertyChangedEventArgs(PropertyName);
             PropertyChanged?.Invoke(this, e);
         }
+        private string name;
 
-        public string Name { get; set; }
+        public string Name
+        {
+            get { return name; }
+            set
+            {
+                name = value;
+                this.NotifyPropertyChanged(nameof(Name));
+            }
+        }
 
+        
         private string unitPrice;
 
         public string UnitPrice
@@ -29,8 +39,19 @@ namespace FurnitureApp.Contents.Orders.Order00400
                 this.NotifyPropertyChanged(nameof(UnitPrice));
             }
         }
-        public string Quantity { get; set; }
-        public string TotalAmount { get; set; }
+        private string quantity;
+
+        public string Quantity
+        {
+            get { return quantity; }
+            set
+            {
+                quantity = value;
+                this.NotifyPropertyChanged(nameof(Quantity));
+            }
+        }
+
+        public int? TotalAmount { get; set; }
         public Cost Model
         {
             get
@@ -62,7 +83,7 @@ namespace FurnitureApp.Contents.Orders.Order00400
             this.Name = cost.Name;
             this.UnitPrice = $"{cost.UnitPrice}";
             this.Quantity = $"{cost.Quantity}";
-            this.TotalAmount = $"{cost.TotalAmount}";
+            this.TotalAmount = cost.TotalAmount;
         }
     }
 }
