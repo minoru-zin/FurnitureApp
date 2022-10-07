@@ -15,6 +15,7 @@ namespace FurnitureApp.Contents.Masters.Master00100
         public double? Thickness { get; }
         public int? PasteUnitPrice { get; }
         public string CutType { get; }
+        public DateTime? UpdatedDate { get; }
         public MaterialInfo Model { get; }
         private CommonData cd = CommonData.GetInstance();
         public MaterialInfoViewModel(MaterialInfo m)
@@ -26,6 +27,7 @@ namespace FurnitureApp.Contents.Masters.Master00100
             this.Thickness = m.Thickness;
             this.PasteUnitPrice = m.PasteUnitPrice;
             this.CutType = this.cd.CutTypes.FirstOrDefault(x => x.Code == m.CutType)?.DisplayName;
+            this.UpdatedDate = m.UpdatedDate;
         }
     }
 }
