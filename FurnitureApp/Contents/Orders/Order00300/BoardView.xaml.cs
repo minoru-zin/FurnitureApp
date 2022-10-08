@@ -14,6 +14,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -28,7 +29,7 @@ namespace FurnitureApp.Contents.Orders.Order00300
         private NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private CommonData cd = CommonData.GetInstance();
         public BoardType BoardType { get; }
-        public List<DisplayInfo<MaterialInfo>> MaterialInfos { get; } = new List<DisplayInfo<MaterialInfo>>();
+        public List<DisplayInfo<int?>> MaterialInfos { get; } = new List<DisplayInfo<int?>>();
         public List<DisplayInfo<KoguchiMakeupArea>> KoguchiKeshouAreas { get; }
         public List<DisplayInfo<int?>> PaintCostItemInfos { get; } = new List<DisplayInfo<int?>> { new DisplayInfo<int?>(null, "無し") };
         public List<DisplayInfo<PaintArea>> PaintAreas { get; }
@@ -46,7 +47,7 @@ namespace FurnitureApp.Contents.Orders.Order00300
             {
                 this.BoardCountUnitTextBlock.Text = "段";
             }
-            this.MaterialInfos.AddRange(this.cd.MaterialInfos.Select(x => new DisplayInfo<MaterialInfo>(x, x.Name)));
+            this.MaterialInfos.AddRange(this.cd.MaterialInfos.Select(x => new DisplayInfo<int?>(x.Code, x.Name)));
             this.BoardTypeTextBlock.Text = this.cd.BoardTypes.First(x => x.Code == boardType).DisplayName;
             this.KoguchiKeshouAreas = this.cd.KoguchiKeshouAreas;
             this.PaintCostItemInfos.AddRange(this.cd.PaintCostItemInfos.Select(x => new DisplayInfo<int?>(x.Code, x.Name)));
@@ -74,7 +75,7 @@ namespace FurnitureApp.Contents.Orders.Order00300
         }
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            this.ViewModels.Add(new BoardLayerViewModel(null, null));
+            this.ViewModels.Add(new BoardLayerViewModel(null));
             this.CalSumThickness();
         }
 
@@ -145,14 +146,17 @@ namespace FurnitureApp.Contents.Orders.Order00300
 
             if (vm == null) { return; }
 
-            vm.PasteUnitPrice = $"{vm.MaterialInfo?.PasteUnitPrice}";
+            var info = this.cd.MaterialInfoDict.GetValueOrDefault(vm.MaterialInfoCode);
+
+            vm.Thickness = info?.Thickness;
+            vm.PasteUnitPrice = $"{info?.PasteUnitPrice}";
 
             this.CalSumThickness();
         }
 
         private void CalSumThickness()
         {
-            this.SumThicknessTextBlock.Text = $"{this.ViewModels.Where(x => x.MaterialInfo != null).Sum(x => x.MaterialInfo.Thickness)}";
+            this.SumThicknessTextBlock.Text = $"{this.ViewModels.Where(x => x.MaterialInfoCode != null).Sum(x => x.Thickness)}";
         }
         public void SetBoard(Board board)
         {
@@ -161,7 +165,7 @@ namespace FurnitureApp.Contents.Orders.Order00300
             this.PaintCostItemInfoComboBox.SelectedValue = board.PaintCostItemInfoCode;
             this.PaintAreaComboBox.SelectedValue = board.PaintArea;
             this.ViewModels.Clear();
-            this.ViewModels.AddRange(board.BoardLayers.Select(x => new BoardLayerViewModel(x, this.cd.MaterialInfos.FirstOrDefault(m => m.Id == x.MaterialInfoCode))));
+            this.ViewModels.AddRange(board.BoardLayers.Select(x => new BoardLayerViewModel(x)));
             this.CalSumThickness();
         }
         public Board GetBoardOrDefault()
@@ -170,7 +174,7 @@ namespace FurnitureApp.Contents.Orders.Order00300
 
             if (quantity == 0) { return null; }
 
-            var vms = this.ViewModels.Where(x => x.MaterialInfo != null);
+            var vms = this.ViewModels.Where(x => x.MaterialInfoCode != null);
 
             if (!vms.Any()) { return null; }
 

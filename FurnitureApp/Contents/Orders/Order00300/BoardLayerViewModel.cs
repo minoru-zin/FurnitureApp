@@ -1,4 +1,5 @@
-﻿using FurnitureApp.Repository.MaterialInfos;
+﻿using FurnitureApp.Models;
+using FurnitureApp.Repository.MaterialInfos;
 using FurnitureApp.Repository.Orders;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,21 @@ namespace FurnitureApp.Contents.Orders.Order00300
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public int? MaterialInfoCode { get; set; }
 
-        public MaterialInfo MaterialInfo { get; set; }
+        private double? thickness;
+
+        public double? Thickness
+        {
+            get { return thickness; }
+            set
+            {
+                thickness = value;
+                NotifyPropertyChanged(nameof(Thickness));
+            }
+        }
         private string pasteUnitPrice;
-
+        
         public string PasteUnitPrice
         {
             get { return pasteUnitPrice; }
@@ -32,19 +44,22 @@ namespace FurnitureApp.Contents.Orders.Order00300
             {
                 return new BoardLayer
                 {
-                    MaterialInfoCode = this.MaterialInfo.Id,
+                    MaterialInfoCode = this.MaterialInfoCode,
                     PasteUnitPrice = Utility.NumberFormatter.GetNullInt(this.PasteUnitPrice),
                     MokumeDirectionCode = MokumeDirectionType,
                 };
             }
         }
 
+        private CommonData cd = CommonData.GetInstance();
 
-        public BoardLayerViewModel(BoardLayer boardLayer, MaterialInfo materialInfo)
+        public BoardLayerViewModel(BoardLayer boardLayer)
         {
-            this.MaterialInfo = materialInfo;
-            this.PasteUnitPrice = $"{boardLayer?.PasteUnitPrice}";
-            this.MokumeDirectionType = boardLayer?.MokumeDirectionCode ?? MokumeDirectionType.Nashi;
+            if (boardLayer?.MaterialInfoCode == null) { return; }
+            this.MaterialInfoCode = boardLayer.MaterialInfoCode;
+            this.Thickness = this.cd.MaterialInfoDict.GetValueOrDefault(boardLayer.MaterialInfoCode)?.Thickness;
+            this.PasteUnitPrice = $"{boardLayer.PasteUnitPrice}";
+            this.MokumeDirectionType = boardLayer.MokumeDirectionCode;
         }
         public void NotifyPropertyChanged(string PropertyName)
         {
