@@ -75,7 +75,7 @@
                         Click="AddProductButton_Click"/>
                 <Button Content="複製"
                         Name="CopyProductButton"
-                        Width="35"
+                        Width="50"
                         Click="CopyProductButton_Click"/>
             </StackPanel>
             <DataGrid Grid.Row="1"
