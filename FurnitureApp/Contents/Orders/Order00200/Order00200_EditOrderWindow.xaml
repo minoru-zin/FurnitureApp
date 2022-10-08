@@ -73,6 +73,10 @@
                         Name="AddProductButton"
                         Width="35"
                         Click="AddProductButton_Click"/>
+                <Button Content="複製"
+                        Name="CopyProductButton"
+                        Width="35"
+                        Click="CopyProductButton_Click"/>
             </StackPanel>
             <DataGrid Grid.Row="1"
                       ItemsSource="{Binding ProductViewModels}"

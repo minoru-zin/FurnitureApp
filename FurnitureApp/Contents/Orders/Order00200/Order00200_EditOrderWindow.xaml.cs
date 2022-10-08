@@ -167,6 +167,33 @@ namespace FurnitureApp.Contents.Orders.Order00200
                 this.cd.DialogService.ShowMessage(ex.Message);
             }
         }
+        private void CopyProductButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var vm = this.ProductDataGrid.SelectedItem as ProductViewModel;
+
+                if (vm == null) { return; }
+
+                var clone = vm.Model.Clone();
+                clone.ProductFiles.Clear();
+                clone.Name += " - コピー"; 
+                var w = new Order00300_EditProductWindow(clone);
+                w.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                w.ShowDialog();
+
+                if (!w.IsChanged) { return; }
+
+                this.ProductViewModels.Add(new ProductViewModel(w.Product));
+
+                this.SetTotalAmount();
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                this.cd.DialogService.ShowMessage(ex.Message);
+            }
+        }
 
         private void ProductDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
