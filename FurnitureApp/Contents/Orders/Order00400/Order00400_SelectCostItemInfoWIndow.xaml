@@ -1,0 +1,33 @@
+﻿<Window x:Class="FurnitureApp.Contents.Orders.Order00400.Order00400_SelectCostItemInfoWIndow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FurnitureApp.Contents.Orders.Order00400"
+        mc:Ignorable="d"
+        Title="費用項目選択 Order00400_SelectCostItemInfoWIndow" Height="450" Width="800">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <DataGrid Grid.Column="0" x:Name="CategoryDataGrid"
+                  ItemsSource="{Binding Categories}"
+                  SelectedCellsChanged="CategoryDataGrid_SelectedCellsChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="カテゴリ"
+                                    Width="*"
+                                    Binding="{Binding}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid Grid.Column="1" x:Name="CostItemInfoDataGrid"
+                  ItemsSource="{Binding CostItemInfos}"
+                  MouseDoubleClick="CostItemInfoDataGrid_MouseDoubleClick">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="項目"
+                                    Width="*"
+                                    Binding="{Binding DisplayName}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

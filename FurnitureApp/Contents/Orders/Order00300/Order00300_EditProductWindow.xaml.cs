@@ -172,11 +172,20 @@ namespace FurnitureApp.Contents.Orders.Order00300
         {
             this.TotalCostAmountTextBlock.Text = $"合計 {this.CostViewModels.Sum(x => x.TotalAmount):#,0}円";
         }
-        private void EditCostButton_Click(object sender, RoutedEventArgs e)
+        private void AddCostButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                this.ShowEditCostWindow();
+                var w = new Order00400_EditCostWindow(new Cost());
+
+                w.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                w.ShowDialog();
+
+                if (w.IsChanged)
+                {
+                    this.CostViewModels.Add(new CostViewModel(w.Model));
+                }
+                this.SetTotalCostAmountTextBlock();
             }
             catch (Exception ex)
             {
@@ -184,12 +193,31 @@ namespace FurnitureApp.Contents.Orders.Order00300
                 this.cd.DialogService.ShowMessage(ex.Message);
             }
         }
-
         private void CostDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             try
             {
-                this.ShowEditCostWindow();
+                var vm = this.CostDataGrid.SelectedItem as CostViewModel;
+
+                if (vm == null) { return; }
+
+                var w = new Order00400_EditCostWindow(vm.Model);
+
+                w.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                w.ShowDialog();
+
+                if (w.IsChanged)
+                {
+                    var index = this.CostViewModels.IndexOf(vm);
+
+                    this.CostViewModels.Remove(vm);
+
+                    if (!w.IsDeleted)
+                    {
+                        this.CostViewModels.Insert(index, new CostViewModel(w.Model));
+                    }
+                }
+                this.SetTotalCostAmountTextBlock();
             }
             catch (Exception ex)
             {
@@ -197,20 +225,44 @@ namespace FurnitureApp.Contents.Orders.Order00300
                 this.cd.DialogService.ShowMessage(ex.Message);
             }
         }
-
-        private void ShowEditCostWindow()
+        private void UpCostButton_Click(object sender, RoutedEventArgs e)
         {
-            var w = new Order00400_EditCostWindow(this.CostViewModels.Select(x => x.Model));
-            w.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            w.ShowDialog();
+            var vm = this.CostDataGrid.SelectedItem as CostViewModel;
 
-            if (w.IsChanged)
-            {
-                this.CostViewModels.Clear();
-                this.CostViewModels.AddRange(w.Costs.Select(x => new CostViewModel(x)));
-            }
-            this.SetTotalCostAmountTextBlock();
+            if (vm == null) { return; }
+
+            var index = this.CostViewModels.IndexOf(vm);
+
+            if (index == 0) { return; }
+
+            var clone = this.CostViewModels.ToList()[index];
+
+            this.CostViewModels.Remove(vm);
+
+            this.CostViewModels.Insert(index - 1, clone);
+
+            this.CostDataGrid.SelectedItem = clone;
         }
+
+        private void DownCostButton_Click(object sender, RoutedEventArgs e)
+        {
+            var vm = this.CostDataGrid.SelectedItem as CostViewModel;
+
+            if (vm == null) { return; }
+
+            var index = this.CostViewModels.IndexOf(vm);
+
+            if (index == this.CostViewModels.Count - 1) { return; }
+
+            var clone = this.CostViewModels.ToList()[index];
+
+            this.CostViewModels.Remove(vm);
+
+            this.CostViewModels.Insert(index + 1, clone);
+
+            this.CostDataGrid.SelectedItem = clone;
+        }
+        
         #endregion
 
         #region ファイル

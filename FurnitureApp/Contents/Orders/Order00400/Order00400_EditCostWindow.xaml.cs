@@ -1,4 +1,5 @@
-﻿using FurnitureApp.Models;
+﻿using FurnitureApp.Contents.Orders.Order00300;
+using FurnitureApp.Models;
 using FurnitureApp.Repository.CostItemInfos;
 using FurnitureApp.Repository.Orders;
 using FurnitureApp.Utility.Extensions;
@@ -25,133 +26,55 @@ namespace FurnitureApp.Contents.Orders.Order00400
     {
         private NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private CommonData cd = CommonData.GetInstance();
+        private ControlFormatter cf = new ControlFormatter();
 
-        private List<DisplayInfo<CostItemInfo>> allCostItemInfos;
-        public List<string> Categories { get; }
-        public ObservableCollection<DisplayInfo<CostItemInfo>> CostItemInfos { get; } = new ObservableCollection<DisplayInfo<CostItemInfo>>();
+        public Cost Model { get; private set; } 
 
-        public List<Cost> Costs { get; } = new List<Cost>();
         public bool IsChanged { get; private set; } = false;
-        public ObservableCollection<CostViewModel> ViewModels { get; } = new ObservableCollection<CostViewModel>();
-
-        public Order00400_EditCostWindow(IEnumerable<Cost> costs)
+        public bool IsDeleted { get; private set; } = false;
+        public Order00400_EditCostWindow(Cost c)
         {
             InitializeComponent();
-            this.DataContext = this;
-            this.Categories = this.cd.CostItemInfos.GroupBy(x => x.CategoryName).Select(x => x.Key).ToList();
-            this.allCostItemInfos = this.cd.CostItemInfos.Select(x => new DisplayInfo<CostItemInfo>(x, x.Name)).ToList();
-            this.CostItemInfos.AddRange(this.allCostItemInfos);
-            this.SetCostItemInfos(null);
-            this.ViewModels.AddRange(costs.Select(x => new CostViewModel(x)));
+            this.Model = c.Clone();
+            this.SetInfoToControls();
         }
-        private void SetCostItemInfos(string categoryName)
+        private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            var vm = this.CostDataGrid.SelectedItem as CostViewModel;
-
-            if(vm == null) { return; }
-
-            var name = vm.Name;
-
-            this.CostItemInfos.Clear();
-
-            var costs = this.allCostItemInfos.Where(x => x.Code.CategoryName == categoryName);
-
-            if (costs.Any())
+            switch (e.Key)
             {
-                this.CostItemInfos.AddRange(costs);
-            }
-            else
-            {
-                this.CostItemInfos.AddRange(this.allCostItemInfos);
-            }
-
-            if (!string.IsNullOrEmpty(name))
-            {
-            vm.Name = name;
-            }
-        }
-        private void AddButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.ViewModels.Add(new CostViewModel(new Cost()));
-        }
-
-        private void DeleteButton_Click(object sender, RoutedEventArgs e)
-        {
-            var vm = this.CostDataGrid.SelectedItem as CostViewModel;
-
-            if (vm == null) { return; }
-
-            var index = this.ViewModels.IndexOf(vm);
-
-            this.ViewModels.Remove(vm);
-
-            if (!this.ViewModels.Any()) { return; }
-
-            if (this.ViewModels.Count > index)
-            {
-                this.CostDataGrid.SelectedItem = this.ViewModels[index];
-            }
-            else
-            {
-                this.CostDataGrid.SelectedItem = this.ViewModels[this.ViewModels.Count - 1];
+                case Key.Enter:
+                    (FocusManager.GetFocusedElement(System.Windows.Window.GetWindow(this)) as System.Windows.FrameworkElement).MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+                    break;
             }
         }
 
-        private void UpButton_Click(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            var vm = this.CostDataGrid.SelectedItem as CostViewModel;
+            this.NameTextBox.Focus();
+        }
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            var textBox = e.OriginalSource as System.Windows.Controls.TextBox;
 
-            if (vm == null) { return; }
+            if (textBox == null) { return; }
 
-            var index = this.ViewModels.IndexOf(vm);
-
-            if (index == 0) { return; }
-
-            var clone = this.ViewModels.ToList()[index];
-
-            this.ViewModels.Remove(vm);
-
-            this.ViewModels.Insert(index - 1, clone);
-
-            this.CostDataGrid.SelectedItem = clone;
+            textBox.SelectAll();
+        }
+        private void SequenceTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            this.cf.SetIntNumberTextBox(sender as TextBox);
+        }
+        private void QuantityTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            this.cf.SetIntNumberTextBox(sender as TextBox);
+        }
+        private void SetInfoToControls()
+        {
+            this.NameTextBox.Text = this.Model.Name;
+            this.UnitPriceTextBox.Text = $"{this.Model.UnitPrice}";
+            this.QuantityTextBox.Text = $"{this.Model.Quantity}";
         }
 
-        private void DownButton_Click(object sender, RoutedEventArgs e)
-        {
-            var vm = this.CostDataGrid.SelectedItem as CostViewModel;
-
-            if (vm == null) { return; }
-
-            var index = this.ViewModels.IndexOf(vm);
-
-            if (index == this.ViewModels.Count - 1) { return; }
-
-            var clone = this.ViewModels.ToList()[index];
-
-            this.ViewModels.Remove(vm);
-
-            this.ViewModels.Insert(index + 1, clone);
-
-            this.CostDataGrid.SelectedItem = clone;
-        }
-        private void CategoryNameComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var comboBox = sender as ComboBox;
-            this.SetCostItemInfos(comboBox.SelectedValue as string);
-        }
-        private void NameComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var comboBox = sender as ComboBox;
-            var vm = this.CostDataGrid.SelectedItem as CostViewModel;
-
-            if (vm == null) { return; }
-
-            var costItemInfo = comboBox.SelectedValue as CostItemInfo;
-
-            if (costItemInfo == null) { return; }
-            vm.Name = costItemInfo.Name;
-            vm.UnitPrice = $"{costItemInfo.UnitPrice}";
-        }
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -160,17 +83,21 @@ namespace FurnitureApp.Contents.Orders.Order00400
             }
             catch (Exception ex)
             {
-                this.logger.Error(ex);
                 this.cd.DialogService.ShowMessage(ex.Message);
+                logger.Error(ex);
             }
         }
 
         private void Update()
         {
-            var vms = this.ViewModels.Where(x => !string.IsNullOrEmpty($"{x.Name}{x.UnitPrice}{x.Quantity}"));
+            this.Model.Name = this.NameTextBox.Text;
+            this.Model.UnitPrice = Utility.NumberFormatter.GetNullInt(this.UnitPriceTextBox.Text) ?? 0;
+            this.Model.Quantity = Utility.NumberFormatter.GetNullInt(this.QuantityTextBox.Text) ?? 0;
+            this.Model.TotalAmount = this.Model.UnitPrice * this.Model.Quantity;
 
-            this.Costs.Clear();
-            this.Costs.AddRange(vms.Select(x => x.Model));
+            if (string.IsNullOrEmpty(this.Model.Name)) { throw new Exception("名称が不適"); }
+            if (this.Model.UnitPrice < 0) { throw new Exception("単価が不適"); }
+            if (this.Model.Quantity < 0) { throw new Exception("数量が不適"); }
 
             this.IsChanged = true;
             this.Close();
@@ -181,11 +108,38 @@ namespace FurnitureApp.Contents.Orders.Order00400
             this.Close();
         }
 
-        private void UnitPriceTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            var total = this.ViewModels.Sum(x => (Utility.NumberFormatter.GetNullInt(x.UnitPrice) * Utility.NumberFormatter.GetNullInt(x.Quantity)) ?? 0);
+            if (!this.cd.DialogService.ShowComfirmationMessageDialog("本当に削除しますか？")) { return; }
 
-            this.TotalAmountTextBloxk.Text = $"合計 {total:#,0}円";
+            this.IsChanged = true;
+            this.IsDeleted = true;
+            this.Close();
+        }
+
+        private void SelectCostItemInfoButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var w = new Order00400_SelectCostItemInfoWIndow();
+
+                w.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                w.ShowDialog();
+
+                if (w.IsSelected)
+                {
+                    this.NameTextBox.Text = w.Model.Name;
+                    this.UnitPriceTextBox.Text = $"{w.Model.UnitPrice}";
+                    this.QuantityTextBox.Focus();
+                    this.QuantityTextBox.SelectAll();
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                this.cd.DialogService.ShowMessage(ex.Message);
+            }
         }
     }
 }
+

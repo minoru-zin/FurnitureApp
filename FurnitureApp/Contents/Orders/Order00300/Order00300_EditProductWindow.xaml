@@ -271,16 +271,16 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="35"/>
                     </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="35"/>
+                    </Grid.ColumnDefinitions>
                     <DockPanel Grid.Row="0">
                         <TextBlock Text="1台当たりの費用"
                                    FontSize="25"/>
-                        <Button Content="＋"
-                                HorizontalAlignment="Right"
-                                Width="35"
-                                Name="EditCostButton"
-                                Click="EditCostButton_Click"/>
-                    </DockPanel>
+                        </DockPanel>
                     <DataGrid Grid.Row="1"
+                              Grid.Column="0"
                               ItemsSource="{Binding CostViewModels}"
                               Name="CostDataGrid"
                               MouseDoubleClick="CostDataGrid_MouseDoubleClick">
@@ -291,8 +291,22 @@
                                                 Binding="{Binding UnitPrice}"/>
                             <DataGridTextColumn Header="数量"
                                                 Binding="{Binding Quantity}"/>
+                            <DataGridTextColumn Header="合計"
+                                                Binding="{Binding TotalAmount}"/>
                         </DataGrid.Columns>
                     </DataGrid>
+                    <StackPanel Grid.Row="1"
+                                Grid.Column="1">
+                        <Button Name="AddCostButton"
+                                Content="＋"
+                                Click="AddCostButton_Click"/>
+                        <Button Name="UpCostButton"
+                                Content="↑"
+                                Click="UpCostButton_Click"/>
+                        <Button Name="DownCostButton"
+                                Content="↓"
+                                Click="DownCostButton_Click"/>
+                    </StackPanel>
                     <TextBlock Grid.Row="2" FontSize="25" TextAlignment="Right" Name="TotalCostAmountTextBlock"/>
                 </Grid>
             </TabItem>

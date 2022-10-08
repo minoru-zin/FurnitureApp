@@ -5,99 +5,67 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FurnitureApp.Contents.Orders.Order00400"
         mc:Ignorable="d"
-        Title="費用 Order00400_EditCostWindow" Height="450" Width="900"
-        Name="Root">
+        Title="費用 Order00400_EditCostWindow" 
+        Height="200" Width="500"
+        KeyDown="Window_KeyDown"
+        Loaded="Window_Loaded">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="35"/>
-            <RowDefinition Height="35"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="35"/>
-        </Grid.ColumnDefinitions>
-        <DataGrid Grid.Row="0"
-                  Grid.Column="0"
-                  ItemsSource="{Binding ViewModels}"
-                  Name="CostDataGrid">
-            <DataGrid.Columns>
-                <DataGridTemplateColumn Header="カテゴリ"
-                                        MinWidth="100">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <ComboBox ItemsSource="{Binding ElementName=Root,Path=DataContext.Categories}"
-                                      SelectionChanged="CategoryNameComboBox_SelectionChanged"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="項目"
-                                        Width="*">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <ComboBox IsEditable="True"
-                                      ItemsSource="{Binding ElementName=Root,Path=DataContext.CostItemInfos}"
-                                      Name="NameComboBox"
-                                      DisplayMemberPath="DisplayName"
-                                      SelectedValuePath="Code"
-                                      SelectionChanged="NameComboBox_SelectionChanged"
-                                      Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="単価"
-                                        Width="80">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBox Text="{Binding UnitPrice, UpdateSourceTrigger=PropertyChanged}"
-                                     Name="UnitPriceTextBox"
-                                     TextChanged="UnitPriceTextBox_TextChanged"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="数量"
-                                        Width="60">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBox Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}"
-                                     TextChanged="UnitPriceTextBox_TextChanged"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-        </DataGrid>
-        <StackPanel Grid.Row="0"
-                    Grid.Column="1">
-            <Button Name="AddButton"
-                    Content="＋"
-                    Click="AddButton_Click"/>
+        <StackPanel Grid.Row="0">
+            <StackPanel.Resources>
+                <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+                    <Setter Property="Width" Value="70"/>
+                </Style>
+                <Style TargetType="TextBox" BasedOn="{StaticResource NumberTextBox}">
+                    <EventSetter Event="GotFocus" Handler="TextBox_GotFocus"/>
+                </Style>
+            </StackPanel.Resources>
+            <DockPanel >
+                <Label Content="名称"
+                       DockPanel.Dock="Left"/>
+                <Button Content="参照"
+                        DockPanel.Dock="Right"
+                        Width="60"
+                        Name="SelectCostItemInfoButton"
+                        Click="SelectCostItemInfoButton_Click"
+                        IsTabStop="False"/>
+                <TextBox x:Name="NameTextBox"
+                         Style="{StaticResource HiraganaTextBox}"
+                         GotFocus="TextBox_GotFocus"
+                         Height="25"/>
+            </DockPanel>
+            <DockPanel>
+                <Label Content="単価"/>
+                <TextBox x:Name="UnitPriceTextBox"
+                         LostFocus="SequenceTextBox_LostFocus"/>
+            </DockPanel>
+            <DockPanel>
+                <Label Content="数量"/>
+                <TextBox x:Name="QuantityTextBox"
+                         LostFocus="QuantityTextBox_LostFocus"/>
+            </DockPanel>
+        </StackPanel>
+        <DockPanel Grid.Row="1">
             <Button Name="DeleteButton"
-                    Content="－"
-                    Click="DeleteButton_Click"/>
-            <Button Name="UpButton"
-                    Content="↑"
-                    Click="UpButton_Click"/>
-            <Button Name="DownButton"
-                    Content="↓"
-                    Click="DownButton_Click"/>
-        </StackPanel>
-        <TextBlock Grid.Row="1"
-                   Grid.ColumnSpan="2"
-                   x:Name="TotalAmountTextBloxk"
-                   FontSize="25"
-                   TextAlignment="Right"/>
-        <StackPanel Orientation="Horizontal"
-                    Grid.Row="2"
-                    Grid.ColumnSpan="2"
-                    HorizontalAlignment="Right">
-            <Button Content="登録"
-                    Name="UpdateButton"
-                    Click="UpdateButton_Click"
-                    Width="100"/>
-            <Button Content="キャンセル"
-                    Name="CancelButton"
-                    Click="CancelButton_Click"
-                    Width="100"/>
-        </StackPanel>
+                    Content="削除"
+                    DockPanel.Dock="Left"
+                    Width="100"
+                    Click="DeleteButton_Click"
+                    IsTabStop="False"/>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <Button x:Name="UpdateButton"
+                        Content="登録"
+                        Width="100"
+                        Click="UpdateButton_Click"/>
+                <Button x:Name="CancelButton"
+                        Content="キャンセル"
+                        Width="100"
+                        Click="CancelButton_Click"/>
+            </StackPanel>
+        </DockPanel>
     </Grid>
 </Window>
