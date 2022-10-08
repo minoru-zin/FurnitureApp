@@ -64,7 +64,8 @@
                     Content="削除"
                     DockPanel.Dock="Left"
                     Width="100"
-                    Click="DeleteButton_Click"/>
+                    Click="DeleteButton_Click"
+                    IsTabStop="False"/>
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right">
                 <Button x:Name="UpdateButton"
