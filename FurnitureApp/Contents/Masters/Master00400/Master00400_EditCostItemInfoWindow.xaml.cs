@@ -68,6 +68,11 @@ namespace FurnitureApp.Contents.Masters.Master00400
             this.NameTextBox.Text = this.model.Name;
             this.UnitPriceTextBox.Text = $"{this.model.UnitPrice}";
             this.UpdatedDateTextBox.Text = $"{DateTime.Now.Date:d}";
+
+            if(this.model.Id == null)
+            {
+                this.SequenceTextBox.Text = "";
+            }
         }
 
         private void UpdateButton_Click(object sender, RoutedEventArgs e)

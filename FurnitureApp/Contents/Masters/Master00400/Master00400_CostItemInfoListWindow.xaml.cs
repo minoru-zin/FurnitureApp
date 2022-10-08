@@ -94,7 +94,7 @@ namespace FurnitureApp.Contents.Masters.Master00400
                 if (vm == null) { return; }
                 var clone = vm.Model.Clone();
                 clone.Id = null;
-                var w = new Master00400_EditCostItemInfoWindow(vm.Model);
+                var w = new Master00400_EditCostItemInfoWindow(clone);
                 w.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                 w.ShowDialog();
                 if (w.IsChanged)
