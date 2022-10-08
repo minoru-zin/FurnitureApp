@@ -75,6 +75,7 @@ namespace FurnitureApp.Contents.Masters.Master00300
 
             if (this.model.Id == null)
             {
+                this.SequenceTextBox.Text = "";
                 this.CodeTextBox.Text = $"{(this.cd.ProductCategoryInfos.Max(x => x.Code) ?? 0) + 1}";
             }
             else

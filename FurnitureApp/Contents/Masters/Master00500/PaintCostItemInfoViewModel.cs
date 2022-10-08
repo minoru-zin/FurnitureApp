@@ -11,6 +11,7 @@ namespace FurnitureApp.Contents.Masters.Master00500
         public int? Code { get; }
         public string Name { get; }
         public string UnitPrice { get; }
+        public DateTime? UpdatedDate { get; }
         public PaintCostItemInfo Model { get; }
         public PaintCostItemInfoViewModel(PaintCostItemInfo costItemInfo)
         {
@@ -19,6 +20,7 @@ namespace FurnitureApp.Contents.Masters.Master00500
             this.Code = costItemInfo.Code;
             this.Name = costItemInfo.Name;
             this.UnitPrice = $"{costItemInfo.UnitPrice:C}";
+            this.UpdatedDate = costItemInfo.UpdatedDate;
         }
     }
 }
