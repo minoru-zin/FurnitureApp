@@ -111,6 +111,7 @@
             <Setter Property="HorizontalGridLinesBrush" Value="AliceBlue"/>
             <Setter Property="VerticalGridLinesBrush" Value="AliceBlue"/>
             <Setter Property="IsTabStop" Value="False"/>
+            <Setter Property="FontSize" Value="15"/>
         </Style>
         <!--<Style TargetType="{x:Type DataGridCell}" x:Key="RightDataGridCell">
             <Setter Property="TextBlock.TextAlignment" Value="Center"/>

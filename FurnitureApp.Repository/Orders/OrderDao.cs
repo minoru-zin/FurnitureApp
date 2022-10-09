@@ -21,9 +21,9 @@ namespace FurnitureApp.Repository.Orders
 SELECT *
 FROM {this.tableName}
 WHERE
-{nameof(Order.CreatedDate)} >= '{createdDateF:yyyy-MM-dd}'
+{nameof(Order.CreatedDate)} >= '{createdDateF:yyyy-MM-dd 00:00:00}'
 AND
-{nameof(Order.CreatedDate)} <= '{createdDateT:yyyy-MM-dd}'
+{nameof(Order.CreatedDate)} <= '{createdDateT:yyyy-MM-dd 23:59:59}'
 ";
             #endregion
 

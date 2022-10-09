@@ -19,6 +19,7 @@
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="35"/>
+                <RowDefinition Height="35"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <DockPanel Grid.Row="0">
@@ -42,22 +43,35 @@
                              Width="100"
                              Height="25"
                              LostFocus="CreatedDateFTextBox_LostFocus"/>
-                    <Button Content="表示"
+                    <Button Content="期間表示"
                             Name="RefreshOrdersButton"
                             Click="RefreshOrdersButton_Click"
                             Width="100"/>
+                    <TextBlock x:Name="OrderCountTextBlock"
+                               FontSize="25"/>
                 </StackPanel>
             </DockPanel>
-            <StackPanel Grid.Row="0"
-                        Orientation="Horizontal"
-                        HorizontalAlignment="Right">
-                <Button Content="＋"
+            <DockPanel Grid.Row="1">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="物件名"
+                           VerticalAlignment="Center"/>
+                    <TextBox x:Name="SearchNameTextBox"
+                             Height="25"
+                             Width="212"
+                             Style="{StaticResource HiraganaTextBox}"/>
+                    <Button Content="クリア"
+                            Width="100"
+                            Name="ResetSearchButton"
+                            Click="ResetSearchButton_Click"/>
+                </StackPanel>
+                <Button Content="新規"
+                        HorizontalAlignment="Right"
                         ToolTip="受注データを新規作成します"
-                        Width="35"
+                        Width="50"
                         Name="AddOrderButton"
                         Click="AddOrderButton_Click"/>
-            </StackPanel>
-            <DataGrid Grid.Row="1"
+            </DockPanel>
+            <DataGrid Grid.Row="2"
                       ItemsSource="{Binding OrderViewModels}"
                       Name="OrderDataGrid"
                       MouseDoubleClick="OrderDataGrid_MouseDoubleClick"
@@ -65,7 +79,8 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="作成日"
                                         Binding="{Binding CreatedDate, StringFormat=yyyy/MM/dd}"
-                                        Width="70"/>
+                                        Width="90"
+                                        ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                     <DataGridTextColumn Header="物件名"
                                         Binding="{Binding Name}"
                                         Width="*">
@@ -75,9 +90,32 @@
                             </Style>
                         </DataGridTextColumn.CellStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="提出先"
-                                        Binding="{Binding ClientName}"
+                    <DataGridTextColumn Binding="{Binding ClientName}"
                                         Width="150">
+                        <DataGridTextColumn.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="提出先"
+                                           VerticalAlignment="Center"/>
+                                <Button Height="21"
+                                        Width="50"
+                                        Padding="0 0 0 0"
+                                        Margin="10 0 10 0"
+                                        Name="ClientNameSearchButton"
+                                        Click="ClientNameSearchButton_Click">
+                                    <Button.Content>
+                                        <TextBlock Text="昇順"
+                                                   VerticalAlignment="Bottom"/>
+                                    </Button.Content>
+                                </Button>
+                                <ComboBox Height="21"
+                                          Margin="0"
+                                          Padding="0"
+                                          HorizontalAlignment="Right"
+                                          Name="ClientNameComboBox"
+                                          SelectionChanged="ClientNameComboBox_SelectionChanged"/>
+                            </StackPanel>
+                            
+                        </DataGridTextColumn.Header>
                         <DataGridTextColumn.CellStyle>
                             <Style TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
                                 <Setter Property="ToolTip" Value="{Binding ClientName}"/>
@@ -85,10 +123,11 @@
                         </DataGridTextColumn.CellStyle>
                     </DataGridTextColumn>
                     <DataGridTextColumn Header="納品日"
-                                        Width="70"
+                                        Width="90"
+                                        ElementStyle="{StaticResource CenterGridCellTextBlock}"
                                         Binding="{Binding DeliveryDate, StringFormat=yyyy/MM/dd}"/>
                     <DataGridTextColumn Header="備考"
-                                        Width="80"
+                                        Width="70"
                                         Binding="{Binding Remarks}">
                         <DataGridTextColumn.CellStyle>
                             <Style TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
@@ -128,8 +167,10 @@
                         Name="ShowPaintCostItemInfosButton"
                         Click="ShowPaintCostItemInfosButton_Click"/>
             </StackPanel>
-            <TabControl Grid.Row="1">
-                <TabItem Header="原価計算">
+            <TabControl Grid.Row="1"
+                        FontSize="15">
+                <TabItem Header="原価計算"
+                         Width="100">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
@@ -138,7 +179,7 @@
                         <DataGrid ItemsSource="{Binding ProductViewModels}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="カテゴリ"
-                                                    Width="128"
+                                                    Width="130"
                                         Binding="{Binding ProductCategoryName}">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
@@ -172,7 +213,7 @@
                                         MinWidth="35"
                                                     ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                 <DataGridTextColumn Header="単価"
-                                                    MinWidth="60"
+                                                    MinWidth="70"
                                         Binding="{Binding UnitPriceText}"
                                                     ElementStyle="{StaticResource RightGridCellTextBlock}"/>
                                 <DataGridTextColumn Header="合計"
@@ -205,7 +246,8 @@
                         
                     </Grid>
                 </TabItem>
-                <TabItem Header="詳細">
+                <TabItem Header="詳細"
+                         Width="100">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="250"/>
@@ -278,6 +320,11 @@
                         </Grid>
                         
                         <TabControl Grid.Row="1">
+                            <TabControl.Resources>
+                                <Style TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
+                                    <Setter Property="Width" Value="100"/>
+                                </Style>
+                            </TabControl.Resources>
                             <TabItem Header="製品情報">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -436,7 +483,7 @@
                                     
                                     <Grid Grid.Column="1">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="255"/>
+                                            <RowDefinition Height="310"/>
                                             <RowDefinition Height="*"/>
                                         </Grid.RowDefinitions>
                                         <DataGrid Grid.Row="0"

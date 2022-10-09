@@ -14,8 +14,8 @@
         <StackPanel Grid.Row="0"
                     HorizontalAlignment="Right"
                     Orientation="Horizontal">
-            <Button Content="＋"
-                    Width="35"
+            <Button Content="新規"
+                    Width="50"
                     Name="AddButton"
                     Click="AddButton_Click"/>
             <Button Content="複製"
@@ -29,7 +29,8 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="順番"
                                     Binding="{Binding Sequence}"
-                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
+                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"
+                                    Width="60"/>
                 <DataGridTextColumn Header="名称"
                                     Binding="{Binding Name}"
                                     Width="*"/>
@@ -37,16 +38,18 @@
                                     Binding="{Binding Thickness}"
                                     ElementStyle="{StaticResource CenterGridCellTextBlock}"
                                     MinWidth="60"/>
-                <DataGridTextColumn Header="貼り単価(円/(303^2))"
+                <DataGridTextColumn Header="貼り単価(\/303²)"
                                     Binding="{Binding PasteUnitPrice}"
                                     ElementStyle="{StaticResource CenterGridCellTextBlock}"
                                     MinWidth="80"/>
                 <DataGridTextColumn Header="カットタイプ"
                                     Binding="{Binding CutType}"/>
                 <DataGridTextColumn Header="コード"
-                                    Binding="{Binding Code}"/>
+                                    Binding="{Binding Code}"
+                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                 <DataGridTextColumn Header="更新日"
-                                    Width="70"
+                                    Width="90"
+                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"
                                     Binding="{Binding UpdatedDate, StringFormat=yyyy/MM/dd}"/>
 
             </DataGrid.Columns>

@@ -55,7 +55,7 @@ namespace FurnitureApp.Contents.Orders.Order00100
         {
             InitializeComponent();
             this.DataContext = this;
-            this.CreatedDateFTextBox.Text = $"{DateTime.Now.Date.AddYears(-1):d}";
+            this.CreatedDateFTextBox.Text = $"{DateTime.Now.Date.AddYears(-50):d}";
             this.CreatedDateTTextBox.Text = $"{DateTime.Now:d}";
             
 
@@ -118,6 +118,17 @@ namespace FurnitureApp.Contents.Orders.Order00100
         private void RefreshOrdersButton_Click(object sender, RoutedEventArgs e)
         {
             this.DisplayOrders();
+        }
+        private void ClientNameSearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.DisplayOrders();
+            var orders = this.OrderViewModels.OrderBy(x => x.ClientName).ThenByDescending(x => x.CreatedDate).ThenByDescending(x => x.Model.Id).Select(x => x.Model).ToList();
+            this.OrderViewModels.Clear();
+            this.OrderViewModels.AddRange(orders.Select(x => new OrderViewModel(x)));
+        }
+        private void ClientNameComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
         private void AddOrderButton_Click(object sender, RoutedEventArgs e)
         {
@@ -1124,5 +1135,9 @@ namespace FurnitureApp.Contents.Orders.Order00100
 
         }
 
+        private void ResetSearchButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

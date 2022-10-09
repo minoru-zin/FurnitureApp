@@ -14,8 +14,8 @@
         <StackPanel Grid.Row="0"
                     HorizontalAlignment="Right"
                     Orientation="Horizontal">
-            <Button Content="＋"
-                    Width="35"
+            <Button Content="新規"
+                    Width="50"
                     Name="AddButton"
                     Click="AddButton_Click"/>
             <Button Content="複製"
@@ -29,19 +29,22 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="順番"
                                     Binding="{Binding Sequence}"
-                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
+                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"
+                                    MinWidth="60"/>
                 <DataGridTextColumn Header="名称"
                                     Binding="{Binding Name}"
                                     Width="*"/>
-                <DataGridTextColumn Header="単価(円/303^2)"
+                <DataGridTextColumn Header="単価(\/303²)"
                                     Binding="{Binding UnitPrice}"
                                     MinWidth="60"
                                     ElementStyle="{StaticResource RightGridCellTextBlock}"/>
                 <DataGridTextColumn Header="コード"
-                                    Binding="{Binding Code}"/>
+                                    Binding="{Binding Code}"
+                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                 <DataGridTextColumn Header="更新日"
                                     Binding="{Binding UpdatedDate, StringFormat=yyyy/MM/dd}"
-                                    Width="70"/>
+                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"
+                                    Width="90"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

@@ -14,8 +14,8 @@
         <StackPanel Grid.Row="0"
                     HorizontalAlignment="Right"
                     Orientation="Horizontal">
-            <Button Content="＋"
-                    Width="35"
+            <Button Content="新規"
+                    Width="50"
                     Name="AddButton"
                     Click="AddButton_Click"/>
             <Button Content="複製"
@@ -30,15 +30,15 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="素材"
                                     Binding="{Binding MaterialName}"/>
-                <DataGridTextColumn Header="名称"
+                <DataGridTextColumn Header="素材規格名称"
                                     Binding="{Binding Name}"
                                     Width="*"/>
-                <DataGridTextColumn Header="縦"
-                                    Binding="{Binding Length}"
+                <DataGridTextColumn Header="横(W)"
+                                    Binding="{Binding Width}"
                                     ElementStyle="{StaticResource CenterGridCellTextBlock}"
                                     MinWidth="60"/>
-                <DataGridTextColumn Header="横"
-                                    Binding="{Binding Width}"
+                <DataGridTextColumn Header="縦(L)"
+                                    Binding="{Binding Length}"
                                     ElementStyle="{StaticResource CenterGridCellTextBlock}"
                                     MinWidth="60"/>
                 <DataGridTextColumn Header="単価"
@@ -47,7 +47,8 @@
                                     ElementStyle="{StaticResource RightGridCellTextBlock}"/>
                 <DataGridTextColumn Header="更新日"
                                     Binding="{Binding UpdatedDate,StringFormat=yyyy/MM/dd}"
-                                    Width="70"/>
+                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"
+                                    Width="90"/>
 
             </DataGrid.Columns>
         </DataGrid>

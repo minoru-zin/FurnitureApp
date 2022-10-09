@@ -69,9 +69,9 @@
             <StackPanel Grid.Row="0"
                         Orientation="Horizontal"
                         HorizontalAlignment="Right">
-                <Button Content="＋"
+                <Button Content="新規"
                         Name="AddProductButton"
-                        Width="35"
+                        Width="50"
                         Click="AddProductButton_Click"/>
                 <Button Content="複製"
                         Name="CopyProductButton"
@@ -115,7 +115,7 @@
                                         ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                     <DataGridTextColumn Header="数量"
                                         Binding="{Binding Quantity}"
-                                        Width="35"
+                                        Width="40"
                                         ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                     <DataGridTextColumn Header="単価"
                                         MinWidth="55"
