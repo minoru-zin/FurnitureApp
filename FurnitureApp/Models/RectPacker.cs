@@ -164,6 +164,7 @@ namespace FurnitureApp.Models
             var inputDirPath = Path.Combine(this.coreDirectoryPath, "input");
 
             Utility.DirectoryCreator.CreateSafely(inputDirPath);
+            foreach (var filePath in Directory.GetFiles(inputDirPath)) { File.Delete(filePath); }
 
             foreach (var inputXml in inputXmls)
             {
@@ -172,6 +173,9 @@ namespace FurnitureApp.Models
             }
 
             var inputRecxFilePath = Path.Combine(this.coreDirectoryPath, "input.recx");
+            
+            if (File.Exists(inputRecxFilePath)) { File.Delete(inputRecxFilePath); }
+
             ZipFile.CreateFromDirectory(inputDirPath, inputRecxFilePath);
 
             var resultRecxFilePath = Path.Combine(this.coreDirectoryPath, $"{recxDirName}.recx");

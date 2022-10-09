@@ -430,10 +430,6 @@ namespace FurnitureApp.Contents.Orders.Order00300
         {
             this.SetProdut();
 
-            if (this.Product.ProductCategoryInfoCode == null) { throw new Exception("カテゴリが不適"); }
-            if (string.IsNullOrEmpty(this.Product.Name)) { throw new Exception("製品名が不適"); }
-            if (this.Product.Quantity < 1) { throw new Exception("数量が不適"); }
-
             this.IsChanged = true;
             this.Close();
         }
@@ -474,6 +470,10 @@ namespace FurnitureApp.Contents.Orders.Order00300
         private void SetProdut()
         {
             this.SetProductWithoutCosts();
+
+            if (this.Product.ProductCategoryInfoCode == null) { throw new Exception("カテゴリが不適"); }
+            if (string.IsNullOrEmpty(this.Product.Name)) { throw new Exception("製品名が不適"); }
+            if (this.Product.Quantity < 1) { throw new Exception("数量が不適"); }
 
             // 板コスト
             var boardSizes = new BoardSizeCalculator(this.Product);
