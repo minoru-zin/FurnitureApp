@@ -36,8 +36,10 @@ namespace FurnitureApp.Contents.Orders.Order00100
         private NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private CommonData cd = CommonData.GetInstance();
         private ControlFormatter cf = new ControlFormatter();
-
+        private List<Order> orders = new List<Order>();
         public ObservableCollection<OrderViewModel> OrderViewModels { get; } = new ObservableCollection<OrderViewModel>();
+        public ObservableCollection<string> ClientNameViewModels { get; } = new ObservableCollection<string>();
+        private readonly string allClientName = "指定なし";
         public ObservableCollection<ProductViewModel> ProductViewModels { get; } = new ObservableCollection<ProductViewModel>();
         public ObservableCollection<DisplayBoardViewModel> BoardViewModels { get; } = new ObservableCollection<DisplayBoardViewModel>();
         public ObservableCollection<DisplayBoardLayerViewModel> BoardLayerViewModels { get; } = new ObservableCollection<DisplayBoardLayerViewModel>();
@@ -55,12 +57,14 @@ namespace FurnitureApp.Contents.Orders.Order00100
         {
             InitializeComponent();
             this.DataContext = this;
-            this.CreatedDateFTextBox.Text = $"{DateTime.Now.Date.AddYears(-50):d}";
-            this.CreatedDateTTextBox.Text = $"{DateTime.Now:d}";
-            
+
+            this.ResetSearchControls();
 
             this.DisplayOrders();
         }
+
+        
+
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.Key)
@@ -83,12 +87,16 @@ namespace FurnitureApp.Contents.Orders.Order00100
             textBox.SelectAll();
         }
 
-        #region 作成日
+        #region 受注検索
         private void CreatedDateFTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             this.cf.SetDates(this.CreatedDateFTextBox, this.CreatedDateTTextBox);
         }
-        #endregion
+        
+        private void SearchOrdersButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.DisplayOrders();
+        }
         private void DisplayOrders()
         {
             var createdDateF = Utility.DateTimeFormatter.GetDateTime(this.CreatedDateFTextBox.Text);
@@ -100,35 +108,83 @@ namespace FurnitureApp.Contents.Orders.Order00100
                 return;
             }
 
-            var orders = this.cd.OrderRepository.SelectFromCreatedDate((DateTime)createdDateF, (DateTime)createdDateT).OrderByDescending(x => x.CreatedDate).ThenByDescending(x => x.Id).ToList();
+            var orders = this.cd.OrderRepository.SelectTopOnlyFromCreatedDate((DateTime)createdDateF, (DateTime)createdDateT).OrderByDescending(x => x.CreatedDate).ThenByDescending(x => x.Id).ToList();
 
-            this.OrderViewModels.Clear();
-
-            foreach (var order in orders)
+            if (!string.IsNullOrEmpty(this.SearchNameTextBox.Text))
             {
-                this.OrderViewModels.Add(new OrderViewModel(order));
+                orders = orders.Where(x => $"{x.Name}".Contains(this.SearchNameTextBox.Text)).ToList();
             }
 
+            this.orders = orders;
+            this.OrderViewModels.Clear();
+            this.OrderViewModels.AddRange(this.orders.Select(x => new OrderViewModel(x)));
+
+            this.ClientNameViewModels.Clear();
+            this.ClientNameViewModels.Add(this.allClientName);
+            this.ClientNameViewModels.AddRange(this.OrderViewModels.GroupBy(x => x.ClientName).Select(x => x.Key).OrderBy(x => x));
+
+            this.ResetOrderInfo();
+        }
+        
+        private void ResetOrderInfo()
+        {
             this.ProductViewModels.Clear();
             this.ResetProductPropertyViewModels();
             this.TotalAmountTextBlock.Text = "";
             this.TotalAmountTextBlock2.Text = "";
+            this.SetOrderCount();
+        }
+        private void SetOrderCount()
+        {
+            this.OrderCountTextBlock.Text = $"{this.OrderViewModels.Count}件";
+        }
+        private void ResetSearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.ResetSearchControls();
+        }
+        private void ResetSearchControls()
+        {
+            this.CreatedDateFTextBox.Text = $"{DateTime.Now.Date.AddYears(-50):d}";
+            this.CreatedDateTTextBox.Text = $"{DateTime.Now:d}";
+            this.SearchNameTextBox.Text = "";
+            this.SetOrderCount();
+        }
+        #endregion
 
-        }
-        private void RefreshOrdersButton_Click(object sender, RoutedEventArgs e)
+        #region 受注検索結果DataGrid
+        private void ClientNameUpButton_Click(object sender, RoutedEventArgs e)
         {
-            this.DisplayOrders();
+            var orders = this.OrderViewModels.Select(x => x.Model).OrderBy(x => x.ClientName).ThenByDescending(x => x.CreatedDate).ThenByDescending(x => x.Id).ToList();
+            this.OrderViewModels.Clear();
+            this.OrderViewModels.AddRange(orders.Select(x => new OrderViewModel(x)));
         }
-        private void ClientNameSearchButton_Click(object sender, RoutedEventArgs e)
+        private void ClientNameDownButton_Click(object sender, RoutedEventArgs e)
         {
-            this.DisplayOrders();
-            var orders = this.OrderViewModels.OrderBy(x => x.ClientName).ThenByDescending(x => x.CreatedDate).ThenByDescending(x => x.Model.Id).Select(x => x.Model).ToList();
+            var orders = this.OrderViewModels.Select(x => x.Model).OrderByDescending(x => x.ClientName).ThenByDescending(x => x.CreatedDate).ThenByDescending(x => x.Id).ToList();
             this.OrderViewModels.Clear();
             this.OrderViewModels.AddRange(orders.Select(x => new OrderViewModel(x)));
         }
         private void ClientNameComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            var comboBox = sender as ComboBox;
 
+            var text = comboBox.SelectedValue as string;
+
+            if (string.IsNullOrEmpty(text)) { return; }
+
+            this.OrderViewModels.Clear();
+            
+            if(text == this.allClientName)
+            {
+                this.OrderViewModels.AddRange(this.orders.Select(x => new OrderViewModel(x)));
+            }
+            else
+            {
+                this.OrderViewModels.AddRange(this.orders.Where(x => x.ClientName == text).Select(x => new OrderViewModel(x)));
+            }
+
+            this.SetOrderCount();
+            this.OrderDataGrid.Focus();
         }
         private void AddOrderButton_Click(object sender, RoutedEventArgs e)
         {
@@ -156,7 +212,8 @@ namespace FurnitureApp.Contents.Orders.Order00100
 
                 if (vm == null) { return; }
 
-                var w = new Order00200_EditOrderWindow(vm.Model);
+                var order = this.cd.OrderRepository.SelectById((int)vm.Model.Id);
+                var w = new Order00200_EditOrderWindow(order);
                 w.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                 w.ShowDialog();
                 if (!w.IsChanged) { return; }
@@ -176,9 +233,11 @@ namespace FurnitureApp.Contents.Orders.Order00100
                 var vm = this.OrderDataGrid.SelectedItem as OrderViewModel;
 
                 if (vm == null) { return; }
+                
+                var order = this.cd.OrderRepository.SelectById((int)vm.Model.Id);
 
                 this.ProductViewModels.Clear();
-                this.ProductViewModels.AddRange(vm.Model.Products.Select(x => new ProductViewModel(x)));
+                this.ProductViewModels.AddRange(order.Products.Select(x => new ProductViewModel(x)));
                 this.TotalAmountTextBlock.Text = $"総額 {this.ProductViewModels.Sum(x => x.TotalAmount):#,0}円";
                 this.TotalAmountTextBlock2.Text = $"総額 {this.ProductViewModels.Sum(x => x.TotalAmount):#,0}円";
                 if (this.ProductViewModels.Any())
@@ -192,6 +251,8 @@ namespace FurnitureApp.Contents.Orders.Order00100
                 this.cd.DialogService.ShowMessage(ex.Message);
             }
         }
+        #endregion
+
 
         private void ProductDataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
@@ -545,7 +606,7 @@ namespace FurnitureApp.Contents.Orders.Order00100
 
             foreach (OrderViewModel vm in this.OrderDataGrid.SelectedItems)
             {
-                orders.Add(vm.Model);
+                orders.Add(this.cd.OrderRepository.SelectById((int)vm.Model.Id));
             }
 
             if (!orders.Any())
@@ -1135,9 +1196,6 @@ namespace FurnitureApp.Contents.Orders.Order00100
 
         }
 
-        private void ResetSearchButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+        
     }
 }

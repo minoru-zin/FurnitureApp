@@ -10,67 +10,85 @@
         WindowState="Maximized"
         KeyDown="Window_KeyDown"
         Loaded="Window_Loaded"
-        Closed="Window_Closed">
+        Closed="Window_Closed"
+        Name="Root">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
+        <FrameworkElement x:Name="dummyElement" Visibility="Collapsed"/>
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="35"/>
-                <RowDefinition Height="35"/>
+                <RowDefinition Height="64"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <DockPanel Grid.Row="0">
-                <StackPanel Orientation="Horizontal"
-                            DockPanel.Dock="Left">
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="265"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
                     <StackPanel.Resources>
+                        <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+                            <Setter Property="Width" Value="50"/>
+                        </Style>
                         <Style TargetType="{x:Type TextBox}"
                            BasedOn="{StaticResource NumberTextBox}">
                             <EventSetter Event="GotFocus" Handler="TextBox_GotFocus"/>
                         </Style>
                     </StackPanel.Resources>
-                    <Label Content="作成日"
+                    <StackPanel Orientation="Horizontal"
+                                Margin="0 5 0 6">
+                        <Label Content="作成日"
                            VerticalAlignment="Center"/>
-                    <TextBox Name="CreatedDateFTextBox"
+                        <TextBox Name="CreatedDateFTextBox"
                              Width="100"
                              Height="25"
                              LostFocus="CreatedDateFTextBox_LostFocus"/>
-                    <TextBlock Text="～"
+                        <TextBlock Text="～"
                                VerticalAlignment="Center"/>
-                    <TextBox Name="CreatedDateTTextBox"
+                        <TextBox Name="CreatedDateTTextBox"
                              Width="100"
                              Height="25"
                              LostFocus="CreatedDateFTextBox_LostFocus"/>
-                    <Button Content="期間表示"
-                            Name="RefreshOrdersButton"
-                            Click="RefreshOrdersButton_Click"
-                            Width="100"/>
-                    <TextBlock x:Name="OrderCountTextBlock"
-                               FontSize="25"/>
-                </StackPanel>
-            </DockPanel>
-            <DockPanel Grid.Row="1">
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="物件名"
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="物件名"
                            VerticalAlignment="Center"/>
-                    <TextBox x:Name="SearchNameTextBox"
+                        <TextBox x:Name="SearchNameTextBox"
                              Height="25"
                              Width="212"
-                             Style="{StaticResource HiraganaTextBox}"/>
-                    <Button Content="クリア"
+                             Style="{StaticResource HiraganaTextBox}"
+                                 GotFocus="TextBox_GotFocus"/>
+
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="期間表示"
+                            Name="SearchOrdersButton"
+                            Click="SearchOrdersButton_Click"
+                            Width="100"/>
+                        <TextBlock x:Name="OrderCountTextBlock"
+                               FontSize="25"/>
+                    </StackPanel>
+                    <DockPanel >
+                        <Button DockPanel.Dock="Left" 
+                                Content="クリア"
                             Width="100"
                             Name="ResetSearchButton"
                             Click="ResetSearchButton_Click"/>
+                        <Button Content="新規"
+                                HorizontalAlignment="Right"
+                                ToolTip="受注データを新規作成します"
+                                Width="50"
+                                Name="AddOrderButton"
+                                Click="AddOrderButton_Click"/>
+                    </DockPanel>
+
                 </StackPanel>
-                <Button Content="新規"
-                        HorizontalAlignment="Right"
-                        ToolTip="受注データを新規作成します"
-                        Width="50"
-                        Name="AddOrderButton"
-                        Click="AddOrderButton_Click"/>
-            </DockPanel>
+            </Grid>
             <DataGrid Grid.Row="2"
                       ItemsSource="{Binding OrderViewModels}"
                       Name="OrderDataGrid"
@@ -91,30 +109,49 @@
                         </DataGridTextColumn.CellStyle>
                     </DataGridTextColumn>
                     <DataGridTextColumn Binding="{Binding ClientName}"
-                                        Width="150">
+                                        Width="190">
                         <DataGridTextColumn.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="提出先"
                                            VerticalAlignment="Center"/>
                                 <Button Height="21"
-                                        Width="50"
+                                        Width="20"
+                                        FontSize="10"
+                                        Margin="3 0 0 0"
                                         Padding="0 0 0 0"
-                                        Margin="10 0 10 0"
-                                        Name="ClientNameSearchButton"
-                                        Click="ClientNameSearchButton_Click">
+                                        IsTabStop="False"
+                                        Name="ClientNameUpButton"
+                                        Click="ClientNameUpButton_Click">
                                     <Button.Content>
-                                        <TextBlock Text="昇順"
+                                        <TextBlock Text="▲"
                                                    VerticalAlignment="Bottom"/>
                                     </Button.Content>
                                 </Button>
+                                <Button Height="21"
+                                        Width="20"
+                                        FontSize="10"
+                                        Margin="1 0 5 0"
+                                        Padding="0 0 0 0"
+                                        IsTabStop="False"
+                                        Name="ClientNameDownButton"
+                                        Click="ClientNameDownButton_Click">
+                                    <Button.Content>
+                                        <TextBlock Text="▼"
+                                                   VerticalAlignment="Bottom"/>
+                                    </Button.Content>
+                                </Button>
+
                                 <ComboBox Height="21"
                                           Margin="0"
                                           Padding="0"
+                                          Width="18"
+                                          IsTabStop="False"
                                           HorizontalAlignment="Right"
                                           Name="ClientNameComboBox"
+                                          ItemsSource="{Binding Source={x:Reference dummyElement}, Path=DataContext.ClientNameViewModels}"
                                           SelectionChanged="ClientNameComboBox_SelectionChanged"/>
                             </StackPanel>
-                            
+
                         </DataGridTextColumn.Header>
                         <DataGridTextColumn.CellStyle>
                             <Style TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
@@ -243,7 +280,7 @@
                                        TextAlignment="Right"
                                        FontSize="25"/>
                         </DockPanel>
-                        
+
                     </Grid>
                 </TabItem>
                 <TabItem Header="詳細"
@@ -316,9 +353,9 @@
                                        FontSize="25"
                                        TextAlignment="Right"/>
                             </DockPanel>
-                            
+
                         </Grid>
-                        
+
                         <TabControl Grid.Row="1">
                             <TabControl.Resources>
                                 <Style TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
@@ -480,7 +517,7 @@
                                             </StackPanel>
                                         </StackPanel>
                                     </ScrollViewer>
-                                    
+
                                     <Grid Grid.Column="1">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="310"/>
@@ -567,7 +604,7 @@
                                                Name="CostTotalAmountTextBlock2"/>
                                 </Grid>
                             </TabItem>
-                            
+
                             <TabItem Header="製作寸法">
                                 <DataGrid Grid.Row="0"
                                           ItemsSource="{Binding BoardViewModels2}">
@@ -635,7 +672,7 @@
                                     <TextBlock Grid.Row="2" FontSize="25" Name="BoardCostTotalAmountTextBlock2"
                                                TextAlignment="Right"/>
                                 </Grid>
-                                </TabItem>
+                            </TabItem>
                             <TabItem Header="木口貼り">
                                 <Grid>
                                     <Grid.RowDefinitions>
@@ -727,7 +764,7 @@
                                                TextAlignment="Right"
                                                Name="FinishCutCostTotalAmountTextBlock2"/>
                                 </Grid>
-                                
+
                             </TabItem>
                             <TabItem Header="化粧板貼り">
                                 <Grid>
@@ -773,7 +810,7 @@
                                                TextAlignment="Right"
                                                Name="MakeupBoardPasteCostTotalAmountTextBlock2"/>
                                 </Grid>
-                                
+
                             </TabItem>
                             <TabItem Header="塗装">
                                 <Grid>

@@ -5,6 +5,7 @@ using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FurnitureApp.Repository.Orders
 {
@@ -17,31 +18,13 @@ namespace FurnitureApp.Repository.Orders
             Utility.DirectoryCreator.CreateSafely(this.ProductFileDirName);
         }
 
-        public List<Order> SelectFromCreatedDate(DateTime createdDateF, DateTime createdDateT)
+        public List<Order> SelectTopOnlyFromCreatedDate(DateTime createdDateF, DateTime createdDateT)
         {
             var orders = new List<Order>();
 
             RepositoryAction.Query(c =>
             {
                 orders = new OrderDao(c, null).SelectFromCreatedDate(createdDateF, createdDateT).ToList();
-                var productDao = new ProductDao(c, null);
-                var boardDao = new BoardDao(c, null);
-                var boardLayerDao = new BoardLayerDao(c, null);
-
-                var boardCostDao = new BoardCostDao(c, null);
-                var koguchiPasteCostDao = new KoguchiPasteCostDao(c, null);
-                var finishCutCostDao = new FinishCutCostDao(c, null);
-                var makeupBoardPasteCostDao = new MakeupBoardPasteCostDao(c, null);
-                var paintCostDao = new PaintCostDao(c, null);
-                var costDao = new CostDao(c, null);
-                var productFilePathDao = new ProductFileDao(c, null);
-
-                foreach (var order in orders)
-                {
-                    this.SetOrderProperties(order,
-                        productDao, boardDao, boardLayerDao,
-                        boardCostDao, koguchiPasteCostDao, finishCutCostDao, makeupBoardPasteCostDao, paintCostDao, costDao, productFilePathDao);
-                }
             });
 
             return orders;
@@ -91,7 +74,7 @@ namespace FurnitureApp.Repository.Orders
 
                 this.SetOrderProperties(order,
                         productDao, boardDao, boardLayerDao,
-                        boardCostDao, koguchiPasteCostDao, finishCutCostDao, makeupBoardPasteCostDao,  paintCostDao, costDao, productFilePathDao);
+                        boardCostDao, koguchiPasteCostDao, finishCutCostDao, makeupBoardPasteCostDao, paintCostDao, costDao, productFilePathDao);
             });
 
             return order;
@@ -124,7 +107,7 @@ namespace FurnitureApp.Repository.Orders
 
                     this.InsertOrderProperties(order,
                         productDao, boardDao, boardLayerDao,
-                        boardCostDao, koguchiPasteCostDao, finishCutCostDao, makeupBoardPasteCostDao, paintCostDao,  costDao, productFilePathDao);
+                        boardCostDao, koguchiPasteCostDao, finishCutCostDao, makeupBoardPasteCostDao, paintCostDao, costDao, productFilePathDao);
                 }
 
                 foreach (var order in orders)
@@ -143,7 +126,7 @@ namespace FurnitureApp.Repository.Orders
         }
         private void InsertOrderProperties(Order order,
             ProductDao productDao, BoardDao boardDao, BoardLayerDao boardLayerDao,
-            BoardCostDao boardCostDao, KoguchiPasteCostDao koguchiPasteCostDao, FinishCutCostDao finishCutCostDao, MakeupBoardPasteCostDao makeupBoardPasteCostDao,PaintCostDao paintCostDao, CostDao costDao, ProductFileDao productFileDao)
+            BoardCostDao boardCostDao, KoguchiPasteCostDao koguchiPasteCostDao, FinishCutCostDao finishCutCostDao, MakeupBoardPasteCostDao makeupBoardPasteCostDao, PaintCostDao paintCostDao, CostDao costDao, ProductFileDao productFileDao)
         {
             order.Products.ForEach(x => x.OrderId = order.Id);
 
@@ -185,7 +168,7 @@ namespace FurnitureApp.Repository.Orders
                     cost.ProductId = productId;
                     makeupBoardPasteCostDao.Insert(cost);
                 }
-                foreach(var cost in product.PaintCosts)
+                foreach (var cost in product.PaintCosts)
                 {
                     cost.ProductId = productId;
                     paintCostDao.Insert(cost);
@@ -340,7 +323,7 @@ namespace FurnitureApp.Repository.Orders
         {
             return Path.Combine(this.GetProductFileDirPath(orderId), fileName);
         }
-        private string GetProductFileDirPath (int? orderId)
+        private string GetProductFileDirPath(int? orderId)
         {
             return Path.Combine(this.ProductFileDirName, $"{orderId}");
         }
