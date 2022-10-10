@@ -17,7 +17,39 @@ namespace FurnitureApp.Repository.Orders
         {
             Utility.DirectoryCreator.CreateSafely(this.ProductFileDirName);
         }
+        public Order SelectTopOnlyById(int id)
+        {
+            Order order = null;
 
+            RepositoryAction.Query(c =>
+            {
+                order = new OrderDao(c, null).SelectById(id);
+            });
+
+            return order;
+        }
+        public List<Order> SelectAllUpToProductTopOnly()
+        {
+            var orders = new List<Order>();
+
+            RepositoryAction.Query(c =>
+            {
+                var orderDict = new OrderDao(c, null).SelectAll().ToDictionary(x => x.Id);
+
+                var products = new ProductDao(c,null).SelectAll();
+
+                foreach(var p in products)
+                {
+                    var order = orderDict.GetValueOrDefault(p.OrderId);
+
+                    order.Products.Add(p);
+                }
+
+                orders = orderDict.Select(x => x.Value).ToList();
+            });
+
+            return orders;
+        }
         public List<Order> SelectTopOnlyFromCreatedDate(DateTime createdDateF, DateTime createdDateT)
         {
             var orders = new List<Order>();
