@@ -73,7 +73,7 @@
                     <DockPanel >
                         <StackPanel DockPanel.Dock="Left"
                                     Orientation="Horizontal">
-                            <Button Content="期間表示"
+                            <Button Content="検索"
                             Name="SearchOrdersButton"
                             Click="SearchOrdersButton_Click"
                             Width="100"/>
