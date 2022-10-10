@@ -80,6 +80,11 @@
                                     ElementStyle="{StaticResource CenterGridCellTextBlock }"
                                     MinWidth="60"
                                         Binding="{Binding Height}"/>
+                <DataGridTextColumn Header="数量"
+                                    ElementStyle="{StaticResource CenterGridCellTextBlock }"
+                                    MinWidth="35"
+                                        Binding="{Binding Quantity}"/>
+
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

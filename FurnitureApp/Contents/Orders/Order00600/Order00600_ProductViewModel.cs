@@ -20,6 +20,7 @@ namespace FurnitureApp.Contents.Orders.Order00600
         public double? Width { get; }
         public double? Depth { get; }
         public double? Height { get; }
+        public int? Quantity { get; }
 
         public Product Model { get; }
         private CommonData cd = CommonData.GetInstance();
@@ -38,6 +39,7 @@ namespace FurnitureApp.Contents.Orders.Order00600
             this.Width = product.BodyWidth;
             this.Depth = product.BodyDepth;
             this.Height = product.BodyHeight;
+            this.Quantity = product.Quantity;
         }
     }
 }
