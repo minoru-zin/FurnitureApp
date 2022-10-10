@@ -14,6 +14,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xaml;
+using WinCopies.Util;
 
 namespace FurnitureApp.Contents.Orders.Order00600
 {
@@ -36,7 +38,7 @@ namespace FurnitureApp.Contents.Orders.Order00600
             this.DataContext = this;
             this.ProductCategoryInfoComboBox.SelectedValue = productCategoryInfoId;
             this.ProductCategoryInfos.AddRange(this.cd.ProductCategoryInfos.Select(x => new DisplayInfo<int?>(x.Id, x.Name)));
-            this.SetAllViewModels();    
+            this.SetAllViewModels();
             this.SetProductViewModels();
         }
 
@@ -46,18 +48,19 @@ namespace FurnitureApp.Contents.Orders.Order00600
 
             var vms = new List<Order00600_ProductViewModel>();
 
-            foreach(var o in orders)
+            foreach (var o in orders)
             {
-                foreach(var p in o.Products)
+                foreach (var p in o.Products)
                 {
                     vms.Add(new Order00600_ProductViewModel(o, p));
                 }
             }
-            
+
             this.productViewModelDict.Clear();
-            foreach(var g in vms.GroupBy(x => new { x.ProductCategoryCode, x.ProductCategoryName, x.ProductCategorySequence}).OrderBy(x => x.Key.ProductCategorySequence))
+
+            foreach (var g in vms.GroupBy(x => new { x.ProductCategoryCode, x.ProductCategoryName, x.ProductCategorySequence }).OrderBy(x => x.Key.ProductCategorySequence))
             {
-                this.productViewModelDict.Add(g.Key.ProductCategoryCode, g.ToList());
+                this.productViewModelDict.Add(g.Key.ProductCategoryCode, g.OrderByDescending(x => x.CreatedDate).OrderByDescending(x => x.OrderId).OrderBy(x => x.Model.Id).ToList());
             }
         }
         private void ProductCategoryInfoComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -77,8 +80,8 @@ namespace FurnitureApp.Contents.Orders.Order00600
         private void ProductDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var vm = this.ProductDataGrid.SelectedItem as Order00600_ProductViewModel;
-            
-            if(vm == null) { return; }
+
+            if (vm == null) { return; }
 
             var order = this.cd.OrderRepository.SelectById((int)vm.Model.OrderId);
             this.Product = order.Products.First(x => x.Id == vm.Model.Id);

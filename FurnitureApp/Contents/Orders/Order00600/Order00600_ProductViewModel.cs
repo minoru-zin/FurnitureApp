@@ -9,6 +9,7 @@ namespace FurnitureApp.Contents.Orders.Order00600
 {
     public class Order00600_ProductViewModel
     {
+        public int? OrderId { get; }
         public DateTime? CreatedDate { get; }
         public string OrderName { get; }
         public string ClientName { get; }
@@ -25,6 +26,7 @@ namespace FurnitureApp.Contents.Orders.Order00600
         public Order00600_ProductViewModel(Order order, Product product)
         {
             this.Model = product;
+            this.OrderId = order.Id;
             this.CreatedDate = order.CreatedDate;
             this.OrderName = order.Name;
             this.ClientName = order.ClientName;
