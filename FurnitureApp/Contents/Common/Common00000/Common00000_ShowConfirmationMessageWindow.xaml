@@ -17,7 +17,8 @@
         <ScrollViewer Grid.Row="0"
                       VerticalScrollBarVisibility="Auto">
             <TextBlock x:Name="MessageTextBlock"
-                       TextWrapping="Wrap"/>
+                       TextWrapping="Wrap"
+                       VerticalAlignment="Center"/>
         </ScrollViewer>
         <StackPanel Orientation="Horizontal"
                     Grid.Row="1"
