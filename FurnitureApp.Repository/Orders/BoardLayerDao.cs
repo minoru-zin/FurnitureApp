@@ -3,6 +3,7 @@ using FurnitureApp.Repository.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using System.Linq;
 using System.Text;
 
 namespace FurnitureApp.Repository.Orders
@@ -39,19 +40,19 @@ WHERE
             this.connection.Execute(sql, null, this.transaction);
 
         }
-        public bool ExistMaterialInfoCode(int? materialInfoId)
+        public bool ExistMaterialInfoCode(int? materialInfoCode)
         {
             #region SQL
             var sql = $@"
 SELECT Id 
 FROM {this.tableName}
 WHERE
-{nameof(BoardLayer.MaterialInfoCode)} = {materialInfoId}
+{nameof(BoardLayer.MaterialInfoCode)} = {materialInfoCode}
 LIMIT 1
 ";
             #endregion
 
-            var id = this.connection.Query<int?>(sql, null, this.transaction);
+            var id = this.connection.Query<int?>(sql, null, this.transaction).FirstOrDefault();
 
             return id != null;
         }
