@@ -67,6 +67,10 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="35"/>
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="35"/>
+            </Grid.ColumnDefinitions>
             <StackPanel Grid.Row="0"
                         Orientation="Horizontal"
                         HorizontalAlignment="Right">
@@ -85,7 +89,8 @@
                       MouseDoubleClick="ProductDataGrid_MouseDoubleClick">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="カテゴリ"
-                                        Binding="{Binding ProductCategoryName}">
+                                        Binding="{Binding ProductCategoryName}"
+                                        MinWidth="100">
                         <DataGridTextColumn.CellStyle>
                             <Style TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
                                 <Setter Property="ToolTip" Value="{Binding ProductCategoryName}"/>
@@ -127,6 +132,21 @@
                                         ElementStyle="{StaticResource RightGridCellTextBlock}"/>
                 </DataGrid.Columns>
             </DataGrid>
+            <StackPanel Grid.Row="1" 
+                                    Grid.Column="1">
+                <StackPanel.Resources>
+                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                        <Setter Property="Margin" Value="1 1 0 3 "/>
+                        <Setter Property="Height" Value="30"/>
+                    </Style>
+                </StackPanel.Resources>
+                <Button Name="UpProductButton"
+                                Content="△"
+                                Click="UpProductButton_Click"/>
+                <Button Name="DownProductButton"
+                                Content="▽"
+                                Click="DownProductButton_Click"/>
+            </StackPanel>
             <TextBlock Grid.Row="2"
                        FontSize="25"
                        Name="TotalAmountTextBlock"

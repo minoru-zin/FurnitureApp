@@ -202,7 +202,43 @@ namespace FurnitureApp.Contents.Orders.Order00200
                 this.cd.DialogService.ShowMessage(ex.Message);
             }
         }
+        private void UpProductButton_Click(object sender, RoutedEventArgs e)
+        {
+            var vm = this.ProductDataGrid.SelectedItem as ProductViewModel;
 
+            if (vm == null) { return; }
+
+            var index = this.ProductViewModels.IndexOf(vm);
+
+            if (index == 0) { return; }
+
+            var clone = this.ProductViewModels.ToList()[index];
+
+            this.ProductViewModels.Remove(vm);
+
+            this.ProductViewModels.Insert(index - 1, clone);
+
+            this.ProductDataGrid.SelectedItem = clone;
+        }
+
+        private void DownProductButton_Click(object sender, RoutedEventArgs e)
+        {
+            var vm = this.ProductDataGrid.SelectedItem as ProductViewModel;
+
+            if (vm == null) { return; }
+
+            var index = this.ProductViewModels.IndexOf(vm);
+
+            if (index == this.ProductViewModels.Count - 1) { return; }
+
+            var clone = this.ProductViewModels.ToList()[index];
+
+            this.ProductViewModels.Remove(vm);
+
+            this.ProductViewModels.Insert(index + 1, clone);
+
+            this.ProductDataGrid.SelectedItem = clone;
+        }
         private void ProductDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             try
