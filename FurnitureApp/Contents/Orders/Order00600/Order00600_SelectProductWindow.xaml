@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FurnitureApp.Contents.Orders.Order00600"
         mc:Ignorable="d"
-        Title="製品選択 Order00600_SelectProductWindow" Height="450" Width="500">
+        Title="製品選択 Order00600_SelectProductWindow" Height="450" Width="1000">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -27,8 +27,32 @@
                   Name="ProductDataGrid"
                   MouseDoubleClick="ProductDataGrid_MouseDoubleClick">
             <DataGrid.Columns>
+                <DataGridTextColumn Header="作成日"
+                                    Width="90"
+                                    Binding="{Binding CreatedDate, StringFormat=yyyy/MM/dd}"
+                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
+                <DataGridTextColumn Header="物件名"
+                                    Binding="{Binding OrderName}"
+                                    MinWidth="200">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+                            <Setter Property="ToolTip" Value="{Binding OrderName}"/>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="提出先"
+                                    Binding="{Binding ClientName}"
+                                    MinWidth="150">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+                            <Setter Property="ToolTip" Value="{Binding ClientName}"/>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+
                 <DataGridTextColumn Header="カテゴリ"
-                                        Binding="{Binding ProductCategoryName}">
+                                        Binding="{Binding ProductCategoryName}"
+                                    MinWidth="120">
                     <DataGridTextColumn.CellStyle>
                         <Style TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
                             <Setter Property="ToolTip" Value="{Binding ProductCategoryName}"/>

@@ -5,16 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FurnitureApp.Contents.Orders.Order00200"
         mc:Ignorable="d"
-        Title="受注作成 Order00200_EditOrderWindow" Height="700" Width="1000"
+        Title="受注作成 Order00200_EditOrderWindow" Height="700" Width="1300"
         KeyDown="Window_KeyDown"
-        Loaded="Window_Loaded">
+        Loaded="Window_Loaded"
+        Closing="Window_Closing">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="35"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="500"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <DockPanel Grid.Row="0"
@@ -84,7 +85,6 @@
                       MouseDoubleClick="ProductDataGrid_MouseDoubleClick">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="カテゴリ"
-                                        Width="68"
                                         Binding="{Binding ProductCategoryName}">
                         <DataGridTextColumn.CellStyle>
                             <Style TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
@@ -102,28 +102,28 @@
                         </DataGridTextColumn.CellStyle>
                     </DataGridTextColumn>
                     <DataGridTextColumn Header="W"
-                                        MinWidth="40"
+                                        MinWidth="60"
                                         Binding="{Binding Width}"
                                         ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                     <DataGridTextColumn Header="D"
-                                        MinWidth="40"
+                                        MinWidth="60"
                                         Binding="{Binding Depth}"
                                         ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                     <DataGridTextColumn Header="H"
-                                        MinWidth="40"
+                                        MinWidth="60"
                                         Binding="{Binding Height}"
                                         ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                     <DataGridTextColumn Header="数量"
                                         Binding="{Binding Quantity}"
-                                        Width="40"
+                                        MinWidth="35"
                                         ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                     <DataGridTextColumn Header="単価"
-                                        MinWidth="55"
+                                        MinWidth="100"
                                         Binding="{Binding UnitPriceText}"
                                         ElementStyle="{StaticResource RightGridCellTextBlock}"/>
                     <DataGridTextColumn Header="合計"
                                         Binding="{Binding TotalAmountText}"
-                                        Width="60"
+                                        Width="100"
                                         ElementStyle="{StaticResource RightGridCellTextBlock}"/>
                 </DataGrid.Columns>
             </DataGrid>

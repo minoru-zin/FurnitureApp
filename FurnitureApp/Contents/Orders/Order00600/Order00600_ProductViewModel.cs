@@ -9,7 +9,12 @@ namespace FurnitureApp.Contents.Orders.Order00600
 {
     public class Order00600_ProductViewModel
     {
+        public DateTime? CreatedDate { get; }
+        public string OrderName { get; }
+        public string ClientName { get; }
+        public int? ProductCategoryCode { get; }
         public string ProductCategoryName { get; }
+        public int? ProductCategorySequence { get; }
         public string Name { get; }
         public double? Width { get; }
         public double? Depth { get; }
@@ -17,10 +22,16 @@ namespace FurnitureApp.Contents.Orders.Order00600
 
         public Product Model { get; }
         private CommonData cd = CommonData.GetInstance();
-        public Order00600_ProductViewModel(Product product)
+        public Order00600_ProductViewModel(Order order, Product product)
         {
             this.Model = product;
-            this.ProductCategoryName = this.cd.ProductCategoryInfoDict.GetValueOrDefault(product.ProductCategoryInfoCode)?.Name;
+            this.CreatedDate = order.CreatedDate;
+            this.OrderName = order.Name;
+            this.ClientName = order.ClientName;
+            var pcInfo = this.cd.ProductCategoryInfoDict.GetValueOrDefault(product.ProductCategoryInfoCode);
+            this.ProductCategoryCode = pcInfo?.Code;
+            this.ProductCategoryName = pcInfo?.Name;
+            this.ProductCategorySequence = pcInfo?.Sequence;
             this.Name = product.Name;
             this.Width = product.BodyWidth;
             this.Depth = product.BodyDepth;

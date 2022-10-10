@@ -12,6 +12,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms.VisualStyles;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -32,6 +33,9 @@ namespace FurnitureApp.Contents.Orders.Order00200
         
         private Order oldOrder;
         public bool IsChanged = false;
+        public bool IsDeleted = false;
+        private bool canClose = false;
+
         public Order00200_EditOrderWindow(Order order)
         {
             InitializeComponent();
@@ -63,6 +67,7 @@ namespace FurnitureApp.Contents.Orders.Order00200
 
             textBox.SelectAll();
         }
+        
         private void CreatedDateTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             this.cf.SetDate(sender as TextBox);
@@ -117,6 +122,7 @@ namespace FurnitureApp.Contents.Orders.Order00200
             }
 
             this.IsChanged = true;
+            this.canClose = true;
             this.Close();
         }
 
@@ -144,6 +150,8 @@ namespace FurnitureApp.Contents.Orders.Order00200
 
             this.cd.OrderRepository.Delete(this.oldOrder);
             this.IsChanged = true;
+            this.IsDeleted = true;
+            this.canClose = true;
             this.Close();
         }
 
@@ -212,7 +220,10 @@ namespace FurnitureApp.Contents.Orders.Order00200
 
                 this.ProductViewModels.Remove(vm);
 
-                this.ProductViewModels.Insert(index, new ProductViewModel(w.Product));
+                if (!w.IsDeleted)
+                {
+                    this.ProductViewModels.Insert(index, new ProductViewModel(w.Product));
+                }
 
                 this.SetTotalAmount();
             }
@@ -225,6 +236,17 @@ namespace FurnitureApp.Contents.Orders.Order00200
         private void SetTotalAmount()
         {
             this.TotalAmountTextBlock.Text = $"総額 {this.ProductViewModels.Sum(x => x.TotalAmount):#,0}円";
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (this.canClose) { return; }
+
+            if (!this.cd.DialogService.ShowComfirmationMessageDialog("編集中ですが、閉じますか？"))
+            {
+                e.Cancel = true;
+                return;
+            }
         }
     }
 }

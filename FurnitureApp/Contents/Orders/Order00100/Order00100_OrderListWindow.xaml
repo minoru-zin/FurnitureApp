@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:FurnitureApp.Contents.Orders.Order00100"
         mc:Ignorable="d"
         d:Height="2000"
+        d:Width="1500"
         Title="受注一覧 Order00100_OrderListWindow" Height="800" Width="1200"
         WindowState="Maximized"
         KeyDown="Window_KeyDown"
@@ -66,25 +67,38 @@
                 </StackPanel>
                 <StackPanel Grid.Column="1">
                     <StackPanel Orientation="Horizontal">
-                        <Button Content="期間表示"
-                            Name="SearchOrdersButton"
-                            Click="SearchOrdersButton_Click"
-                            Width="100"/>
                         <TextBlock x:Name="OrderCountTextBlock"
                                FontSize="25"/>
                     </StackPanel>
                     <DockPanel >
-                        <Button DockPanel.Dock="Left" 
+                        <StackPanel DockPanel.Dock="Left"
+                                    Orientation="Horizontal">
+                            <Button Content="期間表示"
+                            Name="SearchOrdersButton"
+                            Click="SearchOrdersButton_Click"
+                            Width="100"/>
+
+                            <Button  
                                 Content="クリア"
                             Width="100"
                             Name="ResetSearchButton"
                             Click="ResetSearchButton_Click"/>
-                        <Button Content="新規"
-                                HorizontalAlignment="Right"
+
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Right">
+                            <Button Content="新規"
                                 ToolTip="受注データを新規作成します"
                                 Width="50"
                                 Name="AddOrderButton"
                                 Click="AddOrderButton_Click"/>
+                            <Button Content="複製"
+                                ToolTip="受注データを複製します"
+                                Width="50"
+                                Name="CopyOrderButton"
+                                Click="CopyOrderButton_Click"/>
+
+                        </StackPanel>
                     </DockPanel>
 
                 </StackPanel>
@@ -112,12 +126,10 @@
                                         Width="190">
                         <DataGridTextColumn.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="提出先"
-                                           VerticalAlignment="Center"/>
                                 <Button Height="21"
                                         Width="20"
                                         FontSize="10"
-                                        Margin="3 0 0 0"
+                                        Margin="0 0 0 0"
                                         Padding="0 0 0 0"
                                         IsTabStop="False"
                                         Name="ClientNameUpButton"
@@ -140,9 +152,12 @@
                                                    VerticalAlignment="Bottom"/>
                                     </Button.Content>
                                 </Button>
+                                <TextBlock Text="提出先"
+                                           VerticalAlignment="Center"/>
+                                
 
                                 <ComboBox Height="21"
-                                          Margin="0"
+                                          Margin="5 0 0 0"
                                           Padding="0"
                                           Width="18"
                                           IsTabStop="False"
@@ -250,7 +265,7 @@
                                         MinWidth="35"
                                                     ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                 <DataGridTextColumn Header="単価"
-                                                    MinWidth="70"
+                                                    MinWidth="100"
                                         Binding="{Binding UnitPriceText}"
                                                     ElementStyle="{StaticResource RightGridCellTextBlock}"/>
                                 <DataGridTextColumn Header="合計"
@@ -332,10 +347,10 @@
                                                     ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                     <DataGridTextColumn Header="数量"
                                         Binding="{Binding Quantity}"
-                                        Width="35"
+                                        MinWidth="35"
                                                     ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                     <DataGridTextColumn Header="単価"
-                                                    MinWidth="60"
+                                                    MinWidth="100"
                                         Binding="{Binding UnitPriceText}"
                                                     ElementStyle="{StaticResource RightGridCellTextBlock}"/>
                                     <DataGridTextColumn Header="合計"
@@ -501,7 +516,7 @@
                                                 <Label Content="円"/>
                                             </StackPanel>
                                             <StackPanel Orientation="Horizontal">
-                                                <Label Content="化粧板貼り"/>
+                                                <Label Content="板貼り"/>
                                                 <TextBlock Name="MakeupBoardPasteCostTotalAmountTextBlock"/>
                                                 <Label Content="円"/>
                                             </StackPanel>
@@ -766,7 +781,7 @@
                                 </Grid>
 
                             </TabItem>
-                            <TabItem Header="化粧板貼り">
+                            <TabItem Header="板貼り">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="25"/>

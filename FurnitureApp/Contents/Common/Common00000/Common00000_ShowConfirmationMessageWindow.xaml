@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FurnitureApp.Contents.Common.Common00000"
         mc:Ignorable="d"
-        Title="確認 Common00000_ShowConfirmationWindow" Height="400" Width="500"
+        Title="確認 Common00000_ShowConfirmationWindow" Height="200" Width="500"
         Loaded="Window_Loaded"
+        WindowStartupLocation="CenterScreen"
         FontSize="15">
     <Grid Margin="10">
         <Grid.RowDefinitions>

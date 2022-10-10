@@ -9,9 +9,9 @@ namespace FurnitureApp.Contents.Orders.Order00300
     public class BoardSizeViewModel
     {
         public string BoardType { get;}
-        public double Width { get; }
-        public double Length { get; }
-        public double Thickness { get; }
+        public string Width { get; }
+        public string Length { get; }
+        public string Thickness { get; }
         public int Quantity { get; }
         
         private CommonData cd = CommonData.GetInstance();
@@ -21,9 +21,9 @@ namespace FurnitureApp.Contents.Orders.Order00300
             
             if (boardSize.Quantity == 0) { return; }
             
-            this.Width = boardSize.Width;
-            this.Length = boardSize.Length;
-            this.Thickness = boardSize.Thickness;
+            this.Width = $"{boardSize.Width:0.0}".Replace(".0", "");
+            this.Length = $"{boardSize.Length:0.0}".Replace(".0", "");
+            this.Thickness = $"{boardSize.Thickness:0.0}".Replace(".0", "");
             this.Quantity = boardSize.Quantity;
         }
     }

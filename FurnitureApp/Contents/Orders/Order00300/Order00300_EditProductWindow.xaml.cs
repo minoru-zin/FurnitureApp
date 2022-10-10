@@ -10,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -39,6 +40,8 @@ namespace FurnitureApp.Contents.Orders.Order00300
 
         public Product Product { get; private set; }
         public bool IsChanged = false;
+        public bool IsDeleted = false;
+        private bool canClose = false;
 
         public Order00300_EditProductWindow(Product product)
         {
@@ -94,7 +97,7 @@ namespace FurnitureApp.Contents.Orders.Order00300
             }
             textBox.Text = $"{number - 1}";
         }
-        
+
         private void DoubleTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             this.cf.SetDoubleNumberTextBox(sender as TextBox);
@@ -281,11 +284,11 @@ namespace FurnitureApp.Contents.Orders.Order00300
 
             this.CostDataGrid.SelectedItem = clone;
         }
-        
+
         #endregion
 
         #region ファイル
-        
+
         private void AddProductFileButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -352,7 +355,7 @@ namespace FurnitureApp.Contents.Orders.Order00300
                     sourceFilePath = vm.Model.SourceFilePath;
                 }
 
-                var destFilePath = Path.Combine(this.cd.TempFileDirName, $"{vm.Model.DisplayName}{Path.GetExtension(vm.Model.FileName)}" );
+                var destFilePath = Path.Combine(this.cd.TempFileDirName, $"{vm.Model.DisplayName}{Path.GetExtension(vm.Model.FileName)}");
 
                 Utility.DirectoryCreator.CreateSafely(Path.GetDirectoryName(destFilePath));
 
@@ -431,6 +434,7 @@ namespace FurnitureApp.Contents.Orders.Order00300
             this.SetProdut();
 
             this.IsChanged = true;
+            this.canClose = true;
             this.Close();
         }
         private void SetProductWithoutCosts()
@@ -515,6 +519,42 @@ namespace FurnitureApp.Contents.Orders.Order00300
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                this.Delete();
+            }
+            catch (Exception ex)
+            {
+                this.logger.Error(ex);
+                this.cd.DialogService.ShowMessage(ex.Message);
+            }
+        }
+
+        private void Delete()
+        {
+            if (!this.cd.DialogService.ShowComfirmationMessageDialog("本当に削除しますか？"))
+            {
+                return;
+            }
+
+            this.IsChanged = true;
+            this.IsDeleted = true;
+            this.canClose = true;
+            this.Close();
+        }
+
+        private void Root_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (this.canClose) { return; }
+
+            if (!this.cd.DialogService.ShowComfirmationMessageDialog("編集中ですが、閉じますか？"))
+            {
+                e.Cancel = true;
+                return;
+            }
         }
 
         

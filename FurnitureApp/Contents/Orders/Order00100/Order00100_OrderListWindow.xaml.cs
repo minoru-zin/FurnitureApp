@@ -17,6 +17,8 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -60,7 +62,7 @@ namespace FurnitureApp.Contents.Orders.Order00100
 
             this.ResetSearchControls();
 
-            this.DisplayOrders();
+            this.SearchOrders();
         }
 
         
@@ -77,6 +79,7 @@ namespace FurnitureApp.Contents.Orders.Order00100
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            this.SearchNameTextBox.Focus();
         }
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
@@ -95,9 +98,9 @@ namespace FurnitureApp.Contents.Orders.Order00100
         
         private void SearchOrdersButton_Click(object sender, RoutedEventArgs e)
         {
-            this.DisplayOrders();
+            this.SearchOrders();
         }
-        private void DisplayOrders()
+        private void SearchOrders()
         {
             var createdDateF = Utility.DateTimeFormatter.GetDateTime(this.CreatedDateFTextBox.Text);
             var createdDateT = Utility.DateTimeFormatter.GetDateTime(this.CreatedDateTTextBox.Text);
@@ -141,6 +144,7 @@ namespace FurnitureApp.Contents.Orders.Order00100
         private void ResetSearchButton_Click(object sender, RoutedEventArgs e)
         {
             this.ResetSearchControls();
+            this.SearchOrders();
         }
         private void ResetSearchControls()
         {
@@ -195,7 +199,44 @@ namespace FurnitureApp.Contents.Orders.Order00100
                 w.ShowDialog();
                 if (!w.IsChanged) { return; }
 
-                this.DisplayOrders();
+                this.SearchOrders();
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                this.cd.DialogService.ShowMessage(ex.Message);
+            }
+        }
+        private void CopyOrderButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var vm = this.OrderDataGrid.SelectedItem as OrderViewModel;
+
+                if (vm == null) { return; }
+
+                var order = this.cd.OrderRepository.SelectById((int)vm.Model.Id);
+
+                var clone = order.Clone();
+
+                foreach(var p in clone.Products)
+                {
+                    foreach(var pf in p.ProductFiles)
+                    {
+                        pf.SourceFilePath = this.cd.OrderRepository.GetProductFilePath(clone.Id, pf.FileName);
+                    }
+                }
+
+                clone.Id = null;
+                clone.Name += " - コピー";
+
+                var w = new Order00200_EditOrderWindow(clone);
+                w.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                w.ShowDialog();
+                
+                if (!w.IsChanged) { return; }
+                
+                this.SearchOrders();
             }
             catch (Exception ex)
             {
@@ -218,7 +259,13 @@ namespace FurnitureApp.Contents.Orders.Order00100
                 w.ShowDialog();
                 if (!w.IsChanged) { return; }
 
-                this.DisplayOrders();
+                var index = this.OrderViewModels.IndexOf(vm);
+
+                this.OrderViewModels.Remove(vm);
+
+                this.OrderViewModels.Insert(index, new OrderViewModel(this.cd.OrderRepository.SelectById((int)vm.Model.Id)));
+
+                this.OrderDataGrid.SelectedItem = this.OrderViewModels[index];
             }
             catch (Exception ex)
             {
@@ -578,7 +625,7 @@ namespace FurnitureApp.Contents.Orders.Order00100
                 w.ShowDialog();
                 if (w.IsChanged)
                 {
-                    this.DisplayOrders();
+                    this.SearchOrders();
                 }
             }
             catch (Exception ex)

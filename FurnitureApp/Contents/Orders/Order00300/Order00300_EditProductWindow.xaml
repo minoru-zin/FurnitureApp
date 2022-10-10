@@ -9,6 +9,7 @@
         WindowState="Maximized"
         KeyDown="Window_KeyDown"
         Loaded="Window_Loaded"
+        Closing="Root_Closing"
         Name="Root">
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -228,13 +229,13 @@
                                 <DataGridTextColumn Header="横"
                                                 Binding="{Binding Width}"
                                                     ElementStyle="{StaticResource CenterGridCellTextBlock}"
-                                                    MinWidth="45"/>
+                                                    MinWidth="55"/>
                                 <DataGridTextColumn Header="縦"
-                                                    MinWidth="45"
+                                                    MinWidth="55"
                                                     ElementStyle="{StaticResource CenterGridCellTextBlock}"
                                                 Binding="{Binding Length}"/>
                                 <DataGridTextColumn Header="厚さ"
-                                                    MinWidth="40"
+                                                    MinWidth="45"
                                                     ElementStyle="{StaticResource CenterGridCellTextBlock}"
                                                 Binding="{Binding Thickness}"/>
                                 <DataGridTextColumn Header="数量"
@@ -254,13 +255,13 @@
                                 <DataGridTextColumn Header="横"
                                                 Binding="{Binding Width}"
                                                     ElementStyle="{StaticResource CenterGridCellTextBlock}"
-                                                    MinWidth="45"/>
+                                                    MinWidth="55"/>
                                 <DataGridTextColumn Header="縦"
-                                                    MinWidth="45"
+                                                    MinWidth="55"
                                                     ElementStyle="{StaticResource CenterGridCellTextBlock}"
                                                 Binding="{Binding Length}"/>
                                 <DataGridTextColumn Header="厚さ"
-                                                    MinWidth="40"
+                                                    MinWidth="45"
                                                     ElementStyle="{StaticResource CenterGridCellTextBlock}"
                                                 Binding="{Binding Thickness}"/>
                                 <DataGridTextColumn Header="数量"
@@ -403,7 +404,8 @@
                 Content="削除"
                 Width="100"
                 HorizontalAlignment="Left"
-                Name="DeleteButton"/>
+                Name="DeleteButton"
+                Click="DeleteButton_Click"/>
         <StackPanel Grid.Row="1"
                     Grid.Column="1"
                     HorizontalAlignment="Right"

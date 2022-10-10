@@ -24,6 +24,8 @@ namespace FurnitureApp.Contents.Orders.Order00600
     {
         private NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private CommonData cd = CommonData.GetInstance();
+
+        private Dictionary<int?, List<Order00600_ProductViewModel>> productViewModelDict = new Dictionary<int?, List<Order00600_ProductViewModel>>();
         public ObservableCollection<Order00600_ProductViewModel> ProductViewModels { get; } = new ObservableCollection<Order00600_ProductViewModel>();
         public List<DisplayInfo<int?>> ProductCategoryInfos { get; } = new List<DisplayInfo<int?>>();
         public Product Product { get; private set; }
@@ -34,7 +36,29 @@ namespace FurnitureApp.Contents.Orders.Order00600
             this.DataContext = this;
             this.ProductCategoryInfoComboBox.SelectedValue = productCategoryInfoId;
             this.ProductCategoryInfos.AddRange(this.cd.ProductCategoryInfos.Select(x => new DisplayInfo<int?>(x.Id, x.Name)));
+            this.SetAllViewModels();    
             this.SetProductViewModels();
+        }
+
+        private void SetAllViewModels()
+        {
+            var orders = this.cd.OrderRepository.SelectAllUpToProductTopOnly();
+
+            var vms = new List<Order00600_ProductViewModel>();
+
+            foreach(var o in orders)
+            {
+                foreach(var p in o.Products)
+                {
+                    vms.Add(new Order00600_ProductViewModel(o, p));
+                }
+            }
+            
+            this.productViewModelDict.Clear();
+            foreach(var g in vms.GroupBy(x => new { x.ProductCategoryCode, x.ProductCategoryName, x.ProductCategorySequence}).OrderBy(x => x.Key.ProductCategorySequence))
+            {
+                this.productViewModelDict.Add(g.Key.ProductCategoryCode, g.ToList());
+            }
         }
         private void ProductCategoryInfoComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -48,7 +72,7 @@ namespace FurnitureApp.Contents.Orders.Order00600
 
             if (pCode == null) { return; }
 
-            this.ProductViewModels.AddRange(this.cd.OrderRepository.SelectTopOnlyByProductCategoryInfoCode((int)pCode).Select(x => new Order00600_ProductViewModel(x)));
+            this.ProductViewModels.AddRange(this.productViewModelDict.GetValueOrDefault(pCode));
         }
         private void ProductDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
