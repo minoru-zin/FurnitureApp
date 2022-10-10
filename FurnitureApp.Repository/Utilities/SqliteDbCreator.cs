@@ -811,7 +811,7 @@ CREATE TABLE MakeupBoardPasteCosts (
     MaterialName text,
     Length real,
     Width real,
-    UnitArea real,
+    UnitLength real,
     Quantity integer,
     UnitPrice integer,
     TotalAmount integer,
