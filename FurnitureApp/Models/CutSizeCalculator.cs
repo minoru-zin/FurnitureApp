@@ -1,9 +1,11 @@
 ﻿using FurnitureApp.Repository.MaterialInfos;
 using FurnitureApp.Repository.Orders;
+using NLog.Time;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Transactions;
 
 namespace FurnitureApp.Models
 {
@@ -27,7 +29,7 @@ namespace FurnitureApp.Models
             foreach (var g in tempCutSizes.OrderBy(x => x.MaterialInfoId)
                 .ThenBy(x => x.Width)
                 .ThenBy(x => x.Length)
-                .GroupBy(x => new { x.MaterialInfoId, x.MaterialName, x.Width, x.Length }))
+                .GroupBy(x => new { x.MaterialInfoId, x.MaterialName, x.Width, x.Length, x.CanRotate}))
             {
                 cutSizes.Add(new CutSize
                 {
@@ -35,7 +37,8 @@ namespace FurnitureApp.Models
                     MaterialName = g.Key.MaterialName,
                     Width = g.Key.Width,
                     Length = g.Key.Length,
-                    Quantity = g.Sum(x => x.Quantity)
+                    Quantity = g.Sum(x => x.Quantity),
+                    CanRotate = g.Key.CanRotate
                 });
             }
 
@@ -62,13 +65,33 @@ namespace FurnitureApp.Models
                     switch (materialInfo.CutType)
                     {
                         case CutType.Normal:
+                            var width = boardSize.Width + product.FinishMargin * 2;
+                            var length = boardSize.Length + product.FinishMargin * 2;
+                            var canRotate = true;
+                            switch (boardLayer.MokumeDirectionCode)
+                            {
+                                case MokumeDirectionType.Nashi:
+                                    if(width > length)
+                                    {
+                                        (width, length) = (length, width);
+                                    }
+                                    break;
+                                case MokumeDirectionType.Width:
+                                    (width, length) = (length, width);
+                                    canRotate = false;
+                                    break;
+                                case MokumeDirectionType.Length:
+                                    canRotate = false;
+                                    break;
+                            }
                             tempCutSizes.Add(new CutSize
                             {
                                 MaterialInfoId = (int)materialInfo.Id,
                                 MaterialName = materialInfo.Name,
-                                Width = boardSize.Width + product.FinishMargin * 2,
-                                Length = boardSize.Length + product.FinishMargin * 2,
+                                Width = width,
+                                Length =length,
                                 Quantity = boardSize.Quantity,
+                                CanRotate = canRotate
                             });
                             break;
                         case CutType.Lvl:
@@ -130,7 +153,6 @@ namespace FurnitureApp.Models
         public double Width { get; set; }
         public double Length { get; set; }
         public int Quantity { get; set; }
-
+        public bool CanRotate { get; set; } = true;
     }
-
 }

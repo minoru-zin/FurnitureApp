@@ -30,7 +30,6 @@ namespace FurnitureApp.Models
 
         private List<CutSize> GetResizedCutSizes(List<CutSize> oldCutSizes, List<MaterialSizeInfo> materialSizeInfos)
         {
-            var cutSizes = new List<CutSize>();
 
             foreach (var g in oldCutSizes.GroupBy(x => new { x.MaterialInfoId, x.MaterialName }))
             {
@@ -44,7 +43,9 @@ namespace FurnitureApp.Models
                 }
             }
 
-            foreach (var g in oldCutSizes.GroupBy(x => new { x.MaterialInfoId, x.MaterialName, x.Width, x.Length }))
+            var cutSizes = new List<CutSize>();
+
+            foreach (var g in oldCutSizes.GroupBy(x => new { x.MaterialInfoId, x.MaterialName, x.Width, x.Length, x.CanRotate }))
             {
                 cutSizes.Add(new CutSize
                 {
@@ -53,13 +54,16 @@ namespace FurnitureApp.Models
                     Length = g.Key.Length,
                     Width = g.Key.Width,
                     Quantity = g.Sum(x => x.Quantity),
+                    CanRotate = g.Key.CanRotate
                 });
             }
 
             return cutSizes;
         }
+        
         private void Resize(CutSize cutSize, List<MaterialSizeInfo> materialSizeInfos)
         {
+
             foreach (var m in materialSizeInfos)
             {
                 if (this.IsFit(cutSize, m)) { return; }
@@ -73,6 +77,7 @@ namespace FurnitureApp.Models
         {
             if (cutSize.Width <= materialSizeInfo.Width && cutSize.Length <= materialSizeInfo.Length) { return true; }
             if (cutSize.Width <= materialSizeInfo.Length && cutSize.Length <= materialSizeInfo.Width) { return true; }
+
             return false;
         }
         private void SplitSize(CutSize cutSize)
@@ -105,7 +110,7 @@ namespace FurnitureApp.Models
                         Height = $"{m.Length}",
                         Width = $"{m.Width}",
                         Cost = $"{m.UnitPrice}",
-                        Count = $"999",
+                        Count = $"",
                     });
                 }
 
@@ -118,7 +123,7 @@ namespace FurnitureApp.Models
                         Height = $"{c.Length}",
                         Width = $"{c.Width}",
                         Count = $"{c.Quantity}",
-                        CanRotate = "true", // TODO 条件追加
+                        CanRotate = c.CanRotate ? "1" : "0",
                     });
                 }
 
@@ -173,7 +178,7 @@ namespace FurnitureApp.Models
             }
 
             var inputRecxFilePath = Path.Combine(this.coreDirectoryPath, "input.recx");
-            
+
             if (File.Exists(inputRecxFilePath)) { File.Delete(inputRecxFilePath); }
 
             ZipFile.CreateFromDirectory(inputDirPath, inputRecxFilePath);
