@@ -662,13 +662,13 @@
                                         <DataGrid.Columns>
                                             <DataGridTextColumn Header="名称"
                                                             Binding="{Binding Name}"/>
-                                            <DataGridTextColumn Header="縦"
-                                                            MinWidth="60"
-                                                            Binding="{Binding Length}"
-                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                             <DataGridTextColumn Header="横"
                                                             MinWidth="60"
                                                             Binding="{Binding Width}"
+                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
+                                            <DataGridTextColumn Header="縦"
+                                                            MinWidth="60"
+                                                            Binding="{Binding Length}"
                                                             ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                             <DataGridTextColumn Header="数量"
                                                             MinWidth="35"
@@ -702,13 +702,13 @@
                                         <DataGrid.Columns>
                                             <DataGridTextColumn Header="部位"
                                                             Binding="{Binding BoardName}"/>
-                                            <DataGridTextColumn Header="縦"
-                                                            MinWidth="60"
-                                                            Binding="{Binding Length}"
-                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                             <DataGridTextColumn Header="横"
                                                             MinWidth="60"
                                                             Binding="{Binding Width}"
+                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
+                                            <DataGridTextColumn Header="縦"
+                                                            MinWidth="60"
+                                                            Binding="{Binding Length}"
                                                             ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                             <DataGridTextColumn Header="箇所"
                                                             Binding="{Binding KoguchiMakeupArea}"/>
@@ -749,14 +749,14 @@
                                         <DataGrid.Columns>
                                             <DataGridTextColumn Header="部位"
                                                             Binding="{Binding BoardName}"/>
-                                            <DataGridTextColumn Header="縦"
-                                                            MinWidth="60"
-                                                            Binding="{Binding Length}"
-                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}" />
                                             <DataGridTextColumn Header="横"
                                                             MinWidth="60"
                                                             Binding="{Binding Width}"
                                                             ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
+                                            <DataGridTextColumn Header="縦"
+                                                            MinWidth="60"
+                                                            Binding="{Binding Length}"
+                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}" />
                                             <DataGridTextColumn Header="外周"
                                                             MinWidth="60"
                                                             Binding="{Binding UnitLength}"
@@ -795,13 +795,13 @@
                                         <DataGrid.Columns>
                                             <DataGridTextColumn Header="部位"
                                                             Binding="{Binding BoardName}"/>
-                                            <DataGridTextColumn Header="縦"
-                                                            MinWidth="60"
-                                                            Binding="{Binding Length}"
-                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                             <DataGridTextColumn Header="横"
                                                             MinWidth="60"
                                                             Binding="{Binding Width}"
+                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
+                                            <DataGridTextColumn Header="縦"
+                                                            MinWidth="60"
+                                                            Binding="{Binding Length}"
                                                             ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                             <DataGridTextColumn Header="面積"
                                                             MinWidth="60"
@@ -841,13 +841,13 @@
                                         <DataGrid.Columns>
                                             <DataGridTextColumn Header="部位"
                                                             Binding="{Binding BoardName}"/>
-                                            <DataGridTextColumn Header="縦"
-                                                            MinWidth="60"
-                                                            Binding="{Binding Length}"
-                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                             <DataGridTextColumn Header="横"
                                                             MinWidth="60"
                                                             Binding="{Binding Width}"
+                                                            ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
+                                            <DataGridTextColumn Header="縦"
+                                                            MinWidth="60"
+                                                            Binding="{Binding Length}"
                                                             ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                             <DataGridTextColumn Header="厚さ"
                                                             MinWidth="60"
