@@ -424,6 +424,12 @@ namespace FurnitureApp.Contents.Orders.Order00300
 
         private void Update()
         {
+            if ((int?)this.ProductCategoryInfoComboBox.SelectedValue == null) { throw new Exception("カテゴリが不適"); }
+            if (string.IsNullOrEmpty(this.NameTextBox.Text.Trim())) { throw new Exception("製品名が不適"); }
+            var banTexts = new List<string> { @"\", "/", ":", "*", "?", "\"", "<", ">", "|" };
+            if (banTexts.Any(x => this.NameTextBox.Text.Contains(x))) { throw new Exception($"製品名に禁止文字列「{string.Join(" ", banTexts)}」が含まれている"); }
+            if (this.Product.Quantity < 1) { throw new Exception("数量が不適"); }
+
             this.SetProdut();
 
             this.IsChanged = true;
@@ -433,7 +439,7 @@ namespace FurnitureApp.Contents.Orders.Order00300
         private void SetProductWithoutCosts()
         {
             this.Product.ProductCategoryInfoCode = (int?)this.ProductCategoryInfoComboBox.SelectedValue;
-            this.Product.Name = this.NameTextBox.Text;
+            this.Product.Name = $"{this.NameTextBox.Text}".Trim();
             this.Product.Quantity = Utility.NumberFormatter.GetNullInt(this.QuantityTextBox.Text) ?? 0;
             this.Product.BodyWidth = Utility.NumberFormatter.GetNullDouble(this.BodyWidthTextBox.Text) ?? 0;
             this.Product.BodyDepth = Utility.NumberFormatter.GetNullDouble(this.BodyDepthTextBox.Text) ?? 0;
@@ -467,10 +473,6 @@ namespace FurnitureApp.Contents.Orders.Order00300
         private void SetProdut()
         {
             this.SetProductWithoutCosts();
-
-            if (this.Product.ProductCategoryInfoCode == null) { throw new Exception("カテゴリが不適"); }
-            if (string.IsNullOrEmpty(this.Product.Name)) { throw new Exception("製品名が不適"); }
-            if (this.Product.Quantity < 1) { throw new Exception("数量が不適"); }
 
             // 板コスト
             var boardSizes = new BoardSizeCalculator(this.Product);
@@ -550,6 +552,6 @@ namespace FurnitureApp.Contents.Orders.Order00300
             }
         }
 
-        
+
     }
 }
