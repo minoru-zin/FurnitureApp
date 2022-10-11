@@ -50,14 +50,6 @@ namespace FurnitureApp.Contents.Masters.Master00100
         {
             this.SequenceTextBox.Focus();
         }
-        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            var textBox = e.OriginalSource as System.Windows.Controls.TextBox;
-
-            if (textBox == null) { return; }
-
-            textBox.SelectAll();
-        }
         private void SequenceTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             this.cf.SetIntNumberTextBox(sender as TextBox);

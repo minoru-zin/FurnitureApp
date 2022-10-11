@@ -20,7 +20,6 @@
                 </Style>
                 <Style TargetType="TextBox" BasedOn="{StaticResource NumberTextBox}">
                     <Setter Property="Width" Value="250"/>
-                    <EventSetter Event="GotFocus" Handler="TextBox_GotFocus"/>
                 </Style>
             </StackPanel.Resources>
             <StackPanel Orientation="Horizontal">
@@ -37,8 +36,7 @@
                 <Label Content="名称"/>
                 <TextBox x:Name="NameTextBox"
                          Style="{StaticResource HiraganaTextBox}"
-                         Width="250"
-                         GotFocus="TextBox_GotFocus"/>
+                         Width="250"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="厚さ"/>

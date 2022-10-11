@@ -66,14 +66,7 @@ namespace FurnitureApp.Contents.Orders.Order00300
         {
             this.ProductCategoryInfoComboBox.Focus();
         }
-        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            var textBox = e.OriginalSource as System.Windows.Controls.TextBox;
 
-            if (textBox == null) { return; }
-
-            textBox.SelectAll();
-        }
         private void QuantityTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             this.cf.SetIntNumberTextBox(sender as TextBox);

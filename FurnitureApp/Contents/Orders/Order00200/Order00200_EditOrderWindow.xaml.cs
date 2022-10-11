@@ -59,14 +59,6 @@ namespace FurnitureApp.Contents.Orders.Order00200
         {
             this.CreatedDateTextBox.Focus();
         }
-        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            var textBox = e.OriginalSource as System.Windows.Controls.TextBox;
-
-            if (textBox == null) { return; }
-
-            textBox.SelectAll();
-        }
         
         private void CreatedDateTextBox_LostFocus(object sender, RoutedEventArgs e)
         {

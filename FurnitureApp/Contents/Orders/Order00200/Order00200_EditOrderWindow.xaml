@@ -26,7 +26,6 @@
                         <Setter Property="Width" Value="60"/>
                     </Style>
                     <Style TargetType="TextBox" BasedOn="{StaticResource NumberTextBox}">
-                        <EventSetter Event="GotFocus" Handler="TextBox_GotFocus"/>
                     </Style>
                 </StackPanel.Resources>
                 <DockPanel>
@@ -37,14 +36,12 @@
                 <DockPanel>
                     <Label DockPanel.Dock="Left" Content="物件名"/>
                     <TextBox x:Name="NameTextBox"
-                             Style="{StaticResource HiraganaTextBox}"
-                             GotFocus="TextBox_GotFocus"/>
+                             Style="{StaticResource HiraganaTextBox}"/>
                 </DockPanel>
                 <DockPanel>
                     <Label DockPanel.Dock="Left" Content="提出先"/>
                     <TextBox x:Name="ClientNameTextBox"
-                             Style="{StaticResource HiraganaTextBox}"
-                             GotFocus="TextBox_GotFocus"/>
+                             Style="{StaticResource HiraganaTextBox}"/>
                 </DockPanel>
                 <DockPanel>
                     <Label DockPanel.Dock="Left" Content="納品日"/>
@@ -56,8 +53,7 @@
                 <Label DockPanel.Dock="Top" Content="備考"/>
                 <TextBox x:Name="RemarksTextBox"
                          AcceptsReturn="True"
-                         Style="{StaticResource HiraganaTextBox}"
-                         GotFocus="TextBox_GotFocus"/>
+                         Style="{StaticResource HiraganaTextBox}"/>
             </DockPanel>
         </DockPanel>
         <Grid Grid.Row="0"

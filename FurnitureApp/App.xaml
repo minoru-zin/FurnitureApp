@@ -24,6 +24,8 @@
         </Style>
         <Style TargetType="{x:Type TextBox}">
             <Setter Property="FontSize" Value="15"/>
+            <EventSetter Event="GotFocus" Handler="TextBox_GotFocus"/>
+            <EventSetter Event="PreviewMouseDown" Handler="TextBox_PreviewMouseDown"/>
         </Style>
         <Style x:Key="NumberTextBox"
                TargetType="{x:Type TextBox}" 

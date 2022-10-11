@@ -35,8 +35,7 @@
                             <Setter Property="Width" Value="50"/>
                         </Style>
                         <Style TargetType="{x:Type TextBox}"
-                           BasedOn="{StaticResource NumberTextBox}">
-                            <EventSetter Event="GotFocus" Handler="TextBox_GotFocus"/>
+                               BasedOn="{StaticResource NumberTextBox}">
                         </Style>
                     </StackPanel.Resources>
                     <StackPanel Orientation="Horizontal"
@@ -46,7 +45,8 @@
                         <TextBox Name="CreatedDateFTextBox"
                              Width="100"
                              Height="25"
-                             LostFocus="CreatedDateFTextBox_LostFocus"/>
+                             LostFocus="CreatedDateFTextBox_LostFocus"
+                             />
                         <TextBlock Text="～"
                                VerticalAlignment="Center"/>
                         <TextBox Name="CreatedDateTTextBox"
@@ -60,8 +60,7 @@
                         <TextBox x:Name="SearchNameTextBox"
                              Height="25"
                              Width="212"
-                             Style="{StaticResource HiraganaTextBox}"
-                                 GotFocus="TextBox_GotFocus"/>
+                             Style="{StaticResource HiraganaTextBox}"/>
 
                     </StackPanel>
                 </StackPanel>

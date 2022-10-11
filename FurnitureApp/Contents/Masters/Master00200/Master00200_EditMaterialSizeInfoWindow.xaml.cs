@@ -55,14 +55,7 @@ namespace FurnitureApp.Contents.Masters.Master00200
             this.MaterialComboBox.Focus();
             this.MaterialComboBox.SelectionChanged += MaterialComboBox_SelectionChanged;
         }
-        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            var textBox = e.OriginalSource as System.Windows.Controls.TextBox;
-
-            if (textBox == null) { return; }
-
-            textBox.SelectAll();
-        }
+        
         private void MaterialComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             this.NameTextBox.Text = this.Materials.First(x => x.Code == (int?)this.MaterialComboBox.SelectedValue).DisplayName;

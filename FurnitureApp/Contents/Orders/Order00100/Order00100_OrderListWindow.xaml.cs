@@ -20,6 +20,7 @@ using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -81,15 +82,7 @@ namespace FurnitureApp.Contents.Orders.Order00100
         {
             this.SearchNameTextBox.Focus();
         }
-        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            var textBox = e.OriginalSource as System.Windows.Controls.TextBox;
-
-            if (textBox == null) { return; }
-
-            textBox.SelectAll();
-        }
-
+        
         #region 受注検索
         private void CreatedDateFTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
@@ -1244,7 +1237,5 @@ namespace FurnitureApp.Contents.Orders.Order00100
             Process.Start(app);
 
         }
-
-        
     }
 }

@@ -46,14 +46,6 @@ namespace FurnitureApp.Contents.Orders.Order00500
         {
             this.DisplayNameTextBox.Focus();
         }
-        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            var textBox = e.OriginalSource as System.Windows.Controls.TextBox;
-
-            if (textBox == null) { return; }
-
-            textBox.SelectAll();
-        }
         private void SetModelToControls()
         {
             this.DisplayNameTextBox.Text = this.ProductFile.DisplayName;

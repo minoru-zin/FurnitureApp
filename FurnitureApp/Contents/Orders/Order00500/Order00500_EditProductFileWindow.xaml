@@ -19,10 +19,9 @@
                     <Setter Property="Width" Value="50"/>
                     <Setter Property="VerticalAlignment" Value="Center"/>
                 </Style>
-                <Style TargetType="TextBox" BasedOn="{StaticResource NumberTextBox}">
+                <Style TargetType="TextBox" BasedOn="{StaticResource HiraganaTextBox}">
                     <Setter Property="Width" Value="300"/>
                     <Setter Property="Height" Value="25"/>
-                    <EventSetter Event="GotFocus" Handler="TextBox_GotFocus"/>
                 </Style>
             </StackPanel.Resources>
             <StackPanel Orientation="Horizontal">
