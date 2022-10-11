@@ -23,7 +23,7 @@
         <Grid Grid.Row="0"
               Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="500"/>
+                <RowDefinition Height="530"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0">
@@ -32,10 +32,12 @@
                         <EventSetter Event="GotFocus" Handler="TextBox_GotFocus"/>
                     </Style>
                 </StackPanel.Resources>
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal"
+                            Margin="0 0 0 10">
                     <Label Content="カテゴリ"
                            Width="45"
-                           VerticalAlignment="Center"/>
+                           VerticalAlignment="Center"
+                           />
                     <ComboBox ItemsSource="{Binding ProductCategoryInfos}"
                               DisplayMemberPath="DisplayName"
                               SelectedValuePath="Code"
