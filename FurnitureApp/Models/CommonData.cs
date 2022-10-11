@@ -114,7 +114,7 @@ namespace FurnitureApp.Models
         {
             new DisplayInfo<MokumeDirectionType>(MokumeDirectionType.Nashi, "無し"),
             new DisplayInfo<MokumeDirectionType>(MokumeDirectionType.Length, "↓"),
-            new DisplayInfo<MokumeDirectionType>(MokumeDirectionType.Length, "→"),
+            new DisplayInfo<MokumeDirectionType>(MokumeDirectionType.Width, "→"),
         };
         #endregion
         private CommonData()
