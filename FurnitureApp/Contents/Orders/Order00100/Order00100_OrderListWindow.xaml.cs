@@ -263,6 +263,8 @@ namespace FurnitureApp.Contents.Orders.Order00100
 
                 this.OrderViewModels.Remove(vm);
 
+                if (w.IsDeleted) { return; }
+
                 this.OrderViewModels.Insert(index, new OrderViewModel(this.cd.OrderRepository.SelectById((int)vm.Model.Id)));
 
                 this.OrderDataGrid.SelectedItem = this.OrderViewModels[index];
