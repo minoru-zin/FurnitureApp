@@ -349,6 +349,8 @@ namespace FurnitureApp.Contents.Orders.Order00100
             this.KoguchiPasteUnitPriceTextBlcok.Text = $"{p.KoguchiPasteUnitPrice}";
             this.FinishCutUnitPriceTextBlock.Text = $"{p.FinishCutUnitPrice}";
             this.FinishMarginTextBlock.Text = $"{p.FinishMargin}";
+            this.UpdatedDateTextBlock.Text = $"{p.UpdatedDate:d}";
+
             this.CostTotalAmountTextBlock.Text = $"{p.Costs.Sum(x => x.TotalAmount):#,0}";
             this.CostTotalAmountTextBlock2.Text = $"合計 {p.Costs.Sum(x => x.TotalAmount):#,0}円";
             this.BoardCostTotalAmountTextBlock.Text = $"{p.BoardCosts.Sum(x => x.TotalAmount) / p.Quantity:#,0}";
@@ -868,6 +870,12 @@ namespace FurnitureApp.Contents.Orders.Order00100
             fields.Add($@"""""");
             fields.Add($@"""{p.FinishMargin}""");
             fields.Add($@"""mm""");
+            lines.Add(string.Join(",", fields));
+
+            fields.Clear();
+            fields.Add($@"""更新日""");
+            fields.Add($@"""""");
+            fields.Add($@"""{p.UpdatedDate:d}""");
             lines.Add(string.Join(",", fields));
 
             fields.Clear();

@@ -23,7 +23,7 @@
         <Grid Grid.Row="0"
               Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="530"/>
+                <RowDefinition Height="555"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0">
@@ -117,7 +117,7 @@
                             <Setter Property="Width" Value="130"/>
                         </Style>
                         <Style TargetType="TextBox" BasedOn="{StaticResource NumberTextBox}">
-                            <Setter Property="Width" Value="80"/>
+                            <Setter Property="Width" Value="85"/>
                         </Style>
                     </StackPanel.Resources>
                     <StackPanel Orientation="Horizontal">
@@ -203,6 +203,11 @@
                         <TextBox Name="FinishMarginTextBox"
                                  LostFocus="DoubleTextBox_LostFocus"/>
                         <Label Content="mm"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="更新日"/>
+                        <TextBox Name="UpdatedDateTextBox"
+                                 LostFocus="UpdatedDateTextBox_LostFocus"/>
                     </StackPanel>
                 </StackPanel>
 

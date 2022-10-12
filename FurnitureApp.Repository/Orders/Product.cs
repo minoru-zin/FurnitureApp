@@ -212,6 +212,14 @@ namespace FurnitureApp.Repository.Orders
             get { return finishMargin; }
             set { finishMargin = value; }
         }
+        private DateTime? updatedDate;
+
+        public DateTime? UpdatedDate
+        {
+            get { return updatedDate; }
+            set { updatedDate = value; }
+        }
+
 
         /// <summary>
         /// 部材リスト

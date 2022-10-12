@@ -271,6 +271,10 @@
                                         Binding="{Binding TotalAmountText}"
                                                     ElementStyle="{StaticResource RightGridCellTextBlock}"
                                         MinWidth="100"/>
+                                <DataGridTextColumn Header="更新日"
+                                                    MinWidth="90"
+                                                    Binding="{Binding UpdatedDate, StringFormat=yyyy/MM/dd}"
+                                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                         <DockPanel Grid.Row="1">
@@ -356,6 +360,11 @@
                                         Binding="{Binding TotalAmountText}"
                                         Width="100"
                                                     ElementStyle="{StaticResource RightGridCellTextBlock}"/>
+                                    <DataGridTextColumn Header="更新日"
+                                                    MinWidth="90"
+                                                    Binding="{Binding UpdatedDate, StringFormat=yyyy/MM/dd}"
+                                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
+
                                 </DataGrid.Columns>
                             </DataGrid>
                             <DockPanel Grid.Row="1">
@@ -492,6 +501,10 @@
                                                 <Label Content="製作幅"/>
                                                 <TextBlock Name="FinishMarginTextBlock"/>
                                                 <Label Content="mm"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Label Content="更新日"/>
+                                                <TextBlock Name="UpdatedDateTextBlock"/>
                                             </StackPanel>
                                             <Label Content=""/>
                                             <StackPanel Orientation="Horizontal">

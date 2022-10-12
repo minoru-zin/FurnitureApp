@@ -660,6 +660,7 @@ TanaitaGawaitaHikae real,
 KoguchiPasteUnitPrice real,
 FinishCutUnitPrice real,
 FinishMargin real,
+UpdatedDate date,
 PRIMARY KEY(Id AUTOINCREMENT)
 )
 ";

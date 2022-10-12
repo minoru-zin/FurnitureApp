@@ -101,6 +101,10 @@ namespace FurnitureApp.Contents.Orders.Order00300
         {
             this.cf.SetDoubleNumberTextBox(sender as TextBox, 2);
         }
+        private void UpdatedDateTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            this.cf.SetDate(sender as TextBox);
+        }
         private void InitializeControls()
         {
             #region 部材初期化
@@ -141,6 +145,7 @@ namespace FurnitureApp.Contents.Orders.Order00300
             this.KoguchiPasteUnitPriceTextBox.Text = $"{this.Product.KoguchiPasteUnitPrice}"; // 木口テープ単価
             this.FinishCutUnitPriceTextBox.Text = $"{this.Product.FinishCutUnitPrice}"; // 仕上げカット単価
             this.FinishMarginTextBox.Text = $"{this.Product.FinishMargin}"; // 製作幅
+            this.UpdatedDateTextBox.Text = $"{DateTime.Now.Date:d}";
 
             #region 部材セット
             foreach (var board in this.Product.Boards)
@@ -430,7 +435,8 @@ namespace FurnitureApp.Contents.Orders.Order00300
             if (string.IsNullOrEmpty(this.NameTextBox.Text.Trim())) { throw new Exception("製品名が不適"); }
             var banTexts = new List<string> { @"\", "/", ":", "*", "?", "\"", "<", ">", "|" };
             if (banTexts.Any(x => this.NameTextBox.Text.Contains(x))) { throw new Exception($"製品名に禁止文字列「{string.Join(" ", banTexts)}」が含まれている"); }
-            if (this.Product.Quantity < 1) { throw new Exception("数量が不適"); }
+            if ((Utility.NumberFormatter.GetNullInt( this.QuantityTextBox.Text) ?? 0) < 1) { throw new Exception("数量が不適"); }
+            if (string.IsNullOrEmpty(this.UpdatedDateTextBox.Text)) { throw new Exception("更新日が不適"); }
 
             this.SetProdut();
 
@@ -460,6 +466,7 @@ namespace FurnitureApp.Contents.Orders.Order00300
             this.Product.KoguchiPasteUnitPrice = Utility.NumberFormatter.GetNullDouble(this.KoguchiPasteUnitPriceTextBox.Text) ?? 0;
             this.Product.FinishCutUnitPrice = Utility.NumberFormatter.GetNullDouble(this.FinishCutUnitPriceTextBox.Text) ?? 0;
             this.Product.FinishMargin = Utility.NumberFormatter.GetNullDouble(this.FinishMarginTextBox.Text) ?? 0;
+            this.Product.UpdatedDate = Utility.DateTimeFormatter.GetDateTime(this.UpdatedDateTextBox.Text);
 
             this.Product.Boards.Clear();
 
@@ -559,5 +566,7 @@ namespace FurnitureApp.Contents.Orders.Order00300
                 return;
             }
         }
+
+        
     }
 }

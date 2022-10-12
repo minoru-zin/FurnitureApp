@@ -18,6 +18,7 @@ namespace FurnitureApp.Contents.Orders.Order00200
         public int? Quantity { get; }
         public int? TotalAmount { get; }
         public string TotalAmountText { get; }
+        public DateTime? UpdatedDate { get; }
         public Product Model { get; }
         private CommonData cd = CommonData.GetInstance();
         public ProductViewModel(Product product)
@@ -33,6 +34,7 @@ namespace FurnitureApp.Contents.Orders.Order00200
             this.Quantity = product.Quantity;
             this.TotalAmount = this.UnitPrice * this.Quantity;
             this.TotalAmountText = $"{this.UnitPrice * this.Quantity:C}";
+            this.UpdatedDate = product.UpdatedDate;
         }
     }
 }

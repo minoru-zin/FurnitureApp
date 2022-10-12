@@ -126,6 +126,12 @@
                                         Binding="{Binding TotalAmountText}"
                                         Width="100"
                                         ElementStyle="{StaticResource RightGridCellTextBlock}"/>
+                    <DataGridTextColumn Header="更新日"
+                                        Binding="{Binding UpdatedDate,StringFormat=yyyy/MM/dd}"
+                                        MinWidth="90"
+                                        ElementStyle="{StaticResource CenterGridCellTextBlock}"
+                                        />
+
                 </DataGrid.Columns>
             </DataGrid>
             <StackPanel Grid.Row="1" 
