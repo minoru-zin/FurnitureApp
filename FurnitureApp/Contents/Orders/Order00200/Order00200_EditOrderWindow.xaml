@@ -84,6 +84,11 @@
                       Name="ProductDataGrid"
                       MouseDoubleClick="ProductDataGrid_MouseDoubleClick">
                 <DataGrid.Columns>
+                    <DataGridTextColumn Header="更新日"
+                                        Binding="{Binding UpdatedDate,StringFormat=yyyy/MM/dd}"
+                                        MinWidth="90"
+                                        ElementStyle="{StaticResource CenterGridCellTextBlock}"
+                                        />
                     <DataGridTextColumn Header="カテゴリ"
                                         Binding="{Binding ProductCategoryName}"
                                         MinWidth="100">
@@ -126,11 +131,7 @@
                                         Binding="{Binding TotalAmountText}"
                                         Width="100"
                                         ElementStyle="{StaticResource RightGridCellTextBlock}"/>
-                    <DataGridTextColumn Header="更新日"
-                                        Binding="{Binding UpdatedDate,StringFormat=yyyy/MM/dd}"
-                                        MinWidth="90"
-                                        ElementStyle="{StaticResource CenterGridCellTextBlock}"
-                                        />
+                    
 
                 </DataGrid.Columns>
             </DataGrid>
@@ -152,8 +153,7 @@
             <TextBlock Grid.Row="2"
                        FontSize="25"
                        Name="TotalAmountTextBlock"
-                       TextAlignment="Right"
-                       Margin="0 0 90 0"/>
+                       TextAlignment="Right"/>
         </Grid>
         
         <StackPanel Grid.Row="1"

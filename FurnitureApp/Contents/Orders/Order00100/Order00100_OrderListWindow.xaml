@@ -229,6 +229,10 @@
                         </Grid.RowDefinitions>
                         <DataGrid ItemsSource="{Binding ProductViewModels}">
                             <DataGrid.Columns>
+                                <DataGridTextColumn Header="更新日"
+                                                    MinWidth="90"
+                                                    Binding="{Binding UpdatedDate, StringFormat=yyyy/MM/dd}"
+                                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                 <DataGridTextColumn Header="カテゴリ"
                                                     Width="130"
                                         Binding="{Binding ProductCategoryName}">
@@ -271,10 +275,7 @@
                                         Binding="{Binding TotalAmountText}"
                                                     ElementStyle="{StaticResource RightGridCellTextBlock}"
                                         MinWidth="100"/>
-                                <DataGridTextColumn Header="更新日"
-                                                    MinWidth="90"
-                                                    Binding="{Binding UpdatedDate, StringFormat=yyyy/MM/dd}"
-                                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
+                                
                             </DataGrid.Columns>
                         </DataGrid>
                         <DockPanel Grid.Row="1">
@@ -296,8 +297,7 @@
                             </StackPanel>
                             <TextBlock x:Name="TotalAmountTextBlock"
                                        TextAlignment="Right"
-                                       FontSize="25"
-                                       Margin="0 0 90 0"/>
+                                       FontSize="25"/>
                         </DockPanel>
 
                     </Grid>
@@ -319,6 +319,10 @@
                                   Name="ProductDataGrid"
                                   SelectedCellsChanged="ProductDataGrid_SelectedCellsChanged">
                                 <DataGrid.Columns>
+                                    <DataGridTextColumn Header="更新日"
+                                                    MinWidth="90"
+                                                    Binding="{Binding UpdatedDate, StringFormat=yyyy/MM/dd}"
+                                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                                     <DataGridTextColumn Header="カテゴリ"
                                         Binding="{Binding ProductCategoryName}"
                                                     Width="128">
@@ -361,11 +365,6 @@
                                         Binding="{Binding TotalAmountText}"
                                         Width="100"
                                                     ElementStyle="{StaticResource RightGridCellTextBlock}"/>
-                                    <DataGridTextColumn Header="更新日"
-                                                    MinWidth="90"
-                                                    Binding="{Binding UpdatedDate, StringFormat=yyyy/MM/dd}"
-                                                    ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
-
                                 </DataGrid.Columns>
                             </DataGrid>
                             <DockPanel Grid.Row="1">
@@ -375,8 +374,7 @@
                                         Width="150"/>
                                 <TextBlock x:Name="TotalAmountTextBlock2"
                                        FontSize="25"
-                                       TextAlignment="Right"
-                                           Margin="0 0 90 0"/>
+                                       TextAlignment="Right"/>
                             </DockPanel>
 
                         </Grid>
