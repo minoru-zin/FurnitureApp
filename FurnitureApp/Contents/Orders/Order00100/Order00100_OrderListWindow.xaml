@@ -296,7 +296,8 @@
                             </StackPanel>
                             <TextBlock x:Name="TotalAmountTextBlock"
                                        TextAlignment="Right"
-                                       FontSize="25"/>
+                                       FontSize="25"
+                                       Margin="0 0 90 0"/>
                         </DockPanel>
 
                     </Grid>
@@ -374,7 +375,8 @@
                                         Width="150"/>
                                 <TextBlock x:Name="TotalAmountTextBlock2"
                                        FontSize="25"
-                                       TextAlignment="Right"/>
+                                       TextAlignment="Right"
+                                           Margin="0 0 90 0"/>
                             </DockPanel>
 
                         </Grid>
