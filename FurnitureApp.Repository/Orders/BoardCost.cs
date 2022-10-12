@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using WinCopies.Util;
 
 namespace FurnitureApp.Repository.Orders
 {
@@ -83,6 +84,21 @@ namespace FurnitureApp.Repository.Orders
         public BoardCost Clone()
         {
             return (BoardCost)MemberwiseClone();
+        }
+        public bool IsSame(BoardCost o)
+        {
+            try
+            {
+                var ignores = new HashSet<string> { nameof(BoardCost.Id), nameof(BoardCost.ProductId) };
+                
+                if (!Utility.Reflector.IsSame(this, o, ignores)) { return false; }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 }

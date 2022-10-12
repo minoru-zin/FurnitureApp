@@ -38,6 +38,7 @@ namespace FurnitureApp.Contents.Orders.Order00300
 
         public List<DisplayInfo<int?>> ProductCategoryInfos { get; } = new List<DisplayInfo<int?>>();
 
+        private Product oldProduct;
         public Product Product { get; private set; }
         public bool IsChanged = false;
         public bool IsDeleted = false;
@@ -47,6 +48,7 @@ namespace FurnitureApp.Contents.Orders.Order00300
         {
             InitializeComponent();
             this.DataContext = this;
+            this.oldProduct = product.Clone();
             this.Product = product.Clone();
             this.ProductCategoryInfos.AddRange(this.cd.ProductCategoryInfos.Select(x => new DisplayInfo<int?>(x.Code, x.Name)));
             this.InitializeControls();
@@ -543,6 +545,12 @@ namespace FurnitureApp.Contents.Orders.Order00300
 
         private void Root_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            if (!this.canClose)
+            {
+                this.SetProductWithoutCosts();
+                this.canClose = this.oldProduct.IsSame(this.Product);
+            }
+
             if (this.canClose) { return; }
 
             if (!this.cd.DialogService.ShowComfirmationMessageDialog("編集中ですが、閉じますか？"))
@@ -551,7 +559,5 @@ namespace FurnitureApp.Contents.Orders.Order00300
                 return;
             }
         }
-
-
     }
 }

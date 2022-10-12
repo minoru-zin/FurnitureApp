@@ -10,8 +10,7 @@ namespace FurnitureApp.Repository.Orders
 {
     class BoardDao : DaoBase<Board>
     {
-        public BoardDao(SQLiteConnection connection, SQLiteTransaction transaction) : base(connection, transaction, $"{nameof(Board)}s",
-            nameof(Board.BoardLayers))
+        public BoardDao(SQLiteConnection connection, SQLiteTransaction transaction) : base(connection, transaction, $"{nameof(Board)}s",Board.GetIgnorePropertyNames())
         {
         }
 

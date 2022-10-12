@@ -54,7 +54,7 @@ namespace FurnitureApp.Repository.Orders
             set { deliveryDate = value; }
         }
 
-        
+
         private string remarks;
         /// <summary>
         /// 備考
@@ -68,13 +68,42 @@ namespace FurnitureApp.Repository.Orders
         /// 製品リスト
         /// </summary>
         public List<Product> Products { get; set; } = new List<Product>();
-        
+
         public Order Clone()
         {
             var clone = (Order)MemberwiseClone();
             clone.Products = this.Products.Select(x => x.Clone()).ToList();
-            
+
             return clone;
+        }
+        public static List<string> GetIgnorePropertyNames()
+        {
+            return new List<string>
+            {
+                nameof(Order.Products)
+            };
+        }
+        public bool IsSame(Order o)
+        {
+            try
+            {
+                var ignorePropertyNames = new HashSet<string> { nameof(Order.Products) };
+
+                if (!Utility.Reflector.IsSame(this, o, ignorePropertyNames)) { return false; }
+
+                if (this.Products.Count != o.Products.Count) { return false; }
+
+                for (var i = 0; i < this.Products.Count; i++)
+                {
+                    if (!this.Products[i].IsSame(o.Products[i])) { return false; }
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 }

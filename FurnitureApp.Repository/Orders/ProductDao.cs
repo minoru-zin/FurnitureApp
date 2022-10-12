@@ -10,15 +10,7 @@ namespace FurnitureApp.Repository.Orders
 {
     class ProductDao : DaoBase<Product>
     {
-        public ProductDao(SQLiteConnection connection, SQLiteTransaction transaction) : base(connection, transaction, $"{nameof(Product)}s",
-            nameof(Product.Boards),
-            nameof(Product.BoardCosts),
-            nameof(Product.KoguchiPasteCosts),
-            nameof(Product.FinishCutCosts),
-            nameof(Product.MakeupBoardPasteCosts),
-            nameof(Product.PaintCosts),
-            nameof(Product.Costs),
-            nameof(Product.ProductFiles))
+        public ProductDao(SQLiteConnection connection, SQLiteTransaction transaction) : base(connection, transaction, $"{nameof(Product)}s", Product.GetIgnorePropertyNames())
         {
         }
         public IEnumerable<Product> SelectByOrderId(int orderId)

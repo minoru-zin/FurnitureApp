@@ -13,5 +13,20 @@ namespace FurnitureApp.Repository.Orders
         {
             return (ProductFileEx)MemberwiseClone();
         }
+        public bool IsSame(ProductFileEx o)
+        {
+            try
+            {
+                var ignores = new HashSet<string> { nameof(ProductFileEx.Id), nameof(ProductFileEx.ProductId) };
+
+                if (!Utility.Reflector.IsSame(this, o, ignores)) { return false; }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }

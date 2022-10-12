@@ -1,8 +1,10 @@
 ﻿using FurnitureApp.Repository.MaterialInfos;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
+using WinCopies.Util;
 
 namespace FurnitureApp.Repository.Orders
 {
@@ -67,7 +69,13 @@ namespace FurnitureApp.Repository.Orders
         }
 
         public List<BoardLayer> BoardLayers { get; set; } = new List<BoardLayer>();
-
+        public static List<string> GetIgnorePropertyNames()
+        {
+            return new List<string>
+            {
+                nameof(Board.BoardLayers),
+            };
+        }
         public double GetThickness(Dictionary<int?, MaterialInfo> materialInfoDict)
         {
             return this.BoardLayers.Sum(x => materialInfoDict.GetValueOrDefault(x.MaterialInfoCode)?.Thickness ?? 0);
@@ -77,6 +85,29 @@ namespace FurnitureApp.Repository.Orders
             var clone = (Board)MemberwiseClone();
             clone.BoardLayers = this.BoardLayers.Select(x => x.Clone()).ToList();
             return clone;
+        }
+        public bool IsSame(Board o)
+        {
+            try
+            {
+                var ignores = new HashSet<string> { nameof(Board.Id), nameof(Board.ProductId) };
+                ignores.AddRange(GetIgnorePropertyNames());
+
+                if (!Utility.Reflector.IsSame(this, o, ignores)) { return false; }
+
+                if (this.BoardLayers.Count != o.BoardLayers.Count) { return false; }
+
+                for (var i = 0; i < this.BoardLayers.Count; i++)
+                {
+                    if (!this.BoardLayers[i].IsSame(o.BoardLayers[i])) { return false; }
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
     public enum BoardType

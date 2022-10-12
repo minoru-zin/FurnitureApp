@@ -66,6 +66,21 @@ namespace FurnitureApp.Repository.Orders
         {
             return (BoardLayer)MemberwiseClone();
         }
+        public bool IsSame(BoardLayer o)
+        {
+            try
+            {
+                var ignores = new HashSet<string> { nameof(BoardLayer.Id), nameof(BoardLayer.BoardId) };
+
+                if (!Utility.Reflector.IsSame(this, o, ignores)) { return false; }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
     /// <summary>
     /// 木目方向

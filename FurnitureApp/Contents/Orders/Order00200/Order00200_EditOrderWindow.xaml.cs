@@ -90,14 +90,7 @@ namespace FurnitureApp.Contents.Orders.Order00200
 
         private void Update()
         {
-            var newOrder = new Order { Id = this.oldOrder.Id };
-
-            newOrder.CreatedDate = Utility.DateTimeFormatter.GetDateTime(this.CreatedDateTextBox.Text);
-            newOrder.Name = this.NameTextBox.Text;
-            newOrder.ClientName = this.ClientNameTextBox.Text;
-            newOrder.DeliveryDate = Utility.DateTimeFormatter.GetDateTime(this.DeliveryDateTextBox.Text);
-            newOrder.Remarks = this.RemarksTextBox.Text;
-            newOrder.Products = this.ProductViewModels.Select(x => x.Model).ToList();
+            var newOrder = this.GetOrderFromControls();
 
             if (newOrder.CreatedDate == null) { throw new Exception("作成日が不適"); }
             if (string.IsNullOrEmpty(newOrder.Name)) { throw new Exception("物件名が不適"); }
@@ -116,6 +109,19 @@ namespace FurnitureApp.Contents.Orders.Order00200
             this.IsChanged = true;
             this.canClose = true;
             this.Close();
+        }
+        private Order GetOrderFromControls()
+        {
+            var order = new Order { Id = this.oldOrder.Id };
+
+            order.CreatedDate = Utility.DateTimeFormatter.GetDateTime(this.CreatedDateTextBox.Text);
+            order.Name = this.NameTextBox.Text;
+            order.ClientName = this.ClientNameTextBox.Text;
+            order.DeliveryDate = Utility.DateTimeFormatter.GetDateTime(this.DeliveryDateTextBox.Text);
+            order.Remarks = this.RemarksTextBox.Text;
+            order.Products = this.ProductViewModels.Select(x => x.Model).ToList();
+
+            return order;
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
@@ -268,6 +274,11 @@ namespace FurnitureApp.Contents.Orders.Order00200
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            if (!this.canClose)
+            {
+                this.canClose = this.oldOrder.IsSame(this.GetOrderFromControls());
+            }
+
             if (this.canClose) { return; }
 
             if (!this.cd.DialogService.ShowComfirmationMessageDialog("編集中ですが、閉じますか？"))

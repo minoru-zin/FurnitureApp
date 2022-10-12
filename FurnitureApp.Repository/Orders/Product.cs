@@ -246,6 +246,20 @@ namespace FurnitureApp.Repository.Orders
         /// </summary>
         public List<ProductFileEx> ProductFiles { get; set; } = new List<ProductFileEx>();
 
+        public static List<string> GetIgnorePropertyNames()
+        {
+            return new List<string>
+            {
+                nameof(Product.Boards),
+                nameof(Product.BoardCosts),
+                nameof(Product.KoguchiPasteCosts),
+                nameof(Product.FinishCutCosts),
+                nameof(Product.MakeupBoardPasteCosts),
+                nameof(Product.PaintCosts),
+                nameof(Product.Costs),
+                nameof(Product.ProductFiles),
+            };
+        }
         public Product Clone()
         {
             var clone = (Product)MemberwiseClone();
@@ -269,7 +283,69 @@ namespace FurnitureApp.Repository.Orders
             var paintCost = this.PaintCosts.Sum(x => x.TotalAmount) ?? 0;
             var cost = this.Costs.Sum(x => x.TotalAmount) ?? 0;
 
-            return boardCost + koguchiCost + finishCutCost + makeCost + paintCost +  cost;
+            return boardCost + koguchiCost + finishCutCost + makeCost + paintCost + cost;
+        }
+        public bool IsSame(Product o)
+        {
+            try
+            {
+                if (!Utility.Reflector.IsSame(this, o, GetIgnorePropertyNames().ToHashSet())) { return false; }
+
+                if (this.Boards.Count != o.Boards.Count) { return false; }
+
+                for (var i = 0; i < this.Boards.Count; i++)
+                {
+                    if (!this.Boards[i].IsSame(o.Boards[i])) { return false; }
+                }
+                if (this.BoardCosts.Count != o.BoardCosts.Count) { return false; }
+
+                for (var i = 0; i < this.BoardCosts.Count; i++)
+                {
+                    if (!this.BoardCosts[i].IsSame(o.BoardCosts[i])) { return false; }
+                }
+                if (this.KoguchiPasteCosts.Count != o.KoguchiPasteCosts.Count) { return false; }
+
+                for (var i = 0; i < this.KoguchiPasteCosts.Count; i++)
+                {
+                    if (!this.KoguchiPasteCosts[i].IsSame(o.KoguchiPasteCosts[i])) { return false; }
+                }
+                if (this.FinishCutCosts.Count != o.FinishCutCosts.Count) { return false; }
+
+                for (var i = 0; i < this.FinishCutCosts.Count; i++)
+                {
+                    if (!this.FinishCutCosts[i].IsSame(o.FinishCutCosts[i])) { return false; }
+                }
+                if (this.MakeupBoardPasteCosts.Count != o.MakeupBoardPasteCosts.Count) { return false; }
+
+                for (var i = 0; i < this.MakeupBoardPasteCosts.Count; i++)
+                {
+                    if (!this.MakeupBoardPasteCosts[i].IsSame(o.MakeupBoardPasteCosts[i])) { return false; }
+                }
+                if (this.PaintCosts.Count != o.PaintCosts.Count) { return false; }
+
+                for (var i = 0; i < this.PaintCosts.Count; i++)
+                {
+                    if (!this.PaintCosts[i].IsSame(o.PaintCosts[i])) { return false; }
+                }
+                if (this.Costs.Count != o.Costs.Count) { return false; }
+
+                for (var i = 0; i < this.Costs.Count; i++)
+                {
+                    if (!this.Costs[i].IsSame(o.Costs[i])) { return false; }
+                }
+                if (this.ProductFiles.Count != o.ProductFiles.Count) { return false; }
+
+                for (var i = 0; i < this.ProductFiles.Count; i++)
+                {
+                    if (!this.ProductFiles[i].IsSame(o.ProductFiles[i])) { return false; }
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 }

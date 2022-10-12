@@ -126,6 +126,21 @@ namespace FurnitureApp.Repository.Orders
         {
             return (PaintCost)MemberwiseClone();
         }
+        public bool IsSame(PaintCost o)
+        {
+            try
+            {
+                var ignores = new HashSet<string> { nameof(PaintCost.Id), nameof(PaintCost.ProductId) };
+
+                if (!Utility.Reflector.IsSame(this, o, ignores)) { return false; }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
     public enum PaintArea
     {

@@ -29,15 +29,15 @@ namespace FurnitureApp.Repository.Utilities
         protected SQLiteConnection connection { get; }
         protected SQLiteTransaction transaction { get; }
 
-        public DaoBase(SQLiteConnection connection, SQLiteTransaction transaction, string tableName, params string[] ignoreProperties)
+        public DaoBase(SQLiteConnection connection, SQLiteTransaction transaction, string tableName, List<string> ignorePropertyNames = null)
         {
             this.connection = connection;
             this.transaction = transaction;
-
+            ignorePropertyNames ??= new List<string>();
 
             this.tableName = tableName;
             var ipns = new List<string>() { "Id" };
-            ipns.AddRange(ignoreProperties);
+            ipns.AddRange(ignorePropertyNames);
 
             var fields = typeof(T).GetProperties().Select(x => x.Name).Where(x => ipns.Contains(x) == false);
 

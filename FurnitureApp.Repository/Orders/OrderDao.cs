@@ -9,8 +9,7 @@ namespace FurnitureApp.Repository.Orders
 {
     class OrderDao : DaoBase<Order>
     {
-        public OrderDao(SQLiteConnection connection, SQLiteTransaction transaction) : base(connection, transaction, $"{nameof(Order)}s",
-            $"{nameof(Order.Products)}")
+        public OrderDao(SQLiteConnection connection, SQLiteTransaction transaction) : base(connection, transaction, $"{nameof(Order)}s", Order.GetIgnorePropertyNames())
         {
         }
 

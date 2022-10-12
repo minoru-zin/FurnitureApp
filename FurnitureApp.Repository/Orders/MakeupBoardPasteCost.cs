@@ -95,5 +95,20 @@ namespace FurnitureApp.Repository.Orders
         {
             return (MakeupBoardPasteCost)MemberwiseClone();
         }
+        public bool IsSame(MakeupBoardPasteCost o)
+        {
+            try
+            {
+                var ignores = new HashSet<string> { nameof(MakeupBoardPasteCost.Id), nameof(MakeupBoardPasteCost.ProductId) };
+
+                if (!Utility.Reflector.IsSame(this, o, ignores)) { return false; }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }
