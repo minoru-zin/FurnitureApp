@@ -17,6 +17,8 @@ namespace FurnitureApp.Models
         private readonly string coreDirectoryPath = "CuttingPlanner";
         public List<BoardCost> GetBoardCosts(string name, List<CutSize> cutSizes, List<MaterialSizeInfo> materialSizeInfos)
         {
+            materialSizeInfos = materialSizeInfos.OrderBy(x => x.MaterialInfoCode).ThenBy(x => x.Length).ThenBy(x => x.Width).ToList();
+
             cutSizes = this.GetResizedCutSizes(cutSizes.Where(x => x.Length > 0 && x.Width > 0).ToList(), materialSizeInfos);
 
             var xmls = this.GetInputXmls(cutSizes, materialSizeInfos);
@@ -31,25 +33,32 @@ namespace FurnitureApp.Models
         private List<CutSize> GetResizedCutSizes(List<CutSize> oldCutSizes, List<MaterialSizeInfo> materialSizeInfos)
         {
 
-            foreach (var g in oldCutSizes.GroupBy(x => new { x.MaterialInfoId, x.MaterialName }))
+            foreach (var g in oldCutSizes.GroupBy(x => new { x.MaterialInfoCode, x.MaterialName }))
             {
-                var ms = materialSizeInfos.Where(x => x.MaterialInfoCode == g.Key.MaterialInfoId).ToList();
+                var ms = materialSizeInfos.Where(x => x.MaterialInfoCode == g.Key.MaterialInfoCode).ToList();
 
-                if (ms.Count == 0) { throw new Exception($"素材マスタ Id : {g.Key.MaterialInfoId} Name : {g.Key.MaterialName} に紐づく素材規格マスタが存在しません"); }
+                if (ms.Count == 0) { throw new Exception($"素材マスタ コード : {g.Key.MaterialInfoCode} Name : {g.Key.MaterialName} に紐づく素材規格マスタが存在しません"); }
 
                 foreach (var c in g)
                 {
-                    this.Resize(c, ms);
+                    if (c.CanRotate)
+                    {
+                        this.Resize1(c, ms);
+                    }
+                    else
+                    {
+                        this.Resize2(c, ms.Last());
+                    }
                 }
             }
 
             var cutSizes = new List<CutSize>();
 
-            foreach (var g in oldCutSizes.GroupBy(x => new { x.MaterialInfoId, x.MaterialName, x.Width, x.Length, x.CanRotate }))
+            foreach (var g in oldCutSizes.GroupBy(x => new { x.MaterialInfoCode, x.MaterialName, x.Width, x.Length, x.CanRotate }))
             {
                 cutSizes.Add(new CutSize
                 {
-                    MaterialInfoId = g.Key.MaterialInfoId,
+                    MaterialInfoCode = g.Key.MaterialInfoCode,
                     MaterialName = g.Key.MaterialName,
                     Length = g.Key.Length,
                     Width = g.Key.Width,
@@ -60,8 +69,8 @@ namespace FurnitureApp.Models
 
             return cutSizes;
         }
-        
-        private void Resize(CutSize cutSize, List<MaterialSizeInfo> materialSizeInfos)
+
+        private void Resize1(CutSize cutSize, List<MaterialSizeInfo> materialSizeInfos)
         {
 
             foreach (var m in materialSizeInfos)
@@ -71,7 +80,35 @@ namespace FurnitureApp.Models
 
             this.SplitSize(cutSize);
 
-            this.Resize(cutSize, materialSizeInfos);
+            this.Resize1(cutSize, materialSizeInfos);
+        }
+        private void Resize2(CutSize cutSize, MaterialSizeInfo sizeInfo)
+        {
+            var widthCutCount = (int)(cutSize.Width / sizeInfo.Width);
+            var lengthCutCount = (int)(cutSize.Length / sizeInfo.Length);
+
+            if(widthCutCount > 0)
+            {
+                var amari = cutSize.Width % sizeInfo.Width;
+                if(amari > 0)
+                {
+                    widthCutCount++;
+                    cutSize.Width = cutSize.Width / widthCutCount;
+                    cutSize.Quantity *= widthCutCount;
+                }
+            }
+
+            if(lengthCutCount > 0)
+            {
+                var amari = cutSize.Length % sizeInfo.Length;
+                if (amari > 0)
+                {
+                    lengthCutCount++;
+                    cutSize.Width = cutSize.Length / lengthCutCount;
+                    cutSize.Quantity *= lengthCutCount;
+                }
+            }
+
         }
         private bool IsFit(CutSize cutSize, MaterialSizeInfo materialSizeInfo)
         {
@@ -97,12 +134,12 @@ namespace FurnitureApp.Models
         {
             var xmls = new List<RectPackerXml>();
 
-            foreach (var (g, i) in cutSizes.GroupBy(x => new { x.MaterialInfoId, x.MaterialName }).WithIndex())
+            foreach (var (g, i) in cutSizes.GroupBy(x => new { x.MaterialInfoCode, x.MaterialName }).WithIndex())
             {
                 var xml = this.GetDefautInstance($"Sheet{i + 1}");
 
                 // 原材リスト
-                foreach (var m in materialSizeInfos.Where(x => x.MaterialInfoCode == g.Key.MaterialInfoId))
+                foreach (var m in materialSizeInfos.Where(x => x.MaterialInfoCode == g.Key.MaterialInfoCode))
                 {
                     xml.SourceBoardList.Add(new BoardXml
                     {

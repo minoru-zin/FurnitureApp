@@ -26,14 +26,14 @@ namespace FurnitureApp.Models
 
             var cutSizes = new List<CutSize>();
 
-            foreach (var g in tempCutSizes.OrderBy(x => x.MaterialInfoId)
+            foreach (var g in tempCutSizes.OrderBy(x => x.MaterialInfoCode)
                 .ThenBy(x => x.Width)
                 .ThenBy(x => x.Length)
-                .GroupBy(x => new { x.MaterialInfoId, x.MaterialName, x.Width, x.Length, x.CanRotate}))
+                .GroupBy(x => new { x.MaterialInfoCode, x.MaterialName, x.Width, x.Length, x.CanRotate}))
             {
                 cutSizes.Add(new CutSize
                 {
-                    MaterialInfoId = g.Key.MaterialInfoId,
+                    MaterialInfoCode = g.Key.MaterialInfoCode,
                     MaterialName = g.Key.MaterialName,
                     Width = g.Key.Width,
                     Length = g.Key.Length,
@@ -60,7 +60,7 @@ namespace FurnitureApp.Models
 
                 foreach (var boardLayer in board.BoardLayers)
                 {
-                    var materialInfo = this.cd.MaterialInfos.First(x => x.Id == boardLayer.MaterialInfoCode);
+                    var materialInfo = this.cd.MaterialInfos.First(x => x.Code == boardLayer.MaterialInfoCode);
 
                     switch (materialInfo.CutType)
                     {
@@ -86,7 +86,7 @@ namespace FurnitureApp.Models
                             }
                             tempCutSizes.Add(new CutSize
                             {
-                                MaterialInfoId = (int)materialInfo.Id,
+                                MaterialInfoCode = (int)materialInfo.Code,
                                 MaterialName = materialInfo.Name,
                                 Width = width,
                                 Length =length,
@@ -126,7 +126,7 @@ namespace FurnitureApp.Models
 
             cutSizes.Add(new CutSize
             {
-                MaterialInfoId = (int)materialInfo.Id,
+                MaterialInfoCode = (int)materialInfo.Code,
                 MaterialName = materialInfo.Name,
                 Width = frashWidth,
                 Length = product.LvlWidth,
@@ -135,7 +135,7 @@ namespace FurnitureApp.Models
 
             cutSizes.Add(new CutSize
             {
-                MaterialInfoId = (int)materialInfo.Id,
+                MaterialInfoCode = (int)materialInfo.Code,
                 MaterialName = materialInfo.Name,
                 Width = product.LvlWidth,
                 Length = frashLength - (product.LvlWidth * 2),
@@ -148,7 +148,7 @@ namespace FurnitureApp.Models
 
     public class CutSize
     {
-        public int MaterialInfoId { get; set; }
+        public int MaterialInfoCode { get; set; }
         public string MaterialName { get; set; }
         public double Width { get; set; }
         public double Length { get; set; }
