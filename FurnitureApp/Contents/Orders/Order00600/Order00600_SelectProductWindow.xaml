@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FurnitureApp.Contents.Orders.Order00600"
         mc:Ignorable="d"
-        Title="製品選択 Order00600_SelectProductWindow" Height="450" Width="1000">
+        Title="製品選択 Order00600_SelectProductWindow" Height="450" Width="1200">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -33,7 +33,7 @@
                                     ElementStyle="{StaticResource CenterGridCellTextBlock}"/>
                 <DataGridTextColumn Header="物件名"
                                     Binding="{Binding OrderName}"
-                                    MinWidth="200">
+                                    Width="*">
                     <DataGridTextColumn.CellStyle>
                         <Style TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
                             <Setter Property="ToolTip" Value="{Binding OrderName}"/>

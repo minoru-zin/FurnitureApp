@@ -547,7 +547,7 @@
 
                                     <Grid Grid.Column="1">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="310"/>
+                                            <RowDefinition Height="335"/>
                                             <RowDefinition Height="*"/>
                                         </Grid.RowDefinitions>
                                         <DataGrid Grid.Row="0"
