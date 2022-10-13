@@ -70,6 +70,7 @@ namespace FurnitureApp.Contents.Masters.Master00300
             {
                 this.SequenceTextBox.Text = "";
                 this.CodeTextBox.Text = $"{(this.cd.ProductCategoryInfos.Max(x => x.Code) ?? 0) + 1}";
+                this.DeleteButton.IsEnabled = false;
             }
             else
             {

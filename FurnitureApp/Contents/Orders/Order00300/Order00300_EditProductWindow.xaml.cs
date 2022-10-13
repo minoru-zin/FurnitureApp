@@ -202,6 +202,7 @@ namespace FurnitureApp.Contents.Orders.Order00300
                 var w = new Order00400_EditCostWindow(new Cost());
 
                 w.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                w.DeleteButton.IsEnabled = false;
                 w.ShowDialog();
 
                 if (w.IsChanged)
@@ -296,6 +297,7 @@ namespace FurnitureApp.Contents.Orders.Order00300
             {
                 var w = new Order00500_EditProductFileWindow(new ProductFileEx());
                 w.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                w.DeleteButton.IsEnabled = false;
                 w.ShowDialog();
 
                 if (w.IsChanged)

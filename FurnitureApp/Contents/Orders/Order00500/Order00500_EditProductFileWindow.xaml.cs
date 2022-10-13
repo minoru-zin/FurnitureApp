@@ -24,7 +24,7 @@ namespace FurnitureApp.Contents.Orders.Order00500
 
         public ProductFileEx ProductFile { get; private set; }
         public bool IsChanged { get; private set; } = false;
-        
+
         public Order00500_EditProductFileWindow(ProductFileEx productFile)
         {
             InitializeComponent();
@@ -51,21 +51,14 @@ namespace FurnitureApp.Contents.Orders.Order00500
             this.DisplayNameTextBox.Text = this.ProductFile.DisplayName;
             this.SourceFilePathTextBox.Text = this.ProductFile.SourceFilePath;
 
-            if(this.ProductFile.Id == null)
-            {
-                if (string.IsNullOrEmpty(this.ProductFile.FileName))
-                {
-                    this.DeleteButton.IsEnabled = false;
-                }
-            }
-            else
+            if (this.ProductFile.Id != null)
             {
                 this.SourceFilePathStackPanel.IsEnabled = false;
             }
         }
         private void SelctFileButton_Click(object sender, RoutedEventArgs e)
         {
-            if(this.cd.DialogService.TrySelectFilePath(this, out string filePath, Environment.GetFolderPath(Environment.SpecialFolder.Desktop)))
+            if (this.cd.DialogService.TrySelectFilePath(this, out string filePath, Environment.GetFolderPath(Environment.SpecialFolder.Desktop)))
             {
                 this.SourceFilePathTextBox.Text = filePath;
                 if (string.IsNullOrEmpty(this.DisplayNameTextBox.Text))
@@ -99,7 +92,7 @@ namespace FurnitureApp.Contents.Orders.Order00500
             this.ProductFile.DisplayName = this.DisplayNameTextBox.Text;
             this.ProductFile.SourceFilePath = this.SourceFilePathTextBox.Text;
 
-            if(this.ProductFile.Id == null)
+            if (this.ProductFile.Id == null)
             {
                 if (string.IsNullOrEmpty(this.ProductFile.SourceFilePath))
                 {
@@ -109,7 +102,7 @@ namespace FurnitureApp.Contents.Orders.Order00500
 
                 this.ProductFile.FileName = $"{Guid.NewGuid()}{Path.GetExtension(this.ProductFile.SourceFilePath)}";
             }
-            
+
             this.ProductFile.IsDeleted = false;
             this.IsChanged = true;
             this.Close();

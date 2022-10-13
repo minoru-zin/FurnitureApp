@@ -65,6 +65,7 @@ namespace FurnitureApp.Contents.Masters.Master00400
             if(this.model.Id == null)
             {
                 this.SequenceTextBox.Text = "";
+                this.DeleteButton.IsEnabled = false;
             }
         }
 

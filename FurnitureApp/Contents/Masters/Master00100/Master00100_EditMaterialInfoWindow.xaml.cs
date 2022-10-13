@@ -84,6 +84,7 @@ namespace FurnitureApp.Contents.Masters.Master00100
 
             if(this.model.Id == null)
             {
+                this.DeleteButton.IsEnabled = false;
                 this.SequenceTextBox.Text = "";
                 this.CodeTextBox.Text = $"{(this.cd.MaterialInfos.Max(x => x.Code) ?? 0) + 1}";
             }

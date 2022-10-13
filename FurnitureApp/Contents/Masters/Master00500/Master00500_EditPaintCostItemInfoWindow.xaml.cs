@@ -46,7 +46,7 @@ namespace FurnitureApp.Contents.Masters.Master00500
         {
             this.SequenceTextBox.Focus();
         }
-        
+
         private void SequenceTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             this.cf.SetIntNumberTextBox(sender as TextBox);
@@ -71,6 +71,7 @@ namespace FurnitureApp.Contents.Masters.Master00500
             {
                 this.SequenceTextBox.Text = "";
                 this.CodeTextBox.Text = $"{(this.cd.PaintCostItemInfos.Max(x => x.Code) ?? 0) + 1}";
+                this.DeleteButton.IsEnabled = false;
             }
             else
             {
@@ -132,7 +133,7 @@ namespace FurnitureApp.Contents.Masters.Master00500
             this.Close();
         }
 
-        
+
     }
 }
 

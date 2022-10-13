@@ -30,7 +30,7 @@ namespace FurnitureApp.Contents.Orders.Order00200
         private ControlFormatter cf = new ControlFormatter();
 
         public ObservableCollection<ProductViewModel> ProductViewModels { get; } = new ObservableCollection<ProductViewModel>();
-        
+
         private Order oldOrder;
         public bool IsChanged = false;
         public bool IsDeleted = false;
@@ -43,7 +43,11 @@ namespace FurnitureApp.Contents.Orders.Order00200
             this.oldOrder = order.Clone();
             this.SetOrderToControls();
             this.SetTotalAmount();
-            if (order.Id == null) { this.CreatedDateTextBox.Text = $"{DateTime.Now:d}"; }
+            if (order.Id == null)
+            {
+                this.CreatedDateTextBox.Text = $"{DateTime.Now:d}";
+                this.DeleteButton.IsEnabled = false;
+            }
         }
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
@@ -59,7 +63,7 @@ namespace FurnitureApp.Contents.Orders.Order00200
         {
             this.CreatedDateTextBox.Focus();
         }
-        
+
         private void CreatedDateTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             this.cf.SetDate(sender as TextBox);
@@ -74,7 +78,7 @@ namespace FurnitureApp.Contents.Orders.Order00200
 
             this.ProductViewModels.AddRange(this.oldOrder.Products.Select(x => new ProductViewModel(x)));
         }
-        
+
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -159,6 +163,7 @@ namespace FurnitureApp.Contents.Orders.Order00200
             {
                 var w = new Order00300_EditProductWindow(new Product());
                 w.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                w.DeleteButton.IsEnabled = false;
                 w.ShowDialog();
 
                 if (!w.IsChanged) { return; }
@@ -183,9 +188,10 @@ namespace FurnitureApp.Contents.Orders.Order00200
 
                 var clone = vm.Model.Clone();
                 clone.ProductFiles.Clear();
-                clone.Name += " - コピー"; 
+                clone.Name += " - コピー";
                 var w = new Order00300_EditProductWindow(clone);
                 w.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                w.DeleteButton.IsEnabled = false;
                 w.ShowDialog();
 
                 if (!w.IsChanged) { return; }
