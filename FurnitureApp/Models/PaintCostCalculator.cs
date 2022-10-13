@@ -54,7 +54,7 @@ namespace FurnitureApp.Models
 
         private PaintCost GetCost(Board board, BoardSize boardSize, double frontLength, double sideLength)
         {
-            var info = this.cd.PaintCostItemInfos.First(x => x.Id == board.PaintCostItemInfoCode);
+            var info = this.cd.PaintCostItemInfos.First(x => x.Code == board.PaintCostItemInfoCode);
 
             var cost = new PaintCost
             {

@@ -70,6 +70,7 @@ namespace FurnitureApp.Repository.PaintCostItemInfos
                         throw new Exception($"板情報で使用されています : {m.Name}");
                     }
                 }
+
                 var PaintCostItemInfoDao = new PaintCostItemInfoDao(c, t);
 
                 foreach (var m in ms)
