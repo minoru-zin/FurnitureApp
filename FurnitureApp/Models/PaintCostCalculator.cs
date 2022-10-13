@@ -39,7 +39,8 @@ namespace FurnitureApp.Models
                     case BoardType.DaiwaBack:
                         costs.Add(this.GetCost(board, boardSize, boardSize.Width, boardSize.Length));
                         break;
-                    case BoardType.Gawaita:
+                    case BoardType.GawaitaLeft:
+                    case BoardType.GawaitaRight:
                     case BoardType.Shikiriita:
                     case BoardType.Tobira:
                     case BoardType.DaiwaLeft:

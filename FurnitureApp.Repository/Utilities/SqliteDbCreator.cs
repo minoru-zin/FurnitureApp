@@ -340,8 +340,19 @@ new MaterialInfo
             });
             product1.Boards.Add(new Board
             {
-                BoardCode = BoardType.Gawaita,
-                Quantity = 2,
+                BoardCode = BoardType.GawaitaLeft,
+                Quantity = 1,
+                BoardLayers = new List<BoardLayer>
+                {
+                    new BoardLayer{ MaterialInfoCode = 4,},
+                    new BoardLayer{ MaterialInfoCode = 11,},
+                    new BoardLayer{ MaterialInfoCode = 4,},
+                }
+            });
+            product1.Boards.Add(new Board
+            {
+                BoardCode = BoardType.GawaitaRight,
+                Quantity = 1,
                 BoardLayers = new List<BoardLayer>
                 {
                     new BoardLayer{ MaterialInfoCode = 4,},
@@ -489,8 +500,20 @@ new MaterialInfo
             });
             product2.Boards.Add(new Board
             {
-                BoardCode = BoardType.Gawaita,
-                Quantity = 2,
+                BoardCode = BoardType.GawaitaLeft,
+                Quantity = 1,
+                BoardLayers = new List<BoardLayer>
+                {
+                    new BoardLayer{ MaterialInfoCode = 3,},
+                    new BoardLayer{ MaterialInfoCode = 5,},
+                    new BoardLayer{ MaterialInfoCode = 12,},
+                    new BoardLayer{ MaterialInfoCode = 4,},
+                }
+            });
+            product2.Boards.Add(new Board
+            {
+                BoardCode = BoardType.GawaitaRight,
+                Quantity = 1,
                 BoardLayers = new List<BoardLayer>
                 {
                     new BoardLayer{ MaterialInfoCode = 3,},

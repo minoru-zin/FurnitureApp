@@ -110,7 +110,8 @@ namespace FurnitureApp.Contents.Orders.Order00300
             #region 部材初期化
             this.BoardViews.Add(new BoardView(BoardType.Tenita));
             this.BoardViews.Add(new BoardView(BoardType.Tenshita));
-            this.BoardViews.Add(new BoardView(BoardType.Gawaita));
+            this.BoardViews.Add(new BoardView(BoardType.GawaitaLeft));
+            this.BoardViews.Add(new BoardView(BoardType.GawaitaRight));
             this.BoardViews.Add(new BoardView(BoardType.Shikiriita));
             this.BoardViews.Add(new BoardView(BoardType.Tanaita));
             this.BoardViews.Add(new BoardView(BoardType.Tobira));

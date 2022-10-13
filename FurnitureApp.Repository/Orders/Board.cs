@@ -121,9 +121,13 @@ namespace FurnitureApp.Repository.Orders
         /// </summary>
         Tenshita,
         /// <summary>
-        /// 側板
+        /// 側板左
         /// </summary>
-        Gawaita,
+        GawaitaLeft,
+        /// <summary>
+        /// 側板右
+        /// </summary>
+        GawaitaRight,
         /// <summary>
         /// 仕切板
         /// </summary>

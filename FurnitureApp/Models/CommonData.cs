@@ -55,7 +55,8 @@ namespace FurnitureApp.Models
         {
             new DisplayInfo<BoardType>(BoardType.Tenita, "天板"),
             new DisplayInfo<BoardType>(BoardType.Tenshita, "天下"),
-            new DisplayInfo<BoardType>(BoardType.Gawaita, "側板"),
+            new DisplayInfo<BoardType>(BoardType.GawaitaLeft, "側板左"),
+            new DisplayInfo<BoardType>(BoardType.GawaitaRight, "側板右"),
             new DisplayInfo<BoardType>(BoardType.Shikiriita, "仕切板"),
             new DisplayInfo<BoardType>(BoardType.Tanaita, "棚板"),
             new DisplayInfo<BoardType>(BoardType.Tobira, "扉"),

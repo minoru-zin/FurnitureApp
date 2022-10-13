@@ -36,10 +36,15 @@ namespace FurnitureApp.Models
         private double tenshitaWidth;
         private double tenshitaLength;
 
-        private int gawaitaQuantity;
-        private double gawaitaThickness;
-        private double gawaitaWidth;
-        private double gawaitaLength;
+        private int gawaitaLeftQuantity;
+        private double gawaitaLeftThickness;
+        private double gawaitaLeftWidth;
+        private double gawaitaLeftLength;
+        
+        private int gawaitaRightQuantity;
+        private double gawaitaRightThickness;
+        private double gawaitaRightWidth;
+        private double gawaitaRightLength;
 
         private int shikiriitaQuantity;
         private double shikiriitaThickness;
@@ -107,7 +112,8 @@ namespace FurnitureApp.Models
 
             (this.tenitaThickness, this.tenitaQuantity) = this.GetBoardInfo(BoardType.Tenita, product);
             (this.tenshitaThickness, this.tenshitaQuantity) = this.GetBoardInfo(BoardType.Tenshita, product);
-            (this.gawaitaThickness, this.gawaitaQuantity) = this.GetBoardInfo(BoardType.Gawaita, product);
+            (this.gawaitaLeftThickness, this.gawaitaLeftQuantity) = this.GetBoardInfo(BoardType.GawaitaLeft, product);
+            (this.gawaitaRightThickness, this.gawaitaRightQuantity) = this.GetBoardInfo(BoardType.GawaitaRight, product);
             (this.shikiriitaThickness, this.shikiriitaQuantity) = this.GetBoardInfo(BoardType.Shikiriita, product);
             (this.tanaitaThickness, this.tanaitaQuantity) = this.GetBoardInfo(BoardType.Tanaita, product);
             (this.tobiraThickness, this.tobiraQuantity) = this.GetBoardInfo(BoardType.Tobira, product);
@@ -128,22 +134,24 @@ namespace FurnitureApp.Models
             #endregion
 
             #region 天下
-            this.tenshitaWidth = this.bodyWidth - (this.fillerL + this.fillerR + this.gawaitaThickness * this.gawaitaQuantity);
+            this.tenshitaWidth = this.bodyWidth - (this.fillerL + this.fillerR + this.gawaitaLeftThickness + this.gawaitaRightThickness);
             this.tenshitaLength = this.bodyDepth - (this.tobiraTenitaHikae + this.tobiraThickness);
             #endregion
 
             #region 側板
-            this.gawaitaWidth = this.bodyDepth - (this.tobiraTenitaHikae + this.tobiraThickness);
-            this.gawaitaLength = this.bodyHeight - (this.tenitaThickness + this.daiwaHeight);
+            this.gawaitaLeftWidth = this.bodyDepth - (this.tobiraTenitaHikae + this.tobiraThickness);
+            this.gawaitaRightWidth = this.bodyDepth - (this.tobiraTenitaHikae + this.tobiraThickness);
+            this.gawaitaLeftLength = this.bodyHeight - (this.tenitaThickness + this.daiwaHeight);
+            this.gawaitaRightLength = this.bodyHeight - (this.tenitaThickness + this.daiwaHeight);
             #endregion
 
             #region 仕切板
-            this.shikiriitaWidth = this.gawaitaWidth - (this.shikiriitaGawaitaHikae + this.seitaThickness);
+            this.shikiriitaWidth = this.bodyDepth - (this.tobiraTenitaHikae + this.tobiraThickness) - (this.shikiriitaGawaitaHikae + this.seitaThickness);
             this.shikiriitaLength = this.bodyHeight - (this.tenitaThickness + this.daiwaHeight + this.tenshitaThickness + this.jiitaThickness);
             #endregion
 
             #region 棚板
-            this.tanaitaWidth = (this.bodyWidth - (this.fillerL + this.fillerR + this.gawaitaThickness * this.gawaitaQuantity + this.shikiriitaThickness * this.shikiriitaQuantity)) / (this.shikiriitaQuantity + 1);
+            this.tanaitaWidth = (this.bodyWidth - (this.fillerL + this.fillerR + this.gawaitaLeftThickness + this.gawaitaRightThickness + this.shikiriitaThickness * this.shikiriitaQuantity)) / (this.shikiriitaQuantity + 1);
             this.tanaitaLength = this.bodyDepth - (this.tobiraTenitaHikae + this.tobiraThickness + this.tanaitaGawaitaHikae);
             #endregion
 
@@ -156,12 +164,12 @@ namespace FurnitureApp.Models
             #endregion
 
             #region 背板
-            this.seitaWidth = this.bodyWidth - (this.fillerL + this.fillerR + this.gawaitaThickness * this.gawaitaQuantity);
+            this.seitaWidth = this.bodyWidth - (this.fillerL + this.fillerR + this.gawaitaLeftThickness + this.gawaitaRightThickness);
             this.seitaLength = this.bodyHeight - (this.tenitaThickness + this.tenshitaThickness + this.jiitaThickness + this.daiwaHeight);
             #endregion
 
             #region 地板
-            this.jiitaWidth = this.bodyWidth - (this.fillerL + this.fillerR + this.gawaitaThickness * this.gawaitaQuantity);
+            this.jiitaWidth = this.bodyWidth - (this.fillerL + this.fillerR + this.gawaitaLeftThickness + this.gawaitaRightThickness);
             this.jiitaLength = this.bodyDepth - (this.tobiraTenitaHikae + this.tobiraThickness);
             #endregion
 
@@ -200,7 +208,8 @@ namespace FurnitureApp.Models
 
             boardSizes.Add(this.GetTenita());
             boardSizes.Add(this.GetTenshita());
-            boardSizes.Add(this.GetGawaita());
+            boardSizes.Add(this.GetGawaitaLeft());
+            boardSizes.Add(this.GetGawaitaRight());
             boardSizes.Add(this.GetShikiriita());
             boardSizes.Add(this.GetTanaita());
             boardSizes.Add(this.GetTobira());
@@ -238,15 +247,26 @@ namespace FurnitureApp.Models
                 Quantity = this.tenshitaQuantity,
             };
         }
-        private BoardSize GetGawaita()
+        private BoardSize GetGawaitaLeft()
         {
             return new BoardSize
             {
-                BoardType = BoardType.Gawaita,
-                Width = this.gawaitaWidth,
-                Length = this.gawaitaLength,
-                Thickness = this.gawaitaThickness,
-                Quantity = this.gawaitaQuantity,
+                BoardType = BoardType.GawaitaLeft,
+                Width = this.gawaitaLeftWidth,
+                Length = this.gawaitaLeftLength,
+                Thickness = this.gawaitaLeftThickness,
+                Quantity = this.gawaitaLeftQuantity,
+            };
+        }
+        private BoardSize GetGawaitaRight()
+        {
+            return new BoardSize
+            {
+                BoardType = BoardType.GawaitaRight,
+                Width = this.gawaitaRightWidth,
+                Length = this.gawaitaRightLength,
+                Thickness = this.gawaitaRightThickness,
+                Quantity = this.gawaitaRightQuantity,
             };
         }
         private BoardSize GetShikiriita()
