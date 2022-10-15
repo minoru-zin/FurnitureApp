@@ -49,13 +49,25 @@ namespace FurnitureApp.Contents.Orders.Order00200
                 this.DeleteButton.IsEnabled = false;
             }
         }
-        private void Window_KeyDown(object sender, KeyEventArgs e)
+
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
+            if (this.RemarksTextBox.IsFocused) { return; }
+
             switch (e.Key)
             {
                 case Key.Enter:
                     (FocusManager.GetFocusedElement(System.Windows.Window.GetWindow(this)) as System.Windows.FrameworkElement).MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
                     break;
+                case Key.Down:
+                    (FocusManager.GetFocusedElement(System.Windows.Window.GetWindow(this)) as System.Windows.FrameworkElement).MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+                    e.Handled = true;
+                    break;
+                case Key.Up:
+                    (FocusManager.GetFocusedElement(System.Windows.Window.GetWindow(this)) as System.Windows.FrameworkElement).MoveFocus(new TraversalRequest(FocusNavigationDirection.Previous));
+                    e.Handled = true;
+                    break;
+
             }
         }
 
@@ -293,5 +305,6 @@ namespace FurnitureApp.Contents.Orders.Order00200
                 return;
             }
         }
+
     }
 }

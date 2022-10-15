@@ -114,6 +114,9 @@
             <Setter Property="VerticalGridLinesBrush" Value="AliceBlue"/>
             <Setter Property="IsTabStop" Value="False"/>
             <Setter Property="FontSize" Value="15"/>
+            <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+            <Setter Property="KeyboardNavigation.ControlTabNavigation" Value="None"/>
+            <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="None"/>
         </Style>
         <!--<Style TargetType="{x:Type DataGridCell}" x:Key="RightDataGridCell">
             <Setter Property="TextBlock.TextAlignment" Value="Center"/>

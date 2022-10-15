@@ -9,7 +9,7 @@
         d:Width="1500"
         Title="受注一覧 Order00100_OrderListWindow" Height="800" Width="1200"
         WindowState="Maximized"
-        KeyDown="Window_KeyDown"
+        PreviewKeyDown="Root_PreviewKeyDown"
         Loaded="Window_Loaded"
         Closed="Window_Closed"
         Name="Root">
@@ -26,10 +26,11 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="265"/>
+                    <ColumnDefinition Width="475"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0">
+                <StackPanel Grid.Column="0"
+                            KeyboardNavigation.TabNavigation="Cycle">
                     <StackPanel.Resources>
                         <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
                             <Setter Property="Width" Value="50"/>
@@ -61,7 +62,16 @@
                              Height="25"
                              Width="212"
                              Style="{StaticResource HiraganaTextBox}"/>
+                        <Button Content="検索"
+                            Name="SearchOrdersButton"
+                            Click="SearchOrdersButton_Click"
+                            Width="100"/>
 
+                        <Button  
+                                Content="クリア"
+                            Width="100"
+                            Name="ResetSearchButton"
+                            Click="ResetSearchButton_Click"/>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Grid.Column="1">
@@ -70,20 +80,6 @@
                                FontSize="25"/>
                     </StackPanel>
                     <DockPanel >
-                        <StackPanel DockPanel.Dock="Left"
-                                    Orientation="Horizontal">
-                            <Button Content="検索"
-                            Name="SearchOrdersButton"
-                            Click="SearchOrdersButton_Click"
-                            Width="100"/>
-
-                            <Button  
-                                Content="クリア"
-                            Width="100"
-                            Name="ResetSearchButton"
-                            Click="ResetSearchButton_Click"/>
-
-                        </StackPanel>
                         <StackPanel Orientation="Horizontal"
                                     HorizontalAlignment="Right">
                             <Button Content="新規"

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:FurnitureApp.Contents.Masters.Master00300"
         mc:Ignorable="d"
         Title="製品カテゴリ Master00300_EditProductCategoryInfoWindow" Height="200" Width="400"
-        KeyDown="Window_KeyDown"
+        PreviewKeyDown="Window_PreviewKeyDown"
         Loaded="Window_Loaded">
     <Grid Margin="10">
         <Grid.RowDefinitions>

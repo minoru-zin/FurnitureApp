@@ -66,15 +66,22 @@ namespace FurnitureApp.Contents.Orders.Order00100
             this.SearchOrders();
         }
 
-        
-
-        private void Window_KeyDown(object sender, KeyEventArgs e)
+        private void Root_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             switch (e.Key)
             {
                 case Key.Enter:
                     (FocusManager.GetFocusedElement(System.Windows.Window.GetWindow(this)) as System.Windows.FrameworkElement).MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
                     break;
+                case Key.Down:
+                    (FocusManager.GetFocusedElement(System.Windows.Window.GetWindow(this)) as System.Windows.FrameworkElement).MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+                    e.Handled = true;
+                    break;
+                case Key.Up:
+                    (FocusManager.GetFocusedElement(System.Windows.Window.GetWindow(this)) as System.Windows.FrameworkElement).MoveFocus(new TraversalRequest(FocusNavigationDirection.Previous));
+                    e.Handled = true;
+                    break;
+
             }
         }
 
@@ -82,13 +89,13 @@ namespace FurnitureApp.Contents.Orders.Order00100
         {
             this.SearchNameTextBox.Focus();
         }
-        
+
         #region 受注検索
         private void CreatedDateFTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             this.cf.SetDates(this.CreatedDateFTextBox, this.CreatedDateTTextBox);
         }
-        
+
         private void SearchOrdersButton_Click(object sender, RoutedEventArgs e)
         {
             this.SearchOrders();
@@ -121,7 +128,7 @@ namespace FurnitureApp.Contents.Orders.Order00100
 
             this.ResetOrderInfo();
         }
-        
+
         private void ResetOrderInfo()
         {
             this.ProductViewModels.Clear();
@@ -170,8 +177,8 @@ namespace FurnitureApp.Contents.Orders.Order00100
             if (string.IsNullOrEmpty(text)) { return; }
 
             this.OrderViewModels.Clear();
-            
-            if(text == this.allClientName)
+
+            if (text == this.allClientName)
             {
                 this.OrderViewModels.AddRange(this.orders.Select(x => new OrderViewModel(x)));
             }
@@ -212,9 +219,9 @@ namespace FurnitureApp.Contents.Orders.Order00100
 
                 var clone = order.Clone();
 
-                foreach(var p in clone.Products)
+                foreach (var p in clone.Products)
                 {
-                    foreach(var pf in p.ProductFiles)
+                    foreach (var pf in p.ProductFiles)
                     {
                         pf.SourceFilePath = this.cd.OrderRepository.GetProductFilePath(clone.Id, pf.FileName);
                     }
@@ -226,9 +233,9 @@ namespace FurnitureApp.Contents.Orders.Order00100
                 var w = new Order00200_EditOrderWindow(clone);
                 w.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                 w.ShowDialog();
-                
+
                 if (!w.IsChanged) { return; }
-                
+
                 this.SearchOrders();
             }
             catch (Exception ex)
@@ -275,7 +282,7 @@ namespace FurnitureApp.Contents.Orders.Order00100
                 var vm = this.OrderDataGrid.SelectedItem as OrderViewModel;
 
                 if (vm == null) { return; }
-                
+
                 var order = this.cd.OrderRepository.SelectById((int)vm.Model.Id);
 
                 this.ProductViewModels.Clear();
@@ -1245,5 +1252,7 @@ namespace FurnitureApp.Contents.Orders.Order00100
             Process.Start(app);
 
         }
+
+
     }
 }

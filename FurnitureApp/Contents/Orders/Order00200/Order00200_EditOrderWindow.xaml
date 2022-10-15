@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:FurnitureApp.Contents.Orders.Order00200"
         mc:Ignorable="d"
         Title="受注作成 Order00200_EditOrderWindow" Height="700" Width="1500"
-        KeyDown="Window_KeyDown"
+        PreviewKeyDown="Window_PreviewKeyDown"
         Loaded="Window_Loaded"
         Closing="Window_Closing">
     <Grid Margin="10">
@@ -19,7 +19,8 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <DockPanel Grid.Row="0"
-                    Grid.Column="0">
+                    Grid.Column="0"
+                        KeyboardNavigation.TabNavigation="Cycle">
             <StackPanel DockPanel.Dock="Top">
                 <StackPanel.Resources>
                     <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
@@ -131,7 +132,7 @@
                                         Binding="{Binding TotalAmountText}"
                                         Width="100"
                                         ElementStyle="{StaticResource RightGridCellTextBlock}"/>
-                    
+
 
                 </DataGrid.Columns>
             </DataGrid>
@@ -155,7 +156,7 @@
                        Name="TotalAmountTextBlock"
                        TextAlignment="Right"/>
         </Grid>
-        
+
         <StackPanel Grid.Row="1"
                     Grid.Column="0"
                     Orientation="Horizontal">

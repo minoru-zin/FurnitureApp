@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:FurnitureApp.Contents.Masters.Master00200"
         mc:Ignorable="d"
         Title="素材規格 Master00200_EditMaterialSizeInfoWindow" Height="230" Width="500"
-        KeyDown="Window_KeyDown"
+        PreviewKeyDown="Window_PreviewKeyDown"
         Loaded="Window_Loaded">
     <Grid Margin="10">
         <Grid.RowDefinitions>

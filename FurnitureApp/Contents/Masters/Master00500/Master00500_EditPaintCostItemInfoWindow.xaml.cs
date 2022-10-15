@@ -32,15 +32,26 @@ namespace FurnitureApp.Contents.Masters.Master00500
             this.model = m.Clone();
             this.SetInfoToControls();
         }
-        private void Window_KeyDown(object sender, KeyEventArgs e)
+
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             switch (e.Key)
             {
                 case Key.Enter:
                     (FocusManager.GetFocusedElement(System.Windows.Window.GetWindow(this)) as System.Windows.FrameworkElement).MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
                     break;
+                case Key.Down:
+                    (FocusManager.GetFocusedElement(System.Windows.Window.GetWindow(this)) as System.Windows.FrameworkElement).MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+                    e.Handled = true;
+                    break;
+                case Key.Up:
+                    (FocusManager.GetFocusedElement(System.Windows.Window.GetWindow(this)) as System.Windows.FrameworkElement).MoveFocus(new TraversalRequest(FocusNavigationDirection.Previous));
+                    e.Handled = true;
+                    break;
+
             }
         }
+       
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -132,8 +143,6 @@ namespace FurnitureApp.Contents.Masters.Master00500
             this.IsChanged = true;
             this.Close();
         }
-
-
     }
 }
 

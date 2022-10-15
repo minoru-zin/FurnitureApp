@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:FurnitureApp.Contents.Masters.Master00400"
         mc:Ignorable="d"
         Title="塗装費用項目 Master00500_EditPaintCostItemInfoWindow" Height="230" Width="400"
-        KeyDown="Window_KeyDown"
+PreviewKeyDown="Window_PreviewKeyDown"
         Loaded="Window_Loaded">
     <Grid Margin="10">
         <Grid.RowDefinitions>
