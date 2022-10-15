@@ -72,19 +72,10 @@ namespace FurnitureApp.Contents.Orders.Order00300
 
             }
         }
-        private void Window_KeyDown(object sender, KeyEventArgs e)
-        {
-            switch (e.Key)
-            {
-                case Key.Enter:
-                    (FocusManager.GetFocusedElement(System.Windows.Window.GetWindow(this)) as System.Windows.FrameworkElement).MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
-                    break;
-            }
-        }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            this.ProductCategoryInfoComboBox.Focus();
+            this.NameTextBox.Focus();
         }
 
         private void QuantityTextBox_LostFocus(object sender, RoutedEventArgs e)

@@ -40,7 +40,7 @@
                         </Style>
                     </StackPanel.Resources>
                     <StackPanel Orientation="Horizontal"
-                                Margin="0 5 0 6">
+                                Margin="0 5 0 0">
                         <Label Content="作成日"
                            VerticalAlignment="Center"/>
                         <TextBox Name="CreatedDateFTextBox"
@@ -54,6 +54,9 @@
                              Width="100"
                              Height="25"
                              LostFocus="CreatedDateFTextBox_LostFocus"/>
+                        <TextBlock x:Name="OrderCountTextBlock"
+                               FontSize="20"
+                                   Margin="3 0 0 0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="物件名"
@@ -74,12 +77,8 @@
                             Click="ResetSearchButton_Click"/>
                     </StackPanel>
                 </StackPanel>
-                <StackPanel Grid.Column="1">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock x:Name="OrderCountTextBlock"
-                               FontSize="25"/>
-                    </StackPanel>
-                    <DockPanel >
+                <StackPanel Grid.Column="1"
+                            VerticalAlignment="Bottom">
                         <StackPanel Orientation="Horizontal"
                                     HorizontalAlignment="Right">
                             <Button Content="新規"
@@ -94,8 +93,6 @@
                                 Click="CopyOrderButton_Click"/>
 
                         </StackPanel>
-                    </DockPanel>
-
                 </StackPanel>
             </Grid>
             <DataGrid Grid.Row="2"
